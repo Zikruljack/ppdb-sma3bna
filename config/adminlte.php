@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'SMAN 3 Banda Aceh',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>SMAN 3 </b>Banda Aceh',
+    'logo_img' => '/assets/img/logo_smantig.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => '/assets/img/logo_smantig.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -113,7 +113,7 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => '/assets/img/logo_smantig.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -257,13 +257,13 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin/dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => '/admin/profile',
     'disable_darkmode_routes' => false,
 
     /*
@@ -300,97 +300,129 @@ return [
 
     'menu' => [
         // Navbar items:
+        // [
+        //     'type' => 'navbar-search',
+        //     'text' => 'search',
+        //     'topnav_right' => true,
+        // ],
         [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
+            'type' => 'navbar-notification',
+            'id' => 'my-notification',                // An ID attribute (required).
+            'icon' => 'fas fa-bell',                  // A font awesome icon (required).
+            'icon_color' => 'ligth',                  // The initial icon color (optional).
+            'label' => 0,                             // The initial label for the badge (optional).
+            'label_color' => 'danger',                // The initial badge color (optional).
+            'url' => 'notifications/show',            // The url to access all notifications/elements (required).
+            'topnav_right' => true,                   // Or "topnav => true" to place on the left (required).
+            'dropdown_mode' => true,                  // Enables the dropdown mode (optional).
+            'dropdown_flabel' => 'All notifications', // The label for the dropdown footer link (optional).
+            'update_cfg' => [
+                'url' => 'notifications/get',         // The url to periodically fetch new data (optional).
+                'period' => 30,                       // The update period for get new data (in seconds, optional).
+            ],
         ],
 
+
         // Sidebar items:
+        ['header' => 'MENAJEMEN'],
         [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Dashboard',
+            'url' => 'admin/dashboard',
+            'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
+            'text' => 'Berita',
+            // 'url' => 'admin/berita',
+            'icon' => 'far fa-fw fa-newspaper',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'Berita',
+                    'url' => 'admin/berita',
+                    'icon' => 'far fa-fw fa-newspaper',
+                    'shift' => 'ml-3',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
+                    'text' => 'Kategori Berita',
+                    'url' => 'admin/kategori-berita',
+                    'icon' => 'fas fa-fw fa-list',
+                    'shift' => 'ml-3',
                 ],
                 [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'text' => 'Tag Berita',
+                    'url' => 'admin/tag-berita',
+                    'icon' => 'fas fa-fw fa-tags',
+                    'shift' => 'ml-3',
+                ],
+                [
+                    'text' => 'Tong Sampah Berita',
+                    'url' => 'admin/trash-berita',
+                    'icon' => 'far fa-fw fa-trash-alt',
+                    'shift' => 'ml-3',
                 ],
             ],
         ],
-        ['header' => 'labels'],
         [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
+            'text' => 'Galeri',
+            'url' => 'admin/galeri',
+            'icon' => 'far fa-fw fa-images',
         ],
         [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
+            'text' => 'Pengumuman',
+            'url' => 'admin/pengumuman',
+            'icon' => 'far fa-fw fa-flag',
         ],
         [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text' => 'Prestasi',
+            'url' => 'admin/prestasi',
+            'icon' => 'fas fa-fw fa-trophy',
+        ],
+        [
+            'text' => 'Kegiatan',
+            'url' => 'admin/kegiatan',
+            'icon' => 'far fa-fw fa-calendar-alt',
+        ],
+
+        ['header' => 'Pengaturan Akun'],
+        [
+            'text' => 'Profil',
+            'url' => 'admin/settings',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        ['header' => 'PENGATURAN'],
+        [
+            'text' => 'Konfigurasi Web',
+            'url' => 'admin/konfigurasi',
+            'icon' => 'fas fa-fw fa-cog',
+        ],
+        [
+            'text' => 'Pengguna',
+            'url' => 'admin/pengguna',
+            'icon' => 'fas fa-fw fa-users',
+        ],
+        [
+            'text' => 'ACL (Access Control List)',
+            // 'url' => 'admin/acl',
+            'icon' => 'fas fa-fw fa-user-lock',
+            'submenu' => [
+                [
+                    'text' => 'Users',
+                    'url' => 'admin/users',
+                    'icon' => 'fas fa-fw fa-users',
+                    'shift' => 'ml-3',
+                ],
+                [
+                    'text' => 'Roles',
+                    'url' => 'admin/roles',
+                    'icon' => 'fas fa-fw fa-user-tag',
+                    'shift' => 'ml-3',
+                ],
+                [
+                    'text' => 'Permissions',
+                    'url' => 'admin/permissions',
+                    'icon' => 'fas fa-fw fa-key',
+                    'shift' => 'ml-3',
+                ],
+            ],
         ],
     ],
 

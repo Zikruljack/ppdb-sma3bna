@@ -54,8 +54,8 @@
 
                 <!-- Buttons for Dashboard & Login -->
                 <div class="d-flex gap-2 ms-lg-3">
-                    <a href="#" class="btn btn-sm btn-primary">Pendaftaran</a>
-                    <a href="#" class="btn btn-sm btn-danger">Login</a>
+                    <a href="{{ route('register') }}" class="btn btn-sm btn-primary">Pendaftaran</a>
+                    <a href="{{ route('login') }}" class="btn btn-sm btn-danger">Login</a>
                 </div>
             </div>
         </div>
