@@ -17,4 +17,9 @@ class LandingPageController extends Controller
     {
         return view('site.index');
     }
+
+    public function ppdb()
+    {
+        return view('ppdb.index');
+    }
 }

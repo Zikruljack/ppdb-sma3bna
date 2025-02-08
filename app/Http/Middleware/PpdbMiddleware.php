@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class isLogged
+class PpdbMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,6 +15,12 @@ class isLogged
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // pisahkan session pendaftar ppdb dengan user dashboard
+        if (auth()->check() && auth()->user()->role == 'ppdb') {
+            return redirect()->route('ppdb.account');
+        }else{
+            return redirect()->route('landing.page');
+        }
         return $next($request);
     }
 }

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 //Landing Page
 Route::prefix('/')->group(function () {
-    Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing-page');
+    Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing.page');
     Route::get('/profil', [App\Http\Controllers\LandingPageController::class, 'profil'])->name('profil');
     Route::get('/ppdb', [App\Http\Controllers\LandingPageController::class, 'ppdb'])->name('ppdb');
     Route::get('/berita', [App\Http\Controllers\LandingPageController::class, 'berita'])->name('berita');
@@ -58,7 +58,7 @@ Route::middleware(['auth'])->group(function () {
 //ppdb
 
 Route::middleware(['auth', 'ppdbMiddleware'])->group(function () {
-    Route::get('/account', [App\Http\Controller\Ppdb\PpdbController::class, 'account'])->name('ppdb.account');
+    Route::get('/index', [App\Http\Controller\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
     Route::get('/formulir/{slug}', [App\Http\Controller\Ppdb\PpdbController::class, 'formulir'])->name('ppdb.formulir');
     Route::get('/upload/{slug}', [App\Http\Controller\Ppdb\PpdbController::class, 'upload'])->name('ppdb.upload');
     Route::get('/pengumuman', [App\Http\Controller\Ppdb\PpdbController::class, 'pengumuman'])->name('ppdb.pengumuman');
