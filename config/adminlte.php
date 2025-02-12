@@ -339,25 +339,25 @@ return [
                     'text' => 'Berita',
                     'url' => 'admin/berita',
                     'icon' => 'far fa-fw fa-newspaper',
-                    'shift' => 'ml-3',
+                    'classes' => 'ml-3',
                 ],
                 [
                     'text' => 'Kategori Berita',
                     'url' => 'admin/kategori-berita',
                     'icon' => 'fas fa-fw fa-list',
-                    'shift' => 'ml-3',
+                    'classes' => 'ml-3',
                 ],
                 [
                     'text' => 'Tag Berita',
                     'url' => 'admin/tag-berita',
                     'icon' => 'fas fa-fw fa-tags',
-                    'shift' => 'ml-3',
+                    'classes' => 'ml-3',
                 ],
                 [
                     'text' => 'Tong Sampah Berita',
                     'url' => 'admin/trash-berita',
                     'icon' => 'far fa-fw fa-trash-alt',
-                    'shift' => 'ml-3',
+                    'classes' => 'ml-3',
                 ],
             ],
         ],
@@ -365,6 +365,11 @@ return [
             'text' => 'Galeri',
             'url' => 'admin/galeri',
             'icon' => 'far fa-fw fa-images',
+        ],
+        [
+            'text' => 'PPDB',
+            'url' => 'admin/ppdb',
+            'icon' => 'fas fa-fw fa-user-graduate',
         ],
         [
             'text' => 'Pengumuman',
@@ -385,7 +390,7 @@ return [
         ['header' => 'Pengaturan Akun'],
         [
             'text' => 'Profil',
-            'url' => 'admin/settings',
+            'url' => 'admin/account',
             'icon' => 'fas fa-fw fa-user',
         ],
         ['header' => 'PENGATURAN'],
@@ -395,32 +400,48 @@ return [
             'icon' => 'fas fa-fw fa-cog',
         ],
         [
-            'text' => 'Pengguna',
-            'url' => 'admin/pengguna',
-            'icon' => 'fas fa-fw fa-users',
+            'text' => 'Backup & Restore',
+            'url' => 'admin/backup',
+            'icon' => 'fas fa-fw fa-database',
         ],
         [
-            'text' => 'ACL (Access Control List)',
-            // 'url' => 'admin/acl',
+            'text' => 'Log Aktivitas',
+            'url' => 'admin/log-activity',
+            'icon' => 'fas fa-fw fa-history',
+        ],
+        [
+            'text' => 'Manajemen Pengguna',
+            'icon' => 'fas fa-fw fa-users',
+            'submenu' =>[
+                [
+                    'text' => 'Pengguna',
+                    'url' => 'admin/pengguna',
+                    'icon' => 'fas fa-fw fa-users',
+                    'classes' => 'ml-3',
+                ],
+                [
+                    'text' => 'Pengguna PPDB',
+                    'url' => 'admin/user/pengguna-ppdb',
+                    'icon' => 'fas fa-fw fa-users',
+                    'classes' => 'ml-3',
+                ],
+            ]
+        ],
+        [
+            'text' => 'Manajemen Hak Akses',
             'icon' => 'fas fa-fw fa-user-lock',
             'submenu' => [
-                [
-                    'text' => 'Users',
-                    'url' => 'admin/users',
-                    'icon' => 'fas fa-fw fa-users',
-                    'shift' => 'ml-3',
-                ],
                 [
                     'text' => 'Roles',
                     'url' => 'admin/roles',
                     'icon' => 'fas fa-fw fa-user-tag',
-                    'shift' => 'ml-3',
+                    'classes' => 'ml-3',
                 ],
                 [
                     'text' => 'Permissions',
                     'url' => 'admin/permissions',
                     'icon' => 'fas fa-fw fa-key',
-                    'shift' => 'ml-3',
+                    'classes' => 'ml-3',
                 ],
             ],
         ],

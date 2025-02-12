@@ -15,11 +15,11 @@ class LandingPageController extends Controller
 
     public function index()
     {
-        return view('site.index');
+        return view('site.blog');
     }
 
     public function ppdb()
     {
-        return view('ppdb.index');
+        return view('ppdb.formulir');
     }
 }
