@@ -6,8 +6,12 @@ use Illuminate\Support\Facades\Route;
 //Landing Page
 Route::prefix('/')->group(function () {
     Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing.page');
+    Route::get('/ppdb', [App\Http\Controllers\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
+    Route::get('/ppdb/login', [App\Http\Controllers\Ppdb\PpdbController::class , 'login'])->name('login.ppdb');
+    Route::post('/ppdb/login/attempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'loginAttempt'])->name('login.attempt');
+    Route::get('/ppdb/register', [App\Http\Controllers\Ppdb\PpdbController::class , 'register'])->name('register.ppdb');
+    Route::get('/ppdb/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
     Route::get('/profil', [App\Http\Controllers\LandingPageController::class, 'profil'])->name('profil');
-    Route::get('/ppdb', [App\Http\Controllers\LandingPageController::class, 'ppdb'])->name('ppdb');
     Route::get('/berita', [App\Http\Controllers\LandingPageController::class, 'berita'])->name('berita');
     Route::get('/berita/{slug}', [App\Http\Controllers\LandingPageController::class, 'beritaDetail'])->name('berita.detail');
     Route::get('/galeri', [App\Http\Controllers\LandingPageController::class, 'galeri'])->name('galeri');
@@ -20,7 +24,9 @@ Route::prefix('/')->group(function () {
     Route::get('/struktur-organisasi', [App\Http\Controllers\LandingPageController::class, 'strukturOrganisasi'])->name('struktur-organisasi');
 });
 
-Auth::routes();
+Auth::routes([
+    'register' => false,
+]);
 
 Route::middleware(['auth'])->group(function () {
 
@@ -57,9 +63,9 @@ Route::middleware(['auth'])->group(function () {
 
 //ppdb
 
-Route::middleware(['auth', 'ppdbMiddleware'])->group(function () {
-    Route::get('/index', [App\Http\Controller\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
-    Route::get('/formulir/{slug}', [App\Http\Controller\Ppdb\PpdbController::class, 'formulir'])->name('ppdb.formulir');
-    Route::get('/upload/{slug}', [App\Http\Controller\Ppdb\PpdbController::class, 'upload'])->name('ppdb.upload');
-    Route::get('/pengumuman', [App\Http\Controller\Ppdb\PpdbController::class, 'pengumuman'])->name('ppdb.pengumuman');
+Route::prefix('ppdb')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Ppdb\PpdbController::class, 'dashboard'])->name('ppdb.dashboard');
+    Route::get('/formulir', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulir'])->name('ppdb.formulir');
+    Route::get('/upload/{slug}', [App\Http\Controllers\Ppdb\PpdbController::class, 'upload'])->name('ppdb.upload');
+    Route::get('/pengumuman', [App\Http\Controllers\Ppdb\PpdbController::class, 'pengumuman'])->name('ppdb.pengumuman');
 });

@@ -16,110 +16,7 @@
             </div>
             <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('ppdb') }}">PPDB Online</a></li>
-                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
-                            data-bs-toggle="dropdown">Dropdown</a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item"><a class="dropdown-item" href="#">Action</a></li>
-                            <li class="dropdown dropdown-submenu dropend"><a class="dropdown-item dropdown-toggle"
-                                    href="#" data-bs-toggle="dropdown">Dropdown</a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown dropdown-submenu dropend"><a
-                                            class="dropdown-item dropdown-toggle" href="#"
-                                            data-bs-toggle="dropdown">Dropdown</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="nav-item"><a class="dropdown-item" href="#">Action</a></li>
-                                            <li class="nav-item"><a class="dropdown-item" href="#">Another
-                                                    Action</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a class="dropdown-item" href="#">Action</a></li>
-                                    <li class="nav-item"><a class="dropdown-item" href="#">Another Action</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item"><a class="dropdown-item" href="#">Another Action</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown dropdown-mega"><a class="nav-link dropdown-toggle" href="#"
-                            data-bs-toggle="dropdown">Mega Menu</a>
-                        <ul class="dropdown-menu mega-menu">
-                            <li class="mega-menu-content">
-                                <div class="row gx-0 gx-lg-3">
-                                    <div class="col-lg-6">
-                                        <h6 class="dropdown-header">One</h6>
-                                        <div class="row gx-0">
-                                            <div class="col-lg-6">
-                                                <ul class="list-unstyled">
-                                                    <li><a class="dropdown-item" href="#">Link</a></li>
-                                                    <li><a class="dropdown-item" href="#">Link</a></li>
-                                                    <li><a class="dropdown-item" href="#">Link</a></li>
-                                                </ul>
-                                            </div>
-                                            <!--/column -->
-                                            <div class="col-lg-6">
-                                                <ul class="list-unstyled">
-                                                    <li><a class="dropdown-item" href="#">Link</a></li>
-                                                    <li><a class="dropdown-item" href="#">Link</a></li>
-                                                    <li><a class="dropdown-item" href="#">Link</a></li>
-                                                </ul>
-                                            </div>
-                                            <!--/column -->
-                                        </div>
-                                        <!--/.row -->
-                                    </div>
-                                    <!--/column -->
-                                    <div class="col-lg-3">
-                                        <h6 class="dropdown-header">Two</h6>
-                                        <ul class="list-unstyled">
-                                            <li><a class="dropdown-item" href="#">Link</a></li>
-                                            <li><a class="dropdown-item" href="#">Link</a></li>
-                                            <li><a class="dropdown-item" href="#">Link</a></li>
-                                        </ul>
-                                    </div>
-                                    <!--/column -->
-                                    <div class="col-lg-3">
-                                        <h6 class="dropdown-header">Three</h6>
-                                        <ul class="list-unstyled">
-                                            <li><a class="dropdown-item" href="#">Link</a></li>
-                                            <li><a class="dropdown-item" href="#">Link</a></li>
-                                            <li><a class="dropdown-item" href="#">Link</a></li>
-                                        </ul>
-                                    </div>
-                                    <!--/column -->
-                                </div>
-                                <!--/.row -->
-                            </li>
-                            <!--/.mega-menu-content-->
-                        </ul>
-                        <!--/.dropdown-menu -->
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Dropdown
-                            Large</a>
-                        <div class="dropdown-menu dropdown-lg">
-                            <div class="dropdown-lg-content">
-                                <div>
-                                    <h6 class="dropdown-header">One</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="#">Link</a></li>
-                                        <li><a class="dropdown-item" href="#">Link</a></li>
-                                        <li><a class="dropdown-item" href="#">Another Link</a></li>
-                                    </ul>
-                                </div>
-                                <!-- /.column -->
-                                <div>
-                                    <h6 class="dropdown-header">Two</h6>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="#">Link</a></li>
-                                        <li><a class="dropdown-item" href="#">Link</a></li>
-                                        <li><a class="dropdown-item" href="#">Another Link</a></li>
-                                    </ul>
-                                </div>
-                                <!-- /.column -->
-                            </div>
-                            <!-- /auto-column -->
-                        </div>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('ppdb.index') }}">PPDB Online</a></li>
                 </ul>
                 <!-- /.navbar-nav -->
                 <div class="d-lg-none mt-auto pt-6 pb-6 order-4">
@@ -138,19 +35,6 @@
             </div>
             <!-- /.offcanvas-body -->
         </div>
-        <!-- /.navbar-collapse -->
-        {{-- <div class="navbar-other ms-lg-4">
-            <ul class="navbar-nav flex-row align-items-center ms-auto">
-                <li class="nav-item d-none d-md-block">
-                    <a href="#" class="btn btn-sm btn-primary rounded-pill" data-bs-toggle="modal"
-                        data-bs-target="trueLink">Sign In</a>
-                </li>
-                <li class="nav-item d-lg-none">
-                    <button class="hamburger offcanvas-nav-btn"><span></span></button>
-                </li>
-            </ul>
-            <!-- /.navbar-nav -->
-        </div> --}}
         <!-- /.navbar-other -->
     </div>
     <!-- /.container -->

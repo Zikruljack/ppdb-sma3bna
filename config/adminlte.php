@@ -263,7 +263,9 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => '/admin/profile',
+    // 'profile_url' => '/admin/profile',
+
+    /*
     'disable_darkmode_routes' => false,
 
     /*
@@ -324,127 +326,348 @@ return [
 
 
         // Sidebar items:
-        ['header' => 'MENAJEMEN'],
-        [
-            'text' => 'Dashboard',
-            'url' => 'admin/dashboard',
-            'icon' => 'fas fa-fw fa-tachometer-alt',
-        ],
-        [
-            'text' => 'Berita',
-            // 'url' => 'admin/berita',
-            'icon' => 'far fa-fw fa-newspaper',
-            'submenu' => [
-                [
-                    'text' => 'Berita',
-                    'url' => 'admin/berita',
-                    'icon' => 'far fa-fw fa-newspaper',
-                    'classes' => 'ml-3',
-                ],
-                [
-                    'text' => 'Kategori Berita',
-                    'url' => 'admin/kategori-berita',
-                    'icon' => 'fas fa-fw fa-list',
-                    'classes' => 'ml-3',
-                ],
-                [
-                    'text' => 'Tag Berita',
-                    'url' => 'admin/tag-berita',
-                    'icon' => 'fas fa-fw fa-tags',
-                    'classes' => 'ml-3',
-                ],
-                [
-                    'text' => 'Tong Sampah Berita',
-                    'url' => 'admin/trash-berita',
-                    'icon' => 'far fa-fw fa-trash-alt',
-                    'classes' => 'ml-3',
-                ],
-            ],
-        ],
-        [
-            'text' => 'Galeri',
-            'url' => 'admin/galeri',
-            'icon' => 'far fa-fw fa-images',
-        ],
-        [
-            'text' => 'PPDB',
-            'url' => 'admin/ppdb',
-            'icon' => 'fas fa-fw fa-user-graduate',
-        ],
-        [
-            'text' => 'Pengumuman',
-            'url' => 'admin/pengumuman',
-            'icon' => 'far fa-fw fa-flag',
-        ],
-        [
-            'text' => 'Prestasi',
-            'url' => 'admin/prestasi',
-            'icon' => 'fas fa-fw fa-trophy',
-        ],
-        [
-            'text' => 'Kegiatan',
-            'url' => 'admin/kegiatan',
-            'icon' => 'far fa-fw fa-calendar-alt',
-        ],
+        // ['header' => 'MENAJEMEN'],
+        // [
+        //     'text' => 'Dashboard',
+        //     'url' => 'admin/dashboard',
+        //     'icon' => 'fas fa-fw fa-tachometer-alt',
+        // ],
+        // [
+        //     'text' => 'Berita',
+        //     'icon' => 'far fa-fw fa-newspaper',
+        //     'can' => 'berita',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Berita',
+        //             'url' => 'admin/berita',
+        //             'icon' => 'far fa-fw fa-newspaper',
+        //             'classes' => 'ml-3',
+        //         ],
+        //         [
+        //             'text' => 'Kategori Berita',
+        //             'url' => 'admin/kategori-berita',
+        //             'icon' => 'fas fa-fw fa-list',
+        //             'classes' => 'ml-3',
+        //         ],
+        //         [
+        //             'text' => 'Tag Berita',
+        //             'url' => 'admin/tag-berita',
+        //             'icon' => 'fas fa-fw fa-tags',
+        //             'classes' => 'ml-3',
+        //         ],
+        //         [
+        //             'text' => 'Tong Sampah Berita',
+        //             'url' => 'admin/trash-berita',
+        //             'icon' => 'far fa-fw fa-trash-alt',
+        //             'classes' => 'ml-3',
+        //         ],
+        //     ],
+        // ],
+        // [
+        //     'text' => 'Galeri',
+        //     'url' => 'admin/galeri',
+        //     'icon' => 'far fa-fw fa-images',
+        // ],
+        // [
+        //     'text' => 'PPDB',
+        //     'icon' => 'fas fa-fw fa-user-graduate',
+        //     'can' => 'admin',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Daftar Peserta PPDB',
+        //             'icon' => 'fas fa-fw fa-users',
+        //             'url'  => 'admin/ppdb/list',
+        //             'classes' => 'ml-3',
+        //         ],
+        //         [
+        //             'text' => 'Peserta Lulus',
+        //             'icon' => 'fas fa-fw fa-user-check',
+        //             'url'  => 'admin/ppdb/peserta-lulus',
+        //             'classes' => 'ml-3',
+        //         ],
+        //         [
+        //             'text' => 'Pengaturan PPDB',
+        //             'icon' => 'fas fa-fw fa-cog',
+        //             'url'  => 'admin/ppdb/settings',
+        //             'classes' => 'ml-3',
+        //         ],
+        //     ],
+        // ],
+        // [
+        //     'text' => 'Pengumuman',
+        //     'url' => 'admin/pengumuman',
+        //     'icon' => 'far fa-fw fa-flag',
+        // ],
+        // [
+        //     'text' => 'Prestasi',
+        //     'url' => 'admin/prestasi',
+        //     'icon' => 'fas fa-fw fa-trophy',
+        // ],
+        // [
+        //     'text' => 'Kegiatan',
+        //     'url' => 'admin/kegiatan',
+        //     'icon' => 'far fa-fw fa-calendar-alt',
+        // ],
+        // ['header' => 'PENGATURAN AKUN'],
+        // [
+        //     'text' => 'Profil',
+        //     'url' => 'admin/account',
+        //     'icon' => 'fas fa-fw fa-user',
+        // ],
+        // [
+        //     'header' => 'PENGATURAN',
+        //     'can' => 'admin',
+        // ],
+        // [
+        //     'text' => 'Konfigurasi Web',
+        //     'url' => 'admin/konfigurasi',
+        //     'icon' => 'fas fa-fw fa-cog',
+        // ],
+        // [
+        //     'text' => 'Backup & Restore',
+        //     'url' => 'admin/backup',
+        //     'icon' => 'fas fa-fw fa-database',
+        // ],
+        // [
+        //     'text' => 'Log Aktivitas',
+        //     'url' => 'admin/log-activity',
+        //     'icon' => 'fas fa-fw fa-history',
+        // ],
+        // [
+        //     'text' => 'Manajemen Pengguna',
+        //     'icon' => 'fas fa-fw fa-users',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Pengguna',
+        //             'url' => 'admin/pengguna',
+        //             'icon' => 'fas fa-fw fa-users',
+        //             'classes' => 'ml-3',
+        //         ],
+        //         // [
+        //         //     'text' => 'Calon Siswa PPDB',
+        //         //     'url' => 'admin/user/pengguna-ppdb',
+        //         //     'icon' => 'fas fa-fw fa-user-graduate',
+        //         //     'classes' => 'ml-3',
+        //         // ],
+        //     ],
+        // ],
+        // [
+        //     'text' => 'Manajemen Hak Akses',
+        //     'icon' => 'fas fa-fw fa-user-lock',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Roles',
+        //             'url' => 'admin/roles',
+        //             'icon' => 'fas fa-fw fa-user-tag',
+        //             'classes' => 'ml-3',
+        //         ],
+        //         [
+        //             'text' => 'Permissions',
+        //             'url' => 'admin/permissions',
+        //             'icon' => 'fas fa-fw fa-key',
+        //             'classes' => 'ml-3',
+        //         ],
+        //     ],
+        // ],
 
-        ['header' => 'Pengaturan Akun'],
-        [
-            'text' => 'Profil',
-            'url' => 'admin/account',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        ['header' => 'PENGATURAN'],
-        [
-            'text' => 'Konfigurasi Web',
-            'url' => 'admin/konfigurasi',
-            'icon' => 'fas fa-fw fa-cog',
-        ],
-        [
-            'text' => 'Backup & Restore',
-            'url' => 'admin/backup',
-            'icon' => 'fas fa-fw fa-database',
-        ],
-        [
-            'text' => 'Log Aktivitas',
-            'url' => 'admin/log-activity',
-            'icon' => 'fas fa-fw fa-history',
-        ],
-        [
-            'text' => 'Manajemen Pengguna',
-            'icon' => 'fas fa-fw fa-users',
-            'submenu' =>[
-                [
-                    'text' => 'Pengguna',
-                    'url' => 'admin/pengguna',
-                    'icon' => 'fas fa-fw fa-users',
-                    'classes' => 'ml-3',
-                ],
-                [
-                    'text' => 'Pengguna PPDB',
-                    'url' => 'admin/user/pengguna-ppdb',
-                    'icon' => 'fas fa-fw fa-users',
-                    'classes' => 'ml-3',
-                ],
-            ]
-        ],
-        [
-            'text' => 'Manajemen Hak Akses',
-            'icon' => 'fas fa-fw fa-user-lock',
-            'submenu' => [
-                [
-                    'text' => 'Roles',
-                    'url' => 'admin/roles',
-                    'icon' => 'fas fa-fw fa-user-tag',
-                    'classes' => 'ml-3',
-                ],
-                [
-                    'text' => 'Permissions',
-                    'url' => 'admin/permissions',
-                    'icon' => 'fas fa-fw fa-key',
-                    'classes' => 'ml-3',
+        // [
+        //     'header' => 'Peserta PPDB',
+        //     'can'   => 'peserta_ppdb',
+        // ],
+        // [
+        //     'text' => 'Profil',
+        //     'url' => '/ppdb/profil',
+        //     'icon' => 'fas fa-fw fa-user',
+        //     'can'   => 'peserta_ppdb',
+        //     'classes' => 'ml-3',
+        // ],
+        // [
+        //     'text' => 'Upload Berkas',
+        //     'url' => '/ppdb/berkas',
+        //     'icon' => 'fas fa-fw fa-upload',
+        //     'can'   => 'peserta_ppdb',
+        //     'classes' => 'ml-3',
+        // ],
+        // [
+        //     'text' => 'Pengaturan Akun',
+        //     'url' => '/ppdb/account',
+        //     'icon' => 'fas fa-fw fa-cog',
+        //     'can'   => 'peserta_ppdb',
+        //     'classes' => 'ml-3',
+        // ]
+            ['header' => 'MENAJEMEN'],
+
+            [
+                'text' => 'Dashboard',
+                'url' => 'admin/dashboard',
+                'icon' => 'fas fa-fw fa-tachometer-alt',
+            ],
+            [
+                'text' => 'Berita',
+                'icon' => 'far fa-fw fa-newspaper',
+                'can' => 'manage_news',
+                'submenu' => [
+                    [
+                        'text' => 'Berita',
+                        'url' => 'admin/berita',
+                        'icon' => 'far fa-fw fa-newspaper',
+                        'classes' => 'ml-3',
+                    ],
+                    [
+                        'text' => 'Kategori Berita',
+                        'url' => 'admin/kategori-berita',
+                        'icon' => 'fas fa-fw fa-list',
+                        'classes' => 'ml-3',
+                    ],
+                    [
+                        'text' => 'Tag Berita',
+                        'url' => 'admin/tag-berita',
+                        'icon' => 'fas fa-fw fa-tags',
+                        'classes' => 'ml-3',
+                    ],
+                    [
+                        'text' => 'Tong Sampah Berita',
+                        'url' => 'admin/trash-berita',
+                        'icon' => 'far fa-fw fa-trash-alt',
+                        'classes' => 'ml-3',
+                    ],
                 ],
             ],
-        ],
+            [
+                'text' => 'Galeri',
+                'url' => 'admin/galeri',
+                'icon' => 'far fa-fw fa-images',
+                'can' => 'manage_gallery',
+            ],
+            [
+                'text' => 'PPDB',
+                'icon' => 'fas fa-fw fa-user-graduate',
+                'can' => 'manage_ppdb',
+                'submenu' => [
+                    [
+                        'text' => 'Daftar Peserta PPDB',
+                        'icon' => 'fas fa-fw fa-users',
+                        'url'  => 'admin/ppdb/list',
+                        'classes' => 'ml-3',
+                    ],
+                    [
+                        'text' => 'Peserta Lulus',
+                        'icon' => 'fas fa-fw fa-user-check',
+                        'url'  => 'admin/ppdb/peserta-lulus',
+                        'classes' => 'ml-3',
+                    ],
+                    [
+                        'text' => 'Pengaturan PPDB',
+                        'icon' => 'fas fa-fw fa-cog',
+                        'url'  => 'admin/ppdb/settings',
+                        'classes' => 'ml-3',
+                    ],
+                ],
+            ],
+            [
+                'text' => 'Pengumuman',
+                'url' => 'admin/pengumuman',
+                'icon' => 'far fa-fw fa-flag',
+                'can' => 'manage_announcements',
+            ],
+            [
+                'text' => 'Prestasi',
+                'url' => 'admin/prestasi',
+                'icon' => 'fas fa-fw fa-trophy',
+                'can' => 'manage_achievements',
+            ],
+            [
+                'text' => 'Kegiatan',
+                'url' => 'admin/kegiatan',
+                'icon' => 'far fa-fw fa-calendar-alt',
+                'can' => 'manage_events',
+            ],
+
+            ['header' => 'PENGATURAN AKUN'],
+
+            [
+                'text' => 'Profil',
+                'url' => 'admin/account',
+                'icon' => 'fas fa-fw fa-user',
+            ],
+
+            ['header' => 'PENGATURAN', 'can' => 'manage_settings'],
+
+            [
+                'text' => 'Konfigurasi Web',
+                'url' => 'admin/konfigurasi',
+                'icon' => 'fas fa-fw fa-cog',
+                'can' => 'manage_settings',
+            ],
+            [
+                'text' => 'Backup & Restore',
+                'url' => 'admin/backup',
+                'icon' => 'fas fa-fw fa-database',
+                'can' => 'manage_settings',
+            ],
+            [
+                'text' => 'Log Aktivitas',
+                'url' => 'admin/log-activity',
+                'icon' => 'fas fa-fw fa-history',
+                'can' => 'view_logs',
+            ],
+            [
+                'text' => 'Manajemen Pengguna',
+                'icon' => 'fas fa-fw fa-users',
+                'can' => 'manage_users',
+                'submenu' => [
+                    [
+                        'text' => 'Pengguna',
+                        'url' => 'admin/pengguna',
+                        'icon' => 'fas fa-fw fa-users',
+                        'classes' => 'ml-3',
+                    ],
+                ],
+            ],
+            [
+                'text' => 'Manajemen Hak Akses',
+                'icon' => 'fas fa-fw fa-user-lock',
+                'can' => 'manage_roles',
+                'submenu' => [
+                    [
+                        'text' => 'Roles',
+                        'url' => 'admin/roles',
+                        'icon' => 'fas fa-fw fa-user-tag',
+                        'classes' => 'ml-3',
+                    ],
+                    [
+                        'text' => 'Permissions',
+                        'url' => 'admin/permissions',
+                        'icon' => 'fas fa-fw fa-key',
+                        'classes' => 'ml-3',
+                    ],
+                ],
+            ],
+
+            ['header' => 'Peserta PPDB', 'can' => 'peserta_ppdb'],
+
+            [
+                'text' => 'Profil',
+                'url' => '/ppdb/profil',
+                'icon' => 'fas fa-fw fa-user',
+                'can' => 'peserta_ppdb',
+                'classes' => 'ml-3',
+            ],
+            [
+                'text' => 'Upload Berkas',
+                'url' => '/ppdb/berkas',
+                'icon' => 'fas fa-fw fa-upload',
+                'can' => 'peserta_ppdb',
+                'classes' => 'ml-3',
+            ],
+            [
+                'text' => 'Pengaturan Akun',
+                'url' => '/ppdb/account',
+                'icon' => 'fas fa-fw fa-cog',
+                'can' => 'peserta_ppdb',
+                'classes' => 'ml-3',
+            ]
+
     ],
 
     /*

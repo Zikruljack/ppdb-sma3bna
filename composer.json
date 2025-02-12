@@ -12,6 +12,7 @@
         "laravel/horizon": "^5.30",
         "laravel/tinker": "^2.9",
         "predis/predis": "^2.3",
+        "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-permission": "^6.13",
         "yajra/laravel-datatables": "^11.0"
     },

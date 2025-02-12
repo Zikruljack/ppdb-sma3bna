@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ppbd_user', function (Blueprint $table) {
+        Schema::create('ppdb_user', function (Blueprint $table) {
             $table->id();
             $table->string('nama_lengkap');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('nisn');
             $table->string('nik');
             $table->string('tempat_lahir');
@@ -38,8 +35,8 @@ return new class extends Migration
             $table->string('no_hp');
             $table->string('asal_sekolah');
             $table->string('nomor_peserta_ujian')->nullable();
-            $table->string('no_ijazah')->unique();
-            $table->unsignedInteger('id_berkas');
+            $table->string('no_ijazah')->unique()->nullable();
+            $table->unsignedInteger('id_berkas')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -50,6 +47,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ppbd_user');
+        Schema::dropIfExists('ppdb_user');
     }
 };
