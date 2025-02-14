@@ -22,7 +22,15 @@ class PesertaPPDBDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'pesertappdb.action')
+            ->addColumn('action', function($row){
+                $btn = '<ul class="list-unstyled d-flex gap-2 mb-0">';
+                $btn .= '<li><a href="/admin/ppdb/peserta/detail/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="fa fa-fw fa-eye"></i></a></li>';
+                $btn .= '<li><a href="" class="btn btn-sm delete btn-link" data-bs-toggle="tooltip" data-bs-placement="top" data-confirm-delete="true" title="Delete"><i class="fa fa-fw fa-trash text-danger"></i></a></li>';
+                $btn .= '<li><a href="" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-fw fa-edit text-primary"></i></a></li>';
+                $btn .= '</ul>';
+                return $btn;
+            })
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -62,15 +70,16 @@ class PesertaPPDBDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
+            Column::computed('DT_RowIndex') // Kolom penomoran
+                ->title('No')
+                ->orderable(false)
+                ->searchable(false)
+                ->width(30)
+                ->addClass('text-center'),
+            Column::make('nama_lengkap'),
+            Column::make('jalur_pendaftaran'),
             Column::make('updated_at'),
+            Column::make('action'),
         ];
     }
 

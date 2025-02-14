@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('nilai_rapor', function (Blueprint $table) {
-            $table->string('mapel')->after('semester'); // Tambah kolom mapel
+        Schema::table('ppdb_user', function (Blueprint $table) {
+            //
+            $table->string('nomor_perserta')->nullable();
         });
     }
 
@@ -21,9 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('nilai_rapor', function (Blueprint $table) {
-            $table->dropColumn('mapel');
-
+        Schema::table('ppdb_user', function (Blueprint $table) {
+            //
+            $table->dropColumn('nomor_perserta');
         });
     }
 };

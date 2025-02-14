@@ -12,7 +12,7 @@
                 <div class="col-md-10 offset-md-1 offset-lg-0 col-lg-5 text-center text-lg-start">
                     <h1 class="display-1 mb-5 mx-md-n5 mx-lg-0">SEKOLAH SMA3 Banda Aceh</h1>
                     <p class="lead fs-lg mb-7">Lorem ipsum dolor sit amet. </p>
-                    <span><a class="btn btn-primary rounded-pill me-2">PPDB</a></span>
+                    <span><a class="btn btn-primary rounded-pill me-2">SPMB</a></span>
                 </div>
                 <!-- /column -->
             </div>

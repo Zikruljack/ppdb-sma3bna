@@ -75,31 +75,53 @@ class PpdbController extends Controller{
     }
 
     public function registerAttempt(Request $request){
-        $request->validate([
+
+        // dd($request->all());
+        $validation = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'jalur_pendaftaran' => 'required|in:Prestasi,Kepemimpinan',
         ]);
 
-        $user = Ppdb::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'jalur_pendaftaran' => $request->jalur_pendaftaran
-        ]);
+        if ($validation->fails()) {
+            Log::warning('Validation failed', ['errors' => $validation->errors()]);
+            return redirect()->back()->withErrors($validation)->withInput()->with('error', 'Tidak bisa disimpan!');
+        }
 
-        auth()->login($user);
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('home')->with('success', 'Registration successful.');
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
+
+            $userPpdb = PpdbUser::create([
+                'user_id' => $user->id,
+                'jalur_pendaftaran' => $request->jalur_pendaftaran,
+            ]);
+
+            $user->assignRole('siswa');
+
+            auth()->login($user);
+
+            DB::commit();
+
+            return redirect()->route('ppdb.pendaftaran')->with('success', 'Registration successful.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error(['error' => $e->getMessage(), 'trace' => $e->getTrace()]);
+            return redirect()->back()->withInput()->with('error', 'Terjadi error pada server: ' . $e->getMessage());
+        }
     }
 
     public function pendaftaran()
     {
         $user_id = auth()->id();
-        $ppdbUser = PpdbUser::where('user_id', $user_id)->first() ?? new PpdbUser();
-
-        $berkas = BerkasPpdb::where('user_id', $user_id)->first() ?? new BerkasPpdb();
+        $ppdbUser = PpdbUser::where('user_id', $user_id)->first();
+        // dd($ppdbUser);
         $wilayahProvinsi = DB::table('indonesia_provinces')->get();
 
         return view('ppdb.dashboard.steps.data_diri', compact(
@@ -148,7 +170,7 @@ class PpdbController extends Controller{
     ]);
 
     if ($validatedData->fails()) {
-        return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Tidak bisa disimpan!');
+        return redirect()->back()->withErrors($validatedData)->withInput()->with('error', 'Tidak bisa disimpan!');
     }
 
     $validatedData = $validatedData->validated();
@@ -156,6 +178,8 @@ class PpdbController extends Controller{
     if ($request->hasFile('foto')) {
         $validatedData['foto'] = $request->file('foto')->store('images', 'public');
     }
+
+    $validatedData['status'] = 'Pendaftar';
 
     try {
         DB::beginTransaction();
@@ -165,13 +189,13 @@ class PpdbController extends Controller{
         return redirect()->route('ppdb.formulir.rapor')->with('success', 'Data Diri berhasil disimpan!');
     } catch (\Exception $e) {
         DB::rollback();
-        return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Tidak bisa disimpan!'. $e->getMessage());
+        return redirect()->back()->withErrors($validatedData)->withInput()->with('error', 'Tidak bisa disimpan!'. $e->getMessage());
     }
 }
 
     public function formulirRaporView(){
         $user = auth()->user();
-        // $ppdbUser = PpdbUser::where('user_id', $user->id)->first();
+        $ppdbUser = PpdbUser::where('user_id', $user->id)->first();
         $mapel = Mapel::select('id', 'mapel')->get();
         $nilaiRapors = NilaiRapor::where('user_id', $user->id)
                 ->get()
@@ -183,20 +207,32 @@ class PpdbController extends Controller{
                 })
                 ->toArray();
         // dd($nilaiRapors);
-        return view('ppdb.dashboard.steps.rapor', compact('mapel', 'nilaiRapors'));
+        return view('ppdb.dashboard.steps.rapor', compact('mapel', 'nilaiRapors', 'ppdbUser'));
     }
 
     public function formulirRapor(Request $request)
 {
     $userId = auth()->id();
 
+    $userPpdb = PpdbUser::where('user_id', $userId)->first();
+
+    if($userPpdb->jalur_pendaftaran == 'prestasi'){
+        $minNilai = 86;
+    }else{
+        $minNilai = 82;
+    }
+
     $validatedData = Validator::make($request->all(), [
         'nilai' => 'required|array',
         'nilai.*' => 'required|array',
-        'nilai.*.*' => 'required|integer|min:86|max:100',
+        'nilai.*.*' => "required|integer|min:$minNilai|max:100",
         'scan_rapor' => 'nullable|array',
         'scan_rapor.*' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:2048',
-    ]);
+    ],[
+        'nilai.*.*' => "Nilai harus antara $minNilai dan 100",
+        'scan_rapor.*' => 'Scan Rapor harus berformat PDF, JPG, JPEG, atau PNG',
+    ]
+);
 
     if ($validatedData->fails()) {
         return redirect()->back()->withErrors($validatedData)->withInput()->with('error', 'Tidak bisa disimpan!');
@@ -228,7 +264,8 @@ class PpdbController extends Controller{
 }
 
     public function formulirBerkasView(){
-        return view('ppdb.dashboard.steps.berkas');
+        $ppdbUser = PpdbUser::where('user_id', auth()->id())->first();
+        return view('ppdb.dashboard.steps.berkas', compact('ppdbUser'));
     }
 
     public function formulirBerkas(Request $request)
@@ -308,11 +345,15 @@ class PpdbController extends Controller{
         $user = auth()->user();
         $ppdbUser = PpdbUser::where('user_id', $user->id)->first();
         $mapel = Mapel::select('id', 'mapel')->get();
-        $nilaiRapors = NilaiRapor::where('user_id', $user->id)
-                ->get()
-                ->groupBy(['semester', 'mapel_id']);
+        $nilaiRapor = NilaiRapor::where('user_id', $user->id)
+                    ->with('mapel') // Mengambil nama mapel
+                    ->orderBy('semester')
+                    ->get()
+                    ->groupBy('semester');
+
+                    // dd($nilaiRapor);
         $berkas = BerkasPpdb::where('user_id', $user->id)->first();
-        return view('ppdb.dashboard.steps.detail', compact('ppdbUser', 'mapel', 'nilaiRapors', 'berkas'));
+        return view('ppdb.dashboard.steps.detail', compact('ppdbUser', 'mapel', 'nilaiRapor', 'berkas'));
     }
 
 }

@@ -1,5 +1,7 @@
 @extends('layouts.site.site')
 
+@section('title', 'Daftar SPMB')
+
 @section('hero')
     <section class="wrapper bg-dark text-white">
         <div class="container pt-18 pt-md-20 pb-21 pb-md-21 text-center">
@@ -8,8 +10,8 @@
                     <h1 class="display-1 text-white mb-3">Sign Up</h1>
                     <nav class="d-inline-block" aria-label="breadcrumb">
                         <ol class="breadcrumb text-white">
-                            <li class="breadcrumb-item"><a href="{{ route('landing.page') }}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Daftar PPDB</li>
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Daftar SPMB</li>
                         </ol>
                     </nav>
                     <!-- /nav -->
@@ -36,38 +38,77 @@
                             <!--/column -->
                             <div class="col-lg-6">
                                 <div class="p-10 p-md-11 p-lg-13">
-                                    <h2 class="mb-3 text-start">Daftar PPDB</h2>
+                                    <h2 class="mb-3 text-start">Daftar SPMB</h2>
                                     <p class="lead mb-6 text-start">Pendaftaran akun tidak sampai semenit.</p>
                                     <form class="text-start mb-3" method="post" action="{{ route('register.attempt') }}">
                                         @csrf
                                         <div class="form-floating mb-4">
-                                            <input type="text" class="form-control" placeholder="Name" id="loginName">
+                                            <input name="name" type="text"
+                                                class="form-control @error('name') is-invalid @enderror" placeholder="Name"
+                                                id="loginName">
                                             <label for="loginName">Nama Lengkap</label>
+
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                         <div class="form-floating mb-4">
-                                            <input type="email" class="form-control" placeholder="Email" id="loginEmail">
+                                            <input name="email" type="email"
+                                                class="form-control @error('email') is-invalid @enderror"
+                                                placeholder="Email" id="loginEmail">
                                             <label for="loginEmail">Email</label>
+
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                         <div class="form-floating password-field mb-4">
-                                            <input type="password" class="form-control" placeholder="Password"
-                                                id="loginPassword">
+                                            <input name="password" type="password"
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                placeholder="Password" id="loginPassword">
                                             <span class="password-toggle"><i class="uil uil-eye"></i></span>
                                             <label for="loginPassword">Password</label>
+
+                                            @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                         <div class="form-floating password-field mb-4">
-                                            <input type="password" class="form-control" placeholder="Confirm Password"
-                                                id="loginPasswordConfirm">
+                                            <input name="password_confirmation" type="password"
+                                                class="form-control @error('password_confirmation') is-invalid @enderror""
+                                                placeholder="Confirm Password" id="loginPasswordConfirm">
                                             <span class="password-toggle"><i class="uil uil-eye"></i></span>
                                             <label for="loginPasswordConfirm">Konfirmasi Password</label>
+
+                                            @error('password_confirmation')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+
                                         </div>
                                         <div class="form-select-wrapper mb-4">
-                                            <select class="form-control" id="jalur_pendaftaran" name="jalur_pendaftaran">
+                                            <select class="form-control  @error('password') is-invalid @enderror "
+                                                id="jalur_pendaftaran" name="jalur_pendaftaran">
                                                 <option selected value="">Pilih</option>
-                                                <option value="Prestasi">Prestasi</option>
-                                                <option value="Kepemimpinan">Kepemimpinan</option>
+                                                <option value="prestasi">Prestasi</option>
+                                                <option value="kepemimpinan">Kepemimpinan</option>
                                             </select>
+
+                                            @error('jalur_pendaftaran')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
-                                        <a class="btn btn-primary rounded-pill btn-login w-100 mb-2">Daftar</a>
+                                        <button type="submit"
+                                            class="btn btn-primary rounded-pill btn-login w-100 mb-2">Daftar</button>
                                     </form>
                                     <!-- /form -->
                                     <p class="mb-0">Sudah Mempunyai akun? <a href="{{ route('login') }}"

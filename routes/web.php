@@ -19,12 +19,12 @@ Route::get('/get-kecamatan', function (Request $request) {
 });
 //Landing Page
 Route::prefix('/')->group(function () {
-    Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing.page');
-    Route::get('/ppdb', [App\Http\Controllers\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
+    // Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing.page');
+    Route::get('/', [App\Http\Controllers\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
     Route::get('/ppdb/login', [App\Http\Controllers\Ppdb\PpdbController::class , 'login'])->name('login.ppdb');
     Route::post('/ppdb/login/attempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'loginAttempt'])->name('login.attempt');
     Route::get('/ppdb/register', [App\Http\Controllers\Ppdb\PpdbController::class , 'register'])->name('register.ppdb');
-    Route::get('/ppdb/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
+    Route::post('/ppdb/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
     Route::get('/profil', [App\Http\Controllers\LandingPageController::class, 'profil'])->name('profil');
     Route::get('/berita', [App\Http\Controllers\LandingPageController::class, 'berita'])->name('berita');
     Route::get('/berita/{slug}', [App\Http\Controllers\LandingPageController::class, 'beritaDetail'])->name('berita.detail');
@@ -39,19 +39,25 @@ Route::prefix('/')->group(function () {
 
 
 });
-
-Route::prefix('secure')->group(function () {
-    Auth::routes([
-        'register' => false,
-    ]);
-});
-
-Route::middleware(['auth', 'role:developer|admin'])->group(function () {
+Auth::routes([
+    'register' => false,
+]);
+Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function () {
 
     Route::prefix('admin')->group(function () {
 
         //dashboard
         Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+        Route::prefix('ppdb')->group(function () {
+            Route::get('/peserta', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'index'])->name('admin.ppdb.index');
+            Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
+            Route::get('/peserta/detail/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
+
+            //setting ppdb
+            Route::get('/setting', [App\Http\Controllers\Admin\Ppdb\AdminPpdbSettingController::class, 'index'])->name('admin.ppdb.setting');
+            Route::post('/setting/save', [App\Http\Controllers\Admin\Ppdb\AdminPpdbSettingController::class, 'save'])->name('admin.ppdb.setting.save');
+        });
 
         //users
         Route::get('/users', [App\Http\Controllers\Admin\User\UserController::class, 'index'])->name('admin.users.index');
@@ -82,6 +88,8 @@ Route::prefix('wilayah')->middleware(['auth'])->group(function () {
 
 });
 //ppdb
+
+
 
 Route::prefix('ppdb')->middleware(['auth', 'role:developer|siswa'])->group(function () {
     Route::get('/pendaftaran', [App\Http\Controllers\Ppdb\PpdbController::class, 'pendaftaran'])->name('ppdb.pendaftaran');

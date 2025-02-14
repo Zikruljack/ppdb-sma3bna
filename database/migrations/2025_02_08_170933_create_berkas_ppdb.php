@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('berkas_ppdb', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('kk_file');
-            $table->date('tanggal_kk_dikeluarkan');
-            $table->string('ktp_kia_file');
-            $table->string('surat_keterangan_aktif');
-            $table->string('akta_kelahiran_file');
+            $table->string('kk_file')->nullable();
+            $table->string('ktp_kia_file')->nullable();
+            $table->string('surat_keterangan_aktif')->nullable();
+            $table->string('akta_kelahiran_file')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

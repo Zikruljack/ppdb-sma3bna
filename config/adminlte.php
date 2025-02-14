@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -326,15 +326,9 @@ return [
 
 
         // Sidebar items:
-            ['header' => 'DASHBOARD'],
+            // ['header' => 'DASHBOARD'],
             ['header' => 'MENAJEMEN', 'can' => 'admin'],
 
-            [
-                'text' => 'Dashboard',
-                'url' => 'admin/dashboard',
-                'can' => 'admin',
-                'icon' => 'fas fa-fw fa-tachometer-alt',
-            ],
             [
                 'text' => 'Berita',
                 'icon' => 'far fa-fw fa-newspaper',
@@ -373,30 +367,32 @@ return [
                 'can' => 'manage_gallery',
             ],
             [
-                'text' => 'PPDB',
-                'icon' => 'fas fa-fw fa-user-graduate',
+                'header' => 'SPMB',
                 'can' => 'manage_ppdb',
-                'submenu' => [
-                    [
-                        'text' => 'Daftar Peserta PPDB',
-                        'icon' => 'fas fa-fw fa-users',
-                        'url'  => 'admin/ppdb/list',
-                        'classes' => 'ml-3',
-                    ],
-                    [
-                        'text' => 'Peserta Lulus',
-                        'icon' => 'fas fa-fw fa-user-check',
-                        'url'  => 'admin/ppdb/peserta-lulus',
-                        'classes' => 'ml-3',
-                    ],
-                    [
-                        'text' => 'Pengaturan PPDB',
-                        'icon' => 'fas fa-fw fa-cog',
-                        'url'  => 'admin/ppdb/settings',
-                        'classes' => 'ml-3',
-                    ],
-                ],
             ],
+            [
+                'text' => 'Daftar Peserta SPMB',
+                'icon' => 'fas fa-fw fa-users',
+                'url'  => 'admin/ppdb/peserta',
+                'can' => 'manage_ppdb',
+                'classes' => 'ml-3',
+            ],
+            [
+                'text' => 'Peserta Lulus',
+                'icon' => 'fas fa-fw fa-user-check',
+                'url'  => 'admin/ppdb/peserta-lulus',
+                'can' => 'manage_ppdb',
+                'classes' => 'ml-3',
+            ],
+            [
+                'text' => 'Pengaturan SPMB',
+                'icon' => 'fas fa-fw fa-cog',
+                'url'  => 'admin/ppdb/settings',
+                'classes' => 'ml-3',
+                'can' => 'manage_ppdb',
+
+            ],
+
             [
                 'text' => 'Pengumuman',
                 'url' => 'admin/pengumuman',
@@ -492,30 +488,6 @@ return [
                     ],
                 ],
             ],
-
-            // ['header' => 'Peserta PPDB', 'can' => 'peserta_ppdb'],
-
-            // [
-            //     'text' => 'Profil',
-            //     'url' => '/ppdb/profil',
-            //     'icon' => 'fas fa-fw fa-user',
-            //     'can' => 'peserta_ppdb',
-            //     'classes' => 'ml-3',
-            // ],
-            // [
-            //     'text' => 'Upload Berkas',
-            //     'url' => '/ppdb/berkas',
-            //     'icon' => 'fas fa-fw fa-upload',
-            //     'can' => 'peserta_ppdb',
-            //     'classes' => 'ml-3',
-            // ],
-            // [
-            //     'text' => 'Pengaturan Akun',
-            //     'url' => '/ppdb/account',
-            //     'icon' => 'fas fa-fw fa-cog',
-            //     'can' => 'peserta_ppdb',
-            //     'classes' => 'ml-3',
-            // ]
 
     ],
 

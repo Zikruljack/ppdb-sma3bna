@@ -2,48 +2,56 @@
 
 @section('form-content')
     <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Upload Berkas Jalur {{ strtoupper($ppdbUser->jalur_pendaftaran) }}</h5>
+        </div>
         <div class="card-body">
             <form action="{{ route('ppdb.formulir.berkas.upload') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
                 <div class="row">
                     <!-- Kolom Kiri -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Kartu Keluarga (KK)</label>
-                            <input type="file" class="form-control" name="kk" required>
+                            <label>Kartu Keluarga (KK) <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control @error('kk') is-invalid @enderror" name="kk"
+                                required>
+                            @error('kk')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
-
                         <div class="form-group">
-                            <label>Tanggal KK Dikeluarkan</label>
-                            <input type="date" class="form-control" name="tanggal_kk_dikeluarkan" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>KTP/KIA</label>
-                            <input type="file" class="form-control" name="ktp_kia" required>
+                            <label>Surat Keterangan Aktif Sekolah <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control @error('surat_keterangan_aktif') is-invalid @enderror"
+                                name="surat_keterangan_aktif" required>
+                            @error('surat_keterangan_aktif')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
                     <!-- Kolom Kanan -->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Surat Keterangan Aktif Sekolah</label>
-                            <input type="file" class="form-control" name="surat_keterangan_aktif" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Akta Kelahiran</label>
-                            <input type="file" class="form-control" name="akta" required>
+                            <label>Akta Kelahiran <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control @error('akta') is-invalid @enderror" name="akta"
+                                required>
+                            @error('akta')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
 
                 <!-- Container Sertifikat -->
                 <div class="form-group mt-3">
-                    <label>Sertifikat (Opsional)</label>
+                    <label>Sertifikat {{ strtoupper($ppdbUser->jalur_pendaftaran) }} <span
+                            class="text-danger">*</span></label>
                     <div id="sertifikat-container">
-                        <input type="file" class="form-control mb-2" name="sertifikat[]">
+                        <input type="file" class="form-control mb-2 @error('sertifikat.*') is-invalid @enderror"
+                            name="sertifikat[]">
+                        @error('sertifikat.*')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button type="button" class="btn btn-success btn-sm mt-2" onclick="addSertifikat()">
                         <i class="fas fa-plus"></i> Tambah Sertifikat

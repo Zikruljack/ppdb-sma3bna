@@ -8,8 +8,8 @@
                     <h1 class="display-1 text-white mb-3">Masuk</h1>
                     <nav class="d-inline-block" aria-label="breadcrumb">
                         <ol class="breadcrumb text-white">
-                            <li class="breadcrumb-item"><a href="{{ route('landing.page') }}">Beranda</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Masuk PPDB</li>
+                            <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Masuk SPMB</li>
                         </ol>
                     </nav>
                     <!-- /nav -->

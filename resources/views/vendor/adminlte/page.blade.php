@@ -4,6 +4,7 @@
 @inject('preloaderHelper', 'JeroenNoten\LaravelAdminLte\Helpers\PreloaderHelper')
 
 @section('adminlte_css')
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css')
     @yield('css')
 @stop
