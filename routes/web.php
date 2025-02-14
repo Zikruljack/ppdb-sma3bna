@@ -1,8 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
+Route::get('/get-kabupaten', function (Request $request) {
+    $kabupaten = DB::table('indonesia_cities')
+        ->where('province_code', $request->province_id)
+        ->get();
+    return response()->json($kabupaten);
+});
 
+Route::get('/get-kecamatan', function (Request $request) {
+    $kecamatan = DB::table('indonesia_districts')
+        ->where('city_code', $request->city_id)
+        ->get();
+    return response()->json($kecamatan);
+});
 //Landing Page
 Route::prefix('/')->group(function () {
     Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing.page');
@@ -22,13 +36,17 @@ Route::prefix('/')->group(function () {
     Route::get('/tentang', [App\Http\Controllers\LandingPageController::class, 'tentang'])->name('tentang');
     Route::get('/prestasi', [App\Http\Controllers\LandingPageController::class, 'prestasi'])->name('prestasi');
     Route::get('/struktur-organisasi', [App\Http\Controllers\LandingPageController::class, 'strukturOrganisasi'])->name('struktur-organisasi');
+
+
 });
 
-Auth::routes([
-    'register' => false,
-]);
+Route::prefix('secure')->group(function () {
+    Auth::routes([
+        'register' => false,
+    ]);
+});
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:developer|admin'])->group(function () {
 
     Route::prefix('admin')->group(function () {
 
@@ -60,12 +78,18 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+Route::prefix('wilayah')->middleware(['auth'])->group(function () {
 
+});
 //ppdb
 
-Route::prefix('ppdb')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\Ppdb\PpdbController::class, 'dashboard'])->name('ppdb.dashboard');
-    Route::get('/formulir', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulir'])->name('ppdb.formulir');
-    Route::get('/upload/{slug}', [App\Http\Controllers\Ppdb\PpdbController::class, 'upload'])->name('ppdb.upload');
+Route::prefix('ppdb')->middleware(['auth', 'role:developer|siswa'])->group(function () {
+    Route::get('/pendaftaran', [App\Http\Controllers\Ppdb\PpdbController::class, 'pendaftaran'])->name('ppdb.pendaftaran');
+    Route::post('/formulir/datadiri', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulirDataDiri'])->name('ppdb.formulir.data_diri');
+    Route::get('/formulir/rapor', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulirRaporView'])->name('ppdb.formulir.rapor');
+    Route::post('/formulir/rapor/upload', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulirRapor'])->name('ppdb.formulir.rapor.upload');
+    Route::get('/formulir/berkas', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulirBerkasView'])->name('ppdb.formulir.berkas');
+    Route::post('/formulir/berkas/upload', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulirBerkas'])->name('ppdb.formulir.berkas.upload');
+    Route::get('/resume', [App\Http\Controllers\Ppdb\PpdbController::class, 'resume'])->name('ppdb.resume');
     Route::get('/pengumuman', [App\Http\Controllers\Ppdb\PpdbController::class, 'pengumuman'])->name('ppdb.pengumuman');
 });

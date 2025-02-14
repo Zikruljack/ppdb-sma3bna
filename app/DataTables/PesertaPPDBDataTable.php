@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\PesertaPPDB;
+use App\Models\PpdbUser;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -29,7 +29,7 @@ class PesertaPPDBDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(PesertaPPDB $model): QueryBuilder
+    public function query(PpdbUser $model): QueryBuilder
     {
         return $model->newQuery();
     }

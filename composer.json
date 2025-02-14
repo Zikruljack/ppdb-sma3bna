@@ -3,7 +3,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -12,6 +15,7 @@
         "laravel/horizon": "^5.30",
         "laravel/tinker": "^2.9",
         "predis/predis": "^2.3",
+        "realrashid/sweet-alert": "^7.2",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-permission": "^6.13",
         "yajra/laravel-datatables": "^11.0"
@@ -22,6 +26,7 @@
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "laravel/ui": "^4.6",
+        "laravolt/indonesia": "^0.35.0",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.1",
         "phpunit/phpunit": "^11.0.1"
