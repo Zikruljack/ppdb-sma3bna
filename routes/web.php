@@ -53,6 +53,8 @@ Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function 
             Route::get('/peserta', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'index'])->name('admin.ppdb.index');
             Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
             Route::get('/peserta/detail/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'detailPeserta'])->name('admin.ppdb.detail.peserta');
+            Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
+            Route::get('/peserta/download/kartu/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'downloadKartu'])->name('admin.ppdb.download.kartu');
 
             //setting ppdb
             Route::get('/setting', [App\Http\Controllers\Admin\Ppdb\AdminPpdbSettingController::class, 'index'])->name('admin.ppdb.setting');
