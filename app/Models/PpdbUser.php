@@ -16,6 +16,7 @@ class PpdbUser extends Model
 
     protected $fillable = [
         'user_id',
+        'nomor_peserta',
         'nama_lengkap',
         'nisn',
         'nik',
@@ -50,6 +51,7 @@ class PpdbUser extends Model
         'alamat_ortu',
         'no_hp_ayah',
         'no_hp_ibu',
+        'status',
     ];
 
     public function user()

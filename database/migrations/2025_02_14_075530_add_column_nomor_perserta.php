@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('ppdb_user', function (Blueprint $table) {
             //
-            $table->string('nomor_perserta')->nullable();
+            $table->string('nomor_peserta')->nullable();
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('ppdb_user', function (Blueprint $table) {
             //
-            $table->dropColumn('nomor_perserta');
+            $table->dropColumn('nomor_peserta');
         });
     }
 };

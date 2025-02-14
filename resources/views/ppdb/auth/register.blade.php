@@ -47,7 +47,6 @@
                                                 class="form-control @error('name') is-invalid @enderror" placeholder="Name"
                                                 id="loginName">
                                             <label for="loginName">Nama Lengkap</label>
-
                                             @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

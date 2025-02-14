@@ -130,6 +130,10 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Laravolt\Indonesia\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 
+    'aliases' => Facade::defaultAliases()->merge( [
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+    ])->toArray(),
 ];

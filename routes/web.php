@@ -52,7 +52,7 @@ Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function 
         Route::prefix('ppdb')->group(function () {
             Route::get('/peserta', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'index'])->name('admin.ppdb.index');
             Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
-            Route::get('/peserta/detail/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
+            Route::get('/peserta/detail/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'detailPeserta'])->name('admin.ppdb.detail.peserta');
 
             //setting ppdb
             Route::get('/setting', [App\Http\Controllers\Admin\Ppdb\AdminPpdbSettingController::class, 'index'])->name('admin.ppdb.setting');
@@ -98,6 +98,8 @@ Route::prefix('ppdb')->middleware(['auth', 'role:developer|siswa'])->group(funct
     Route::post('/formulir/rapor/upload', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulirRapor'])->name('ppdb.formulir.rapor.upload');
     Route::get('/formulir/berkas', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulirBerkasView'])->name('ppdb.formulir.berkas');
     Route::post('/formulir/berkas/upload', [App\Http\Controllers\Ppdb\PpdbController::class, 'formulirBerkas'])->name('ppdb.formulir.berkas.upload');
+    Route::post('/formulir/finalisasi', [App\Http\Controllers\Ppdb\PpdbController::class, 'finalisasi'])->name('ppdb.formulir.finalisasi');
     Route::get('/resume', [App\Http\Controllers\Ppdb\PpdbController::class, 'resume'])->name('ppdb.resume');
+    Route::get('/download/{id}', [App\Http\Controllers\Ppdb\PpdbController::class, 'resume'])->name('ppdb.download');
     Route::get('/pengumuman', [App\Http\Controllers\Ppdb\PpdbController::class, 'pengumuman'])->name('ppdb.pengumuman');
 });

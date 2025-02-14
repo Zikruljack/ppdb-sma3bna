@@ -1,5 +1,7 @@
 @extends('layouts.site.site')
 
+@section('title', 'Masuk SPMB')
+
 @section('hero')
     <section class="wrapper bg-dark text-white">
         <div class="container pt-18 pt-md-20 pb-21 pb-md-21 text-center">

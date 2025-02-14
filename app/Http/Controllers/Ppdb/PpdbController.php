@@ -76,17 +76,27 @@ class PpdbController extends Controller{
 
     public function registerAttempt(Request $request){
 
-        // dd($request->all());
+
         $validation = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'jalur_pendaftaran' => 'required|in:Prestasi,Kepemimpinan',
-        ]);
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'jalur_pendaftaran' => 'required|in:prestasi,kepemimpinan',
+            ],[
+                'name.required' => 'Nama harus diisi.',
+                'email.required' => 'Email harus diisi.',
+                'email.unique' => 'Email sudah digunakan.',
+                'email.email' => 'Format email tidak valid.',
+                'password.required' => 'Password harus diisi.',
+                'password.min' => 'Password harus memiliki minimal 8 karakter.',
+                'password.confirmed' => 'Password tidak cocok.',
+                'jalur_pendaftaran.required' => 'Jalur pendaftaran harus dipilih.',
+            ]
+        );
 
         if ($validation->fails()) {
             Log::warning('Validation failed', ['errors' => $validation->errors()]);
-            return redirect()->back()->withErrors($validation)->withInput()->with('error', 'Tidak bisa disimpan!');
+            return redirect()->back()->withErrors($validation)->withInput()->with('error', 'Tidak bisa disimpan!', $validation->errors());
         }
 
         try {
@@ -100,6 +110,7 @@ class PpdbController extends Controller{
 
             $userPpdb = PpdbUser::create([
                 'user_id' => $user->id,
+                'nama_lengkap' => $request->name,
                 'jalur_pendaftaran' => $request->jalur_pendaftaran,
             ]);
 
@@ -121,7 +132,6 @@ class PpdbController extends Controller{
     {
         $user_id = auth()->id();
         $ppdbUser = PpdbUser::where('user_id', $user_id)->first();
-        // dd($ppdbUser);
         $wilayahProvinsi = DB::table('indonesia_provinces')->get();
 
         return view('ppdb.dashboard.steps.data_diri', compact(
@@ -134,7 +144,7 @@ class PpdbController extends Controller{
 {
     $userId = auth()->id();
 
-    $validatedData = Validator::make($request->all(), [
+    $validator = Validator::make($request->all(), [
         'nama_lengkap' => 'required|string|max:255',
         'nisn' => ['required', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
         'nik' => ['required', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
@@ -167,29 +177,79 @@ class PpdbController extends Controller{
         'alamat_ortu' => 'required|string|max:255',
         'no_hp_ayah' => 'required|numeric',
         'no_hp_ibu' => 'required|numeric',
+    ],[
+        'nisn.required' => 'NISN harus diisi.',
+        'nisn.numeric' => 'NISN harus berupa angka.',
+        'nisn.unique' => 'NISN sudah digunakan.',
+        'nik.required' => 'NIK harus diisi.',
+        'nik.numeric' => 'NIK harus berupa angka.',
+        'nik.unique' => 'NIK sudah digunakan.',
+        'no_kk.required' => 'Nomor KK harus diisi.',
+        'no_kk.numeric' => 'Nomor KK harus berupa angka.',
+        'no_kk.unique' => 'Nomor KK sudah digunakan.',
+        'foto.image' => 'Foto harus berupa gambar.',
+        'foto.mimes' => 'Foto harus berformat jpeg, png, jpg, gif, atau svg.',
+        'foto.max' => 'Foto tidak boleh lebih dari 2048 kilobytes.',
+        'tanggal_kk_dikeluarkan.required' => 'Tanggal KK dikeluarkan harus diisi.',
+        'tanggal_kk_dikeluarkan.date' => 'Tanggal KK dikeluarkan harus berupa tanggal yang valid.',
+        'tempat_lahir.required' => 'Tempat lahir harus diisi.',
+        'tanggal_lahir.required' => 'Tanggal lahir harus diisi.',
+        'tanggal_lahir.date' => 'Tanggal lahir harus berupa tanggal yang valid.',
+        'jenis_kelamin.required' => 'Jenis kelamin harus diisi.',
+        'agama.required' => 'Agama harus diisi.',
+        'alamat.required' => 'Alamat harus diisi.',
+        'gol_darah.required' => 'Golongan darah harus diisi.',
+        'tinggi_badan.required' => 'Tinggi badan harus diisi.',
+        'tinggi_badan.numeric' => 'Tinggi badan harus berupa angka.',
+        'berat_badan.required' => 'Berat badan harus diisi.',
+        'berat_badan.numeric' => 'Berat badan harus berupa angka.',
+        'kecamatan.required' => 'Kecamatan harus diisi.',
+        'kabupaten_kota.required' => 'Kabupaten/Kota harus diisi.',
+        'provinsi.required' => 'Provinsi harus diisi.',
+        'kode_pos.required' => 'Kode pos harus diisi.',
+        'kode_pos.numeric' => 'Kode pos harus berupa angka.',
+        'jalur_pendaftaran.required' => 'Jalur pendaftaran harus diisi.',
+        'no_hp.required' => 'Nomor HP harus diisi.',
+        'no_hp.numeric' => 'Nomor HP harus berupa angka.',
+        'asal_sekolah.required' => 'Asal sekolah harus diisi.',
+        'npsn_asal_sekolah.required' => 'NPSN asal sekolah harus diisi.',
+        'npsn_asal_sekolah.numeric' => 'NPSN asal sekolah harus berupa angka.',
+        'kabkota_asal_sekolah.required' => 'Kabupaten/Kota asal sekolah harus diisi.',
+        'nama_ayah.required' => 'Nama ayah harus diisi.',
+        'nama_ibu.required' => 'Nama ibu harus diisi.',
+        'pekerjaan_ayah.required' => 'Pekerjaan ayah harus diisi.',
+        'pekerjaan_ibu.required' => 'Pekerjaan ibu harus diisi.',
+        'jabatan_ayah.required' => 'Jabatan ayah harus diisi.',
+        'jabatan_ibu.required' => 'Jabatan ibu harus diisi.',
+        'alamat_ortu.required' => 'Alamat orang tua harus diisi.',
+        'no_hp_ayah.required' => 'Nomor HP ayah harus diisi.',
+        'no_hp_ayah.numeric' => 'Nomor HP ayah harus berupa angka.',
+        'no_hp_ibu.required' => 'Nomor HP ibu harus diisi.',
+        'no_hp_ibu.numeric' => 'Nomor HP ibu harus berupa angka.',
     ]);
 
-    if ($validatedData->fails()) {
-        return redirect()->back()->withErrors($validatedData)->withInput()->with('error', 'Tidak bisa disimpan!');
+    if ($validator->fails()) {
+        Log::warning(["validasi eror", $validator->errors()]);
+        return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Tidak bisa disimpan!', $validator->errors());
     }
 
-    $validatedData = $validatedData->validated();
+    $params = $validator->validate();
 
     if ($request->hasFile('foto')) {
-        $validatedData['foto'] = $request->file('foto')->store('images', 'public');
+        $params['foto'] = $request->file('foto')->store('images', 'public');
     }
-
-    $validatedData['status'] = 'Pendaftar';
+    $params['status'] = 'Pendaftar';
 
     try {
         DB::beginTransaction();
-        PpdbUser::updateOrCreate(['user_id' => $userId], $validatedData);
+
+        PpdbUser::updateOrCreate(['user_id' => $userId], $params);
         DB::commit();
         session()->push('completed_steps', 'ppdb.formulir.data_diri');
         return redirect()->route('ppdb.formulir.rapor')->with('success', 'Data Diri berhasil disimpan!');
     } catch (\Exception $e) {
         DB::rollback();
-        return redirect()->back()->withErrors($validatedData)->withInput()->with('error', 'Tidak bisa disimpan!'. $e->getMessage());
+        return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Tidak bisa disimpan!'. $e->getMessage());
     }
 }
 
@@ -277,7 +337,6 @@ class PpdbController extends Controller{
     // Validasi input
     $validator = Validator::make($request->all(), [
         'kk' => 'required|file|mimes:pdf,jpg,png|max:2048',
-        'tanggal_kk_dikeluarkan' => 'required|date',
         'ktp_kia' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         'surat_keterangan_aktif' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         'akta' => 'required|file|mimes:pdf,jpg,png|max:2048',
@@ -293,6 +352,7 @@ class PpdbController extends Controller{
     $validatedData = $validator->validated();
 
     try {
+        DB::beginTransaction();
         // Upload file KK
         $kkPath = $request->hasFile('kk')
             ? $request->file('kk')->store('berkas/kk', 'public')
@@ -318,7 +378,6 @@ class PpdbController extends Controller{
             ['user_id' => $userId],
             [
                 'kk_file' => $kkPath,
-                'tanggal_kk_dikeluarkan' => $validatedData['tanggal_kk_dikeluarkan'],
                 'ktp_kia_file' => $ktpKiaPath,
                 'surat_keterangan_aktif' => $suratAktifPath,
                 'akta_kelahiran_file' => $aktaPath,
@@ -332,28 +391,52 @@ class PpdbController extends Controller{
                 $berkas->sertifikat()->create(['file_path' => $path]);
             }
         }
-
+        DB::commit();
         return redirect()->route('ppdb.resume')->with('success', 'Berkas berhasil disimpan!');
     } catch (\Exception $e) {
+        DB::rollback();
         Log::error("Error menyimpan berkas PPDB: " . $e->getMessage());
         return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan, coba lagi.');
     }
 }
 
 
-    public function resume(){
+    public function resume()
+    {
         $user = auth()->user();
         $ppdbUser = PpdbUser::where('user_id', $user->id)->first();
         $mapel = Mapel::select('id', 'mapel')->get();
         $nilaiRapor = NilaiRapor::where('user_id', $user->id)
-                    ->with('mapel') // Mengambil nama mapel
+                    ->with('mapel')
                     ->orderBy('semester')
                     ->get()
                     ->groupBy('semester');
 
-                    // dd($nilaiRapor);
         $berkas = BerkasPpdb::where('user_id', $user->id)->first();
         return view('ppdb.dashboard.steps.detail', compact('ppdbUser', 'mapel', 'nilaiRapor', 'berkas'));
+    }
+
+    public function finalisasi()
+    {
+        $user = auth()->user();
+        $ppdbUser = PpdbUser::where('user_id', $user->id)->first();
+
+        if (!$ppdbUser) {
+            return redirect()->back()->with('error', 'Data belum lengkap!');
+        }
+
+        try {
+            DB::beginTransaction();
+            $lastUser = PpdbUser::whereNotNull('nomor_peserta')->orderBy('nomor_peserta', 'desc')->first();
+            $nomorPeserta = $lastUser ? str_pad($lastUser->nomor_peserta + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            $ppdbUser->update(['status' => 'Final', 'nomor_peserta' => $nomorPeserta]);
+            DB::commit();
+            return redirect()->route('ppdb.resume')->with('success', 'Pendaftaran telah difinalisasi. Anda tidak bisa mengubah data lagi.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error saat finalisasi: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat finalisasi.');
+        }
     }
 
 }

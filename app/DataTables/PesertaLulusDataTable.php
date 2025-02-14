@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PesertaPPDBDataTable extends DataTable
+class PesertaLulusDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,16 +22,7 @@ class PesertaPPDBDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($row){
-                $btn = '<ul class="list-unstyled d-flex gap-2 mb-0">';
-                $btn .= '<li><a href="/admin/ppdb/peserta/detail/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="fa fa-fw fa-eye"></i></a></li>';
-                $btn .= '<li><a href="/admin/ppdb/peserta/validate/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Validasi"><i class="fa fa-fw fa-check text-success"></i></a></li>';
-                // $btn .= '<li><a href="" class="btn btn-sm delete btn-link" data-bs-toggle="tooltip" data-bs-placement="top" data-confirm-delete="true" title="Delete"><i class="fa fa-fw fa-trash text-danger"></i></a></li>';
-                // $btn .= '<li><a href="" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-fw fa-edit text-primary"></i></a></li>';
-                $btn .= '</ul>';
-                return $btn;
-            })
-            ->addIndexColumn()
+            ->addColumn('action', 'pesertalulus.action')
             ->setRowId('id');
     }
 
@@ -40,7 +31,7 @@ class PesertaPPDBDataTable extends DataTable
      */
     public function query(PpdbUser $model): QueryBuilder
     {
-        return $model->newQuery()->where('status', 'Final');
+        return $model->newQuery()->where('status', 'Valid');
     }
 
     /**
@@ -49,7 +40,7 @@ class PesertaPPDBDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('pesertappdb-table')
+                    ->setTableId('pesertalulus-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -71,17 +62,16 @@ class PesertaPPDBDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('DT_RowIndex') // Kolom penomoran
-                ->title('No')
-                ->orderable(false)
-                ->searchable(false)
-                ->width(30)
-                ->addClass('text-center'),
-            Column::make('nomor_peserta'),
+            Column::computed('action')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
+            Column::make('id'),
+            Column::make('nomor_perserta'),
             Column::make('nama_lengkap'),
             Column::make('jalur_pendaftaran'),
             Column::make('status'),
-            Column::make('action'),
         ];
     }
 
@@ -90,6 +80,6 @@ class PesertaPPDBDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'PesertaPPDB_' . date('YmdHis');
+        return 'PesertaLulus_' . date('YmdHis');
     }
 }

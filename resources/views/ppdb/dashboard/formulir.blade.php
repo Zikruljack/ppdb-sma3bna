@@ -42,6 +42,20 @@
     </div>
 @endsection
 
+@section('footer')
+    <div class="footer-content ">
+        <div class="float-right">
+            <small>Version: {{ config('app.version', '1.0.0') }}</small>
+        </div>
+        <strong>
+            {{ config('app.company_name', 'SPMB SMAN 3 Banda Aceh') }}
+            <small>Dev by: ObongJ</small>
+        </strong>
+        <br>
+
+    </div>
+@endsection
+
 
 @section('js')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

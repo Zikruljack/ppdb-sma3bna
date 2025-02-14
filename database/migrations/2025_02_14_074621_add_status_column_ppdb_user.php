@@ -13,7 +13,7 @@ return new class extends Migration
     {
         //
         Schema::table('ppdb_user', function (Blueprint $table) {
-            $table->enum('status', ['Pendaftar', 'Valid', 'Tidak Valid'])->default('Pendaftar');
+            $table->enum('status', ['Pendaftar', 'Valid', 'Tidak Valid' , 'Final'])->default('Pendaftar');
         });
     }
 
