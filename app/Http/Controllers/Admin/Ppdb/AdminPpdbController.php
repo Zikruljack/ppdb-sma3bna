@@ -61,16 +61,21 @@ class AdminPpdbController extends Controller
 
     public function validasi($id)
     {
-        $user = PpdbUser::find($id)->first();
+        $user = PpdbUser::find($id);
+        $userMail = User::where('id', $user->user_id)->first();
         try {
             DB::beginTransaction();
             $user->update(['status' => 'Valid']);
             // Tambahkan logika validasi di sini
+
+            // Kirim email ke user
+            \Mail::to($userMail->email)->send(new \App\Mail\PPDBAcceptanceLetter($user));
+
             DB::commit();
-            return redirect()->route('admin.ppdb.index')->with('success', 'Data berhasil disimpan');
+            return redirect()->route('admin.ppdb.index')->with('success', 'Data berhasil disimpan dan email telah dikirim');
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error("message:" . $e->getMessage());
+            \Log::error("message:" . $e->getMessage());
             return redirect()->route('admin.ppdb.index')->with('error', 'Terjadi kesalahan saat menyimpan data');
         }
     }

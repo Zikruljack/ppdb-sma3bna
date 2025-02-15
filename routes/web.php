@@ -20,7 +20,7 @@ Route::get('/get-kecamatan', function (Request $request) {
 //Landing Page
 Route::prefix('/')->group(function () {
     // Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing.page');
-    Route::get('/', [App\Http\Controllers\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
+    Route::get('/ppdb', [App\Http\Controllers\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
     Route::get('/ppdb/login', [App\Http\Controllers\Ppdb\PpdbController::class , 'login'])->name('login.ppdb');
     Route::post('/ppdb/login/attempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'loginAttempt'])->name('login.attempt');
     Route::get('/ppdb/register', [App\Http\Controllers\Ppdb\PpdbController::class , 'register'])->name('register.ppdb');
