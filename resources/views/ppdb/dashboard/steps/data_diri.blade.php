@@ -6,7 +6,7 @@
             <form id="dataDiriForm" action="{{ route('ppdb.formulir.data_diri') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
-                @if ($ppdbUser->status == 'final')
+                @if ($ppdbUser->status == 'Final')
                     <div class="alert alert-warning">
                         Data tidak bisa diubah karena status sudah final.
                     </div>

@@ -5,73 +5,187 @@
         <div class="card-header">
             <h5 class="card-title">Upload Berkas Jalur {{ strtoupper($ppdbUser->jalur_pendaftaran) }}</h5>
         </div>
+
         <div class="card-body">
+
+            <div class="alert alert-info">
+                <h5 class="alert-heading">Note :</h5>
+                <p>
+                    File yang diupload harus berekstensi pdf,jpg,png dan max file 2mb.
+                </p>
+            </div>
             <form action="{{ route('ppdb.formulir.berkas.upload') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="row">
-                    <!-- Kolom Kiri -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Kartu Keluarga (KK) <span class="text-danger">*</span></label>
-                            <input type="file" class="form-control @error('kk') is-invalid @enderror" name="kk"
-                                required>
-                            @error('kk')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                @if ($ppdbUser->status == 'Final')
+                    <div class="alert alert-warning">
+                        Data tidak bisa diubah karena anda sudah memfinalisasi.
+                    </div>
+                @else
+                    <div class="row">
+                        <!-- Kolom Kiri -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Kartu Keluarga (KK) <span class="text-danger">*</span></label>
+                                <input type="file" class="form-control @error('kk') is-invalid @enderror" name="kk"
+                                    required>
+                                @error('kk')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Surat Keterangan Aktif Sekolah <span class="text-danger">*</span></label>
+                                <input type="file"
+                                    class="form-control @error('surat_keterangan_aktif') is-invalid @enderror"
+                                    name="surat_keterangan_aktif" required>
+                                @error('surat_keterangan_aktif')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Surat Keterangan Aktif Sekolah <span class="text-danger">*</span></label>
-                            <input type="file" class="form-control @error('surat_keterangan_aktif') is-invalid @enderror"
-                                name="surat_keterangan_aktif" required>
-                            @error('surat_keterangan_aktif')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+
+                        <!-- Kolom Kanan -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Akta Kelahiran <span class="text-danger">*</span></label>
+                                <input type="file" class="form-control @error('akta') is-invalid @enderror"
+                                    name="akta" required>
+                                @error('akta')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Kolom Kanan -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Akta Kelahiran <span class="text-danger">*</span></label>
-                            <input type="file" class="form-control @error('akta') is-invalid @enderror" name="akta"
-                                required>
-                            @error('akta')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                    <!-- Container Sertifikat -->
+                    <div class="form-group mt-3">
+
+                        <label>Sertifikat {{ strtoupper($ppdbUser->jalur_pendaftaran) }} <span
+                                class="text-danger">*</span></label>
+                        <div id="sertifikat-container">
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control @error('sertifikat.*') is-invalid @enderror"
+                                        name="sertifikat[]" required>
+                                    @error('sertifikat.*')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text"
+                                        class="form-control @error('nama_sertifikat.*') is-invalid @enderror"
+                                        name="nama_sertifikat[]" placeholder="Nama Sertifikat" required>
+                                    @error('nama_sertifikat.*')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <input type="text"
+                                        class="form-control @error('penandatangan_sertifikat.*') is-invalid @enderror"
+                                        name="penandatangan_sertifikat[]" placeholder="Penandatangan Sertifikat" required>
+                                    @error('penandatangan_sertifikat.*')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control select2 @error('jenis_sertifikat.*') is-invalid @enderror"
+                                        name="jenis_sertifikat[]" required>
+                                        <option value="">Pilih Jenis Sertifikat</option>
+                                        <option value="akademik">Akademik</option>
+                                        <option value="non akademik">Non Akademik</option>
+                                    </select>
+                                    @error('jenis_sertifikat.*')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <input type="date"
+                                        class="form-control @error('tanggal_dikeluarkan.*') is-invalid @enderror"
+                                        name="tanggal_dikeluarkan[]" required>
+                                    @error('tanggal_dikeluarkan.*')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text"
+                                        class="form-control @error('institusi_penerbit.*') is-invalid @enderror"
+                                        name="institusi_penerbit[]" placeholder="Institusi Penerbit" required>
+                                    @error('institusi_penerbit.*')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
+                        <button type="button" class="btn btn-success btn-sm mt-2" onclick="addSertifikat()">
+                            <i class="fas fa-plus"></i> Tambah Sertifikat
+                        </button>
                     </div>
-                </div>
 
-                <!-- Container Sertifikat -->
-                <div class="form-group mt-3">
-                    <label>Sertifikat {{ strtoupper($ppdbUser->jalur_pendaftaran) }} <span
-                            class="text-danger">*</span></label>
-                    <div id="sertifikat-container">
-                        <input type="file" class="form-control mb-2 @error('sertifikat.*') is-invalid @enderror"
-                            name="sertifikat[]">
-                        @error('sertifikat.*')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <button type="button" class="btn btn-success btn-sm mt-2" onclick="addSertifikat()">
-                        <i class="fas fa-plus"></i> Tambah Sertifikat
-                    </button>
-                </div>
+                    <script>
+                        function addSertifikat() {
+                            var container = document.getElementById('sertifikat-container');
+                            var newInput = document.createElement('div');
+                            newInput.innerHTML = `
+                                <hr>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <input type="file" class="form-control @error('sertifikat.*') is-invalid @enderror" name="sertifikat[]" required>
+                                        @error('sertifikat.*')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control @error('nama_sertifikat.*') is-invalid @enderror" name="nama_sertifikat[]" placeholder="Nama Sertifikat" required>
+                                        @error('nama_sertifikat.*')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control @error('penandatangan_sertifikat.*') is-invalid @enderror" name="penandatangan_sertifikat[]" placeholder="Penandatangan Sertifikat" required>
+                                        @error('penandatangan_sertifikat.*')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control @error('jenis_sertifikat.*') is-invalid @enderror" name="jenis_sertifikat[]" required>
+                                            <option value="">Pilih Jenis Sertifikat</option>
+                                            <option value="akademik">Akademik</option>
+                                            <option value="non akademik">Non Akademik</option>
+                                        </select>
+                                        @error('jenis_sertifikat.*')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control @error('tanggal_dikeluarkan.*') is-invalid @enderror" name="tanggal_dikeluarkan[]" required>
+                                        @error('tanggal_dikeluarkan.*')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control @error('institusi_penerbit.*') is-invalid @enderror" name="institusi_penerbit[]" placeholder="Institusi Penerbit" required>
+                                        @error('institusi_penerbit.*')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            `;
+                            container.appendChild(newInput);
+                        }
+                    </script>
 
-                <script>
-                    function addSertifikat() {
-                        var container = document.getElementById('sertifikat-container');
-                        var newInput = document.createElement('div');
-                        newInput.innerHTML =
-                            '<input type="file" class="form-control mb-2" name="sertifikat[]">';
-                        container.appendChild(newInput);
-                    }
-                </script>
+                    <!-- Tombol Navigasi -->
 
-                <!-- Tombol Navigasi -->
-
-                <a href="{{ route('ppdb.formulir.rapor') }}" class="btn btn-secondary">Kembali</a>
-                <button type="submit" class="btn btn-primary">Upload & Lanjut</button>
+                    <a href="{{ route('ppdb.formulir.rapor') }}" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-primary">Upload & Lanjut</button>
+                @endif
             </form>
         </div>
     </div>

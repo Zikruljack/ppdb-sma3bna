@@ -12,7 +12,15 @@ class Sertifikat extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = "sertifikat";
-    protected $fillable = ['berkas_id', 'file_path'];
+    protected $fillable = [
+        'berkas_id',
+        'file_path',
+        'nama_sertifikat',
+        'penandatangan_sertifikat',
+        'jenis_sertifikat',
+        'tanggal_dikeluarkan',
+        'institusi_penerbit'
+    ];
 
     public function berkas()
     {

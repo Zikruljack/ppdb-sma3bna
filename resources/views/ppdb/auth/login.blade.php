@@ -3,7 +3,8 @@
 @section('title', 'Masuk SPMB')
 
 @section('hero')
-    <section class="wrapper bg-dark text-white">
+    <section class="wrapper image-wrapper bg-image bg-overlay text-white"
+        data-image-src="{{ asset('assets/img/front-sma3-bna.jpg') }}">
         <div class="container pt-18 pt-md-20 pb-21 pb-md-21 text-center">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -32,7 +33,7 @@
                     <div class="card shadow-lg">
                         <div class="row gx-0 text-center">
                             <div class="col-lg-6 image-wrapper bg-image bg-cover rounded-top rounded-lg-start d-none d-md-block"
-                                data-image-src="./assets/img/photos/tm3.jpg">
+                                data-image-src="{{ asset('assets/img/front-sma3-bna.jpg') }}">
                             </div>
                             <!--/column -->
                             <div class="col-lg-6">

@@ -124,6 +124,20 @@
                     </tbody>
                 </table>
 
+                {{-- berkas pendukung --}}
+                <h4>Berkas Pendukung</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nama Berkas</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+
                 <div class="text-center mt-4">
                     <form id="finalizeForm" action="{{ route('ppdb.formulir.finalisasi') }}" method="POST">
                         @csrf
@@ -131,7 +145,7 @@
                             onclick="confirmFinalization()">Finalisasi</button>
                     </form>
                     @if ($ppdbUser->nomor_peserta)
-                        <a href="{{ route('ppdb.download', $ppdbUser->id) }}" class="btn btn-success">Download</a>
+                        <a href="{{ route('ppdb.download', $ppdbUser->id) }}" class="btn btn-success">Download Formulir</a>
                     @endif
                 </div>
             </div>

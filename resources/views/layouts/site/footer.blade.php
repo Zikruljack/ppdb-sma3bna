@@ -1,82 +1,16 @@
 <footer class="bg-dark text-inverse">
     <div class="container py-13 py-md-15">
         <div class="row gy-6 gy-lg-0">
-            <div class="col-md-4 col-lg-3">
-                <h4 class="widget-title text-white mb-3">Popular Posts</h4>
-                <ul class="image-list">
-                    <li>
-                        <figure class="rounded"><a href="./blog-post.html"><img src="./assets/img/photos/a4.jpg"
-                                    alt=""></a></figure>
-                        <div class="post-content">
-                            <h6 class="mb-2"> <a class="link-dark" href="./blog-post.html">Magna Mollis Ultricies</a>
-                            </h6>
-                            <ul class="post-meta">
-                                <li class="post-date"><i class="uil uil-calendar-alt"></i><span>26 Mar 2022</span></li>
-                            </ul>
-                            <!-- /.post-meta -->
-                        </div>
-                    </li>
-                    <li class="mt-5">
-                        <figure class="rounded"> <a href="./blog-post.html"><img src="./assets/img/photos/a5.jpg"
-                                    alt=""></a></figure>
-                        <div class="post-content">
-                            <h6 class="mb-2"> <a class="link-dark" href="./blog-post.html">Ornare Nullam Risus</a>
-                            </h6>
-                            <ul class="post-meta">
-                                <li class="post-date"><i class="uil uil-calendar-alt"></i><span>16 Feb 2022</span></li>
-                            </ul>
-                            <!-- /.post-meta -->
-                        </div>
-                    </li>
-                    <li class="mt-5">
-                        <figure class="rounded"><a href="./blog-post.html"><img src="./assets/img/photos/a6.jpg"
-                                    alt=""></a></figure>
-                        <div class="post-content">
-                            <h6 class="mb-2"> <a class="link-dark" href="./blog-post.html">Euismod Nullam Fusce</a>
-                            </h6>
-                            <ul class="post-meta">
-                                <li class="post-date"><i class="uil uil-calendar-alt"></i><span>8 Jan 2022</span></li>
-                            </ul>
-                            <!-- /.post-meta -->
-                        </div>
-                    </li>
-                </ul>
-                <!-- /.image-list -->
-            </div>
             <!-- /column -->
-            <div class="col-md-4 col-lg-3">
+            <div class=" col-lg-6">
                 <div class="widget">
-                    <h4 class="widget-title text-white mb-3">Tags</h4>
-                    <ul class="list-unstyled tag-list">
-                        <li><a href="#" class="btn btn-soft-ash text-white  btn-sm rounded-pill">Still Life</a>
-                        </li>
-                        <li><a href="#" class="btn btn-soft-ash text-white  btn-sm rounded-pill">Urban</a></li>
-                        <li><a href="#" class="btn btn-soft-ash text-white  btn-sm rounded-pill">Nature</a></li>
-                        <li><a href="#" class="btn btn-soft-ash text-white  btn-sm rounded-pill">Landscape</a>
-                        </li>
-                    </ul>
+                    <h4 class="widget-title text-white mb-3">SMAN 3 Banda Aceh</h4>
+                    <address class="pe-xl-15 pe-xxl-17">Jln. Tgk. H. Mohd Daud Beureueh, Banda Aceh</address>
+                    <a href="mailto:info@sman3bandaaceh.web.id">info@sman3bandaaceh.web.id</a><br>
                 </div>
                 <!-- /.widget -->
                 <div class="widget">
-                    <h4 class="widget-title text-white mb-3">Categories</h4>
-                    <ul class="unordered-list text-reset bullet-white ">
-                        <li><a href="#">Lifestyle (21)</a></li>
-                        <li><a href="#">Photography (19)</a></li>
-                        <li><a href="#">Journal (16)</a></li>
-                    </ul>
-                </div>
-                <!-- /.widget -->
-            </div>
-            <!-- /column -->
-            <div class="col-md-4 col-lg-3">
-                <div class="widget">
-                    <h4 class="widget-title text-white mb-3">Get in Touch</h4>
-                    <address class="pe-xl-15 pe-xxl-17">Moonshine St. 14/05 Light City, London, United Kingdom</address>
-                    <a href="mailto:#">info@email.com</a><br> 00 (123) 456 78 90
-                </div>
-                <!-- /.widget -->
-                <div class="widget">
-                    <h4 class="widget-title text-white mb-3">Elsewhere</h4>
+                    <h4 class="widget-title text-white mb-3">Sosial Media</h4>
                     <nav class="nav social social-white">
                         <a href="#"><i class="uil uil-twitter"></i></a>
                         <a href="#"><i class="uil uil-facebook-f"></i></a>
@@ -89,7 +23,7 @@
                 <!-- /.widget -->
             </div>
             <!-- /column -->
-            <div class="col-md-4 col-lg-3">
+            <div class=" col-lg-6">
                 <div class="widget">
                     <h4 class="widget-title text-white mb-3">Learn More</h4>
                     <ul class="list-unstyled text-reset mb-0">
@@ -112,7 +46,7 @@
             <!-- /column -->
         </div>
         <!--/.row -->
-        <p class="mt-6 mb-0 text-center">© 2023 Sandbox. All rights reserved.</p>
+        <p class="mt-6 mb-0 text-center">© 2025 SMAN 3 Banda Aceh. All rights reserved.</p>
     </div>
     <!-- /.container -->
 </footer>

@@ -47,7 +47,7 @@ class AdminPpdbController extends Controller
                 ->orderBy('semester')
                 ->get()
                 ->groupBy('semester');
-        return view('dashboard.ppdb.kartuujian', compact('data', 'nilaiRapor', 'provinsi', 'kabkota', 'kecamatan'));
+        return view('dashboard.ppdb.detail', compact('data', 'nilaiRapor', 'provinsi', 'kabkota', 'kecamatan'));
     }
 
     //validasi ppdb
