@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\PpdbUser;
 use App\Models\Mapel;
@@ -31,8 +32,9 @@ class AdminPpdbController extends Controller
         return $dataTables->render('dashboard.ppdb.pesertalulus');
     }
 
-    public function detailPeserta($id = null){
-        $ppdbUser = PpdbUser::where('status', 'Final')->where('id', $id)->first();
+    public function detailPeserta($id){
+        $ppdbUser = PpdbUser::whereNotIn('status', ['Tidak Valid', 'Pendaftar'])->where('id', $id)->first();
+        // dd($ppdbUser);
         $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
         $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
         $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
@@ -49,28 +51,64 @@ class AdminPpdbController extends Controller
     }
 
     //validasi ppdb
-    // public function validasi($id){
-    //     $ppdb = PpdbUser::find($id);
-    //     $ppdb->status = 'valid';
-    //     $ppdb->save();
-    //     return redirect()->route('admin.ppdb.index');
+    public function validasiView($id){
+        $ppdbUser = PpdbUser::where('id', $id)->first();
+        return view('dashboard.ppdb.validasi', compact('ppdbUser'));
 
-    // }
+    }
 
-    public function validasi($id)
+    public function validasi(Request $request, $id)
     {
-        $user = PpdbUser::find($id);
-        $userMail = User::where('id', $user->user_id)->first();
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:valid,tidak_valid',
+            'note_validasi' => 'nullable|string',
+        ],[
+            'status.required' => 'Status validasi harus dipilih.',
+            'note_validasi' => 'Note validasi harus diisi.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $validatedData = $validator->validated();
+
+
+        $data = PpdbUser::find($id);
+        $userMail = User::where('id', $data->user_id)->first();
         try {
             DB::beginTransaction();
-            $user->update(['status' => 'Valid']);
+            $lastUser = PpdbUser::whereNotNull('nomor_ujian')->orderBy('nomor_ujian', 'desc')->first();
+            $nomorUjian = $lastUser ? str_pad($lastUser->nomorUjian + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            $jalur_pendaftaran = $data->jalur_pendaftaran;
+            if($jalur_pendaftaran == 'prestasi'){
+                $jalur_pendaftaran = 'PRES';
+            }else if($jalur_pendaftaran == 'kepemimpinan'){
+                $jalur_pendaftaran = 'KEPEM';
+            }
+
+            if ($data->status == 'tidak_valid') {
+                $data->update([
+                    'status' => 'Tidak Valid',
+                    'note_validasi' => $request->note_validasi
+                ]);
+                return redirect()->route('admin.ppdb.index')->with('success', 'Data berhasil disimpan');
+            }else{
+                $data->update([
+                    'status' => 'Valid',
+                    'nomor_ujian' => $jalur_pendaftaran .' - ' . $nomorUjian,
+                    'note_validasi' => $request->note_validasi
+                ]);
+                $pdf = Pdf::loadView('dashboard.ppdb.kartuujian', compact('data'))
+                    ->setPaper('A4', 'landscape'); // 10cm x 14cm
+                    return $pdf->download('kartuujian-' . $data->nama_lengkap . '.pdf');
+            }
+
             // Tambahkan logika validasi di sini
 
             // Kirim email ke user
             // \Mail::to($userMail->email)->send(new \App\Mail\PPDBAcceptanceLetter($user));
 
             DB::commit();
-            return redirect()->route('admin.ppdb.index')->with('success', 'Data berhasil disimpan dan email telah dikirim');
         } catch (Exception $e) {
             DB::rollBack();
             \Log::error("message:" . $e->getMessage());

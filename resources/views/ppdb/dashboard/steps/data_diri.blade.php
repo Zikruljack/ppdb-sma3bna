@@ -3,6 +3,15 @@
 @section('form-content')
     <div class="card">
         <div class="card-body">
+            <div class="alert alert-info">
+                <h5 class="alert-heading">Note :</h5>
+                <p>
+                    File yang diupload harus berekstensi pdf,jpg,png dan max file 2mb.
+                </p>
+                <p>
+                    Jika ada kosong datanya maka di isi dengan <strong>"-". </strong>
+                </p>
+            </div>
             <form id="dataDiriForm" action="{{ route('ppdb.formulir.data_diri') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
@@ -12,18 +21,21 @@
                     </div>
                 @else
                     <div class="mb-3">
-                        <label for="jalur_pendaftaran" class="form-label">Jalur Pendaftaran</label>
-                        <select class="form-control select2" name="jalur_pendaftaran" id="jalur_pendaftaran">
-                            <option value="">Pilih</option>
-                            <option value="prestasi"
-                                {{ old('jalur_pendaftaran', $ppdbUser->jalur_pendaftaran) == 'prestasi' ? 'selected' : '' }}>
-                                Prestasi
-                            </option>
-                            <option value="kepemimpinan"
-                                {{ old('jalur_pendaftaran', $ppdbUser->jalur_pendaftaran) == 'kepemimpinan' ? 'selected' : '' }}>
-                                Kepemimpinan
-                            </option>
-                        </select>
+                        <p class="text-muted">
+
+                            <label for="jalur_pendaftaran" class="form-label">Jalur Pendaftaran</label>
+
+                            <select class="form-control select2" name="jalur_pendaftaran" id="jalur_pendaftaran">
+                                <option value="">Pilih</option>
+                                <option value="prestasi"
+                                    {{ old('jalur_pendaftaran', $ppdbUser->jalur_pendaftaran) == 'prestasi' ? 'selected' : '' }}>
+                                    Prestasi
+                                </option>
+                                <option value="kepemimpinan"
+                                    {{ old('jalur_pendaftaran', $ppdbUser->jalur_pendaftaran) == 'kepemimpinan' ? 'selected' : '' }}>
+                                    Kepemimpinan
+                                </option>
+                            </select>
                     </div>
 
                     <div class="row">

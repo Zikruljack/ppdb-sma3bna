@@ -9,7 +9,10 @@
             <div class="row">
                 <div class="col-md-10 col-lg-8 col-xl-7 col-xxl-6 mx-auto">
                     <h1 class="display-1 text-white mb-3">SPMB</h1>
-                    <p class="lead fs-lg px-md-3 px-lg-7 px-xl-9 px-xxl-10">Selamat Datang di SPMB SMA3 Banda Aceh</p>
+                    <p class="lead fs-lg px-md-3 px-lg-7 px-xl-9 px-xxl-10">Selamat Datang di Sistem
+                        Penerimaan Murid Baru
+                    </p>
+                    <p class="lead fs-lg px-md-3 px-lg-7 px-xl-9 px-xxl-10">SMA Negeri 3 Banda Aceh</p>
                     <a href="/ppdb/login" class="btn btn-primary rounded-pill">Masuk SPMB</a>
                 </div>
                 <!-- /column -->

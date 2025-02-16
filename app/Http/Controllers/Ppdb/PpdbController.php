@@ -66,7 +66,7 @@ class PpdbController extends Controller{
             Log::info('User logged in successfully', ['email' => $request->email]);
 
             DB::commit();
-            return redirect()->intended(route('ppdb.pendaftaran'))->with('success', 'Login successful');
+            return redirect()->route('ppdb.dashboard')->with('success', 'Login successful');
 
         } catch (\Exception $e) {
             DB::rollback(); // Rollback transaction
@@ -126,7 +126,7 @@ class PpdbController extends Controller{
 
             DB::commit();
 
-            return redirect()->route('ppdb.pendaftaran')->with('success', 'Registration successful.');
+            return redirect()->route('login.ppdb')->with('success', 'Registrasi berhasil, mohon cek email untuk verifikasi email anda.');
         } catch (\Exception $e) {
             DB::rollback();
             Log::error(['error' => $e->getMessage(), 'trace' => $e->getTrace()]);
@@ -155,7 +155,7 @@ class PpdbController extends Controller{
         $sudahValidasi = $ppdbUser->status === 'Valid'; // Sesuaikan dengan field di database
 
         return view('ppdb.dashboard.dashboard', compact(
-            'dataDiriLengkap', 'nilaiRaporLengkap', 'berkasLengkap', 'sudahValidasi'
+            'dataDiriLengkap', 'nilaiRaporLengkap', 'berkasLengkap', 'sudahValidasi', 'ppdbUser'
         ));
     }
 
@@ -178,8 +178,8 @@ class PpdbController extends Controller{
 
     $validator = Validator::make($request->all(), [
         'nama_lengkap' => 'required|string|max:255',
-        'nisn' => ['required', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
-        'nik' => ['required', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
+        'nisn' => ['required', 'min:10' , 'max:10', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
+        'nik' => ['required', 'min:16', 'max:16' ,'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
         'no_kk' => ['required', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
         'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'tanggal_kk_dikeluarkan' => 'required|date',
@@ -213,9 +213,13 @@ class PpdbController extends Controller{
         'nisn.required' => 'NISN harus diisi.',
         'nisn.numeric' => 'NISN harus berupa angka.',
         'nisn.unique' => 'NISN sudah digunakan.',
+        'nisn.min' => 'NISN harus 10 digit angka',
+        'nisn.max' => 'NISN harus 10 digit angka',
         'nik.required' => 'NIK harus diisi.',
         'nik.numeric' => 'NIK harus berupa angka.',
         'nik.unique' => 'NIK sudah digunakan.',
+        'nik.min' => 'NIK harus 16 digit angka',
+        'nik.max' => 'NIK harus 16 digit angka',
         'no_kk.required' => 'Nomor KK harus diisi.',
         'no_kk.numeric' => 'Nomor KK harus berupa angka.',
         'no_kk.unique' => 'Nomor KK sudah digunakan.',
@@ -355,6 +359,8 @@ class PpdbController extends Controller{
 
     public function formulirBerkasView(){
         $ppdbUser = PpdbUser::where('user_id', auth()->id())->first();
+        // $nilaiRapor = NilaiRapor::where('user_id', auth()->id())->first();
+
         return view('ppdb.dashboard.steps.berkas', compact('ppdbUser'));
     }
 
@@ -458,7 +464,9 @@ class PpdbController extends Controller{
                 ->groupBy('semester');
 
         $berkasPendukung = BerkasPpdb::where('user_id', $user->id)->first();
-        $sertifikat = Sertifikat::where('berkas_id', $berkasPendukung->id)->get();
+        if($berkasPendukung != null){
+            $sertifikat = Sertifikat::where('berkas_id', $berkasPendukung->id)->get();
+        }
 
         $dataDiriLengkap = $ppdbUser ? true : false;
         $nilaiRaporLengkap = !empty($nilaiRapor);

@@ -11,29 +11,7 @@
                         <span>Formulir Pendaftaran Online PPDB 2024 / 2025</span>
                     </div>
                     <div class="col-6 text-right">
-                        <button class="btn btn-success" id="validateButton">Validasi</button>
-                        <form id="validateForm" action="{{ route('admin.ppdb.validasi', $ppdbUser->id) }}" method="POST"
-                            style="display: none;">
-                            @csrf
-                        </form>
-                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                        <script>
-                            document.getElementById('validateButton').addEventListener('click', function() {
-                                Swal.fire({
-                                    title: 'Apakah Anda yakin?',
-                                    text: "Data akan divalidasi!",
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#3085d6',
-                                    cancelButtonColor: '#d33',
-                                    confirmButtonText: 'Ya, validasi!'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        document.getElementById('validateForm').submit();
-                                    }
-                                })
-                            });
-                        </script>
+                        <a href="{{ route('admin.ppdb.validasi.view', $ppdbUser->id) }}" class="btn btn-success">Validasi</a>
                     </div>
                 </div>
             </div>

@@ -421,18 +421,25 @@ return [
             ],
 
             [
-                'text' => 'Profil',
-                'url' => 'ppdb/account',
+                'text' => 'Dashboard',
+                'url' => 'ppdb/dashboard',
                 'can' => 'peserta_ppdb',
-                'icon' => 'fas fa-fw fa-user',
+                'icon' => 'fas fa-fw fa-tachometer-alt',
             ],
 
-            [
-                'text' => 'Pengumuman',
-                'url' => 'ppdb/pengumuman',
-                'can' => 'peserta_ppdb',
-                'icon' => 'far fa-fw fa-flag',
-            ],
+            // [
+            //     'text' => 'Profil',
+            //     'url' => 'ppdb/account',
+            //     'can' => 'peserta_ppdb',
+            //     'icon' => 'fas fa-fw fa-user',
+            // ],
+
+            // [
+            //     'text' => 'Pengumuman',
+            //     'url' => 'ppdb/pengumuman',
+            //     'can' => 'peserta_ppdb',
+            //     'icon' => 'far fa-fw fa-flag',
+            // ],
 
 
             ['header' => 'PENGATURAN', 'can' => 'manage_settings'],

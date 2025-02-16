@@ -14,7 +14,7 @@
                     File yang diupload harus berekstensi pdf,jpg,png dan max file 2mb.
                 </p>
                 <p>
-                    Jika ada kosong datanya maka di isi dengan <strong>"-"</strong>
+                    Jika ada kosong datanya maka di isi dengan <strong>"-". </strong>
                 </p>
                 @if ($ppdbUser->jalur_pendaftaran == 'kepemimpinan')
                     <p>

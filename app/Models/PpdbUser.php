@@ -52,6 +52,8 @@ class PpdbUser extends Model
         'no_hp_ayah',
         'no_hp_ibu',
         'status',
+        'nomor_ujian',
+        'note_validasi',
     ];
 
     public function user()

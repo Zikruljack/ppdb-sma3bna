@@ -22,8 +22,21 @@ class PesertaLulusDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            // ->addColumn('action', 'pesertalulus.action')
+            ->addColumn('aksi', function($row){
+                $btn = '<ul class="list-unstyled d-flex gap-2 mb-0">';
+                $btn .= '<li><a href="/admin/ppdb/peserta/detail/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="fa fa-fw fa-eye"></i></a></li>';
+                // $btn .= '<li><a href="/admin/ppdb/peserta/validate/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Validasi"><i class="fa fa-fw fa-check text-success"></i></a></li>';
+                // $btn .= '<li><a href="" class="btn btn-sm delete btn-link" data-bs-toggle="tooltip" data-bs-placement="top" data-confirm-delete="true" title="Delete"><i class="fa fa-fw fa-trash text-danger"></i></a></li>';
+                // $btn .= '<li><a href="" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-fw fa-edit text-primary"></i></a></li>';
+                $btn .= '</ul>';
+                return $btn;
+            })
             ->addIndexColumn()
+            ->addColumn('jalur', function($row){
+                $jalur = $row->jalur_pendaftaran;
+                return $jalur;
+            })
+            ->rawColumns(['aksi'])
             ->setRowId('id');
     }
 
@@ -63,14 +76,14 @@ class PesertaLulusDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            // Column::computed('action')
-            //       ->exportable(false)
-            //       ->printable(false)
-            //       ->width(60)
-            //       ->addClass('text-center'),
             Column::make('DT_RowIndex')
-                  ->title('No')
-                  ->orderable(false),
+            ->title('No')
+            ->orderable(false),
+            Column::computed('aksi')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
             Column::make('nomor_peserta'),
             Column::make('nama_lengkap'),
             Column::make('jalur_pendaftaran'),
