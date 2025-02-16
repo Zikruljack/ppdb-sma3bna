@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title') | SMAN 3 Banda Aceh </title>
 
+    {{-- favicon --}}
+    <link rel="shortcut icon" href="{{ asset('assets/img/logo_smantig.png') }}" type="image/x-icon">
+
     {{-- css --}}
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">

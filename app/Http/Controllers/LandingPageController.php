@@ -15,7 +15,7 @@ class LandingPageController extends Controller
 
     public function index()
     {
-        return view('site.blog');
+        return view('site.index');
     }
 
     public function ppdb()

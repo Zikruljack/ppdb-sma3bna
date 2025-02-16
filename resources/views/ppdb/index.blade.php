@@ -114,38 +114,44 @@
                     <h3 class="display-4 mb-0 text-center px-xl-10 px-xxl-15">Pendaftaran SPMB SMA NEGERI 3 BANDA ACEH</h3>
                     <div class="row gx-lg-8 gx-xl-12 process-wrapper text-center mt-9">
                         <div class="col-lg-2">
-                            <img src="" class="svg-inject icon-svg icon-svg-md text-primary mb-3" alt="" />
+                            <img src="{{ asset('assets/icons/solid/marker.svg') }}"
+                                class="svg-inject icon-svg icon-svg-xs solid-mono text-primary" alt="" />
                             <h4 class="mb-1">1. Daftar Akun SPMB</h4>
                             <p>Buat atau Masuk Akun SPMB SMA NEGERI 3 BANDA ACEH untuk pengalaman pendaftaran yang mudah dan
                                 cepat.</p>
                         </div>
                         <!--/column -->
                         <div class="col-lg-2">
-                            <img src="" class="svg-inject icon-svg icon-svg-md text-red mb-3" alt="" />
+                            <img src="{{ asset('assets/icons/solid/note.svg') }}"
+                                class="svg-inject icon-svg icon-svg-md text-red mb-3" alt="" />
                             <h4 class="mb-1">2. Masukan Data Diri</h4>
                             <p>Isi data diri dengan lengkap dan benar untuk melanjutkan proses pendaftaran.</p>
                         </div>
                         <!--/column -->
                         <div class="col-lg-2">
-                            <img src="" class="svg-inject icon-svg icon-svg-md text-leaf mb-3" alt="" />
+                            <img src="{{ asset('assets/icons/lineal/download.svg') }}"
+                                class="svg-inject icon-svg icon-svg-md text-leaf mb-3" alt="" />
                             <h4 class="mb-1">3. Unduh Formulir</h4>
                             <p>Unduh dan cetak formulir pendaftaran yang telah diisi.</p>
                         </div>
                         <!--/column -->
                         <div class="col-lg-2">
-                            <img src="" class="svg-inject icon-svg icon-svg-md text-yellow mb-3" alt="" />
+                            <img src="{{ asset('assets/icons/lineal/files.svg') }}"
+                                class="svg-inject icon-svg icon-svg-md text-yellow mb-3" alt="" />
                             <h4 class="mb-1">4. Bawa Berkas</h4>
                             <p>Bawa berkas yang diperlukan untuk verifikasi ke sekolah.</p>
                         </div>
                         <!--/column -->
                         <div class="col-lg-2">
-                            <img src="" class="svg-inject icon-svg icon-svg-md text-blue mb-3" alt="" />
+                            <img src="{{ asset('assets/icons/lineal/smartphone-2.svg') }}"
+                                class="svg-inject icon-svg icon-svg-md text-blue mb-3" alt="" />
                             <h4 class="mb-1">5. Diseleksi</h4>
                             <p>Ikuti proses seleksi yang telah dijadwalkan.</p>
                         </div>
                         <!--/column -->
                         <div class="col-lg-2">
-                            <img src="" class="svg-inject icon-svg icon-svg-md text-purple mb-3" alt="" />
+                            <img src="{{ asset('assets/icons/lineal/paper.svg') }}"
+                                class="svg-inject icon-svg icon-svg-md text-purple mb-3" alt="" />
                             <h4 class="mb-1">6. Ujian</h4>
                             <p>Ikuti ujian masuk sesuai dengan jadwal yang telah ditentukan.</p>
                         </div>
