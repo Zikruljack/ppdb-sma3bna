@@ -104,21 +104,6 @@
     <!-- /section -->
     <section class="wrapper bg-soft-primary">
         <div class="container py-14 pt-md-16 pt-lg-0 pb-md-16">
-            <div class="row text-center">
-                <div class="col-lg-10 mx-auto">
-                    <div class="mt-lg-n20 mt-xl-n22 position-relative">
-                        <div class="shape bg-dot red rellax w-16 h-18" data-rellax-speed="1"
-                            style="top: 1rem; left: -3.9rem;"></div>
-                        <div class="shape rounded-circle bg-line primary rellax w-18 h-18" data-rellax-speed="1"
-                            style="bottom: 2rem; right: -3rem;"></div>
-                        <video poster="./assets/img/photos/movie.jpg" class="player" playsinline controls preload="none">
-                            <source src="./assets/media/movie.mp4" type="video/mp4">
-                            <source src="./assets/media/movie.webm" type="video/webm">
-                        </video>
-                    </div>
-                </div>
-                <!--/column -->
-            </div>
             <!--/.row -->
             <div class="row text-center">
                 <div class="col-lg-12 mx-auto">
