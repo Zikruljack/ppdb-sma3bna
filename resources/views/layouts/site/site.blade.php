@@ -20,6 +20,12 @@
             width: 50px;
             height: auto;
         }
+
+        .logo-smantig-footer {
+            margin-top: 10px;
+            width: 80px;
+            height: auto;
+        }
     </style>
 
 </head>
