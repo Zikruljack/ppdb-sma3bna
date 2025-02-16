@@ -84,7 +84,16 @@ Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function 
         });
 
         //users
-        Route::get('/users', [App\Http\Controllers\Admin\User\UserController::class, 'index'])->name('admin.users.index');
+        Route::prefix('users')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\User\UserController::class, 'index'])->name('admin.users.index');
+            Route::get('/create', [App\Http\Controllers\Admin\User\UserController::class, 'create'])->name('admin.users.create');
+            Route::post('/store', [App\Http\Controllers\Admin\User\UserController::class, 'store'])->name('admin.users.store');
+            Route::get('/edit/{id}', [App\Http\Controllers\Admin\User\UserController::class, 'edit'])->name('admin.users.edit');
+            Route::post('/update/{id}', [App\Http\Controllers\Admin\User\UserController::class, 'update'])->name('admin.users.update');
+            Route::get('/destroy/{id}', [App\Http\Controllers\Admin\User\UserController::class, 'destroy'])->name('admin.users.destroy');
+            Route::get('/change-password/{id}', [App\Http\Controllers\Admin\User\UserController::class, 'changePassword'])->name('admin.users.change.password');
+
+        });
 
         //cms
         Route::prefix('cms')->group(function () {

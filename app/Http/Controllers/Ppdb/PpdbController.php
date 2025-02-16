@@ -19,8 +19,7 @@ use Illuminate\Support\Facades\File;
 // use Illuminate\Support\Str;
 // use Illuminate\Hashing\BcryptHasher;
 
-use PhpOffice\PhpWord\Element\Table;
-use PhpOffice\PhpWord\Element\TextRun;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 use App\Models\User;
@@ -460,138 +459,10 @@ class PpdbController extends Controller{
                 ->groupBy('semester');
 
         $berkas = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
-        $data = [
-            'ppdbUser' => $ppdbUser,
-            'mapel' => $mapel,
-            'nilaiRapor' => $nilaiRapor,
-            'berkas' => $berkas,
-        ];
-        $filePath = $this->generateWord($data);
+        $pdf = Pdf::loadView('ppdb.dashboard.pdf', compact('ppdbUser', 'mapel', 'nilaiRapor', 'berkas'));
 
-        return response()->download($filePath);
+        return $pdf->download('formulir-pendaftaran.pdf');
     }
 
-
-    protected function generateWord($data)
-    {
-        $templatePath = public_path('templates/template-form-baru.docx');
-        $phpWord = new \PhpOffice\PhpWord\TemplateProcessor($templatePath);
-
-        \Carbon\Carbon::setLocale('id');
-        $tanggal_daftar = \Carbon\Carbon::now()->translatedFormat('d F ');
-
-
-        $phpWord->setValue('nomor_peserta', $data['ppdbUser']->nomor_peserta);
-        $phpWord->setValue('jalur', $data['ppdbUser']->jalur_pendaftaran);
-        $phpWord->setValue('nama_lengkap', $data['ppdbUser']->nama_lengkap);
-        $phpWord->setValue('nisn', $data['ppdbUser']->nisn);
-        $phpWord->setValue('nik', $data['ppdbUser']->nik);
-        $phpWord->setValue('jeniskelamin', $data['ppdbUser']->jenis_kelamin);
-        $phpWord->setValue('tempat', $data['ppdbUser']->tempat_lahir);
-        $phpWord->setValue('tanggal_lahir', $data['ppdbUser']->tanggal_lahir);
-        $phpWord->setValue('alamat', $data['ppdbUser']->alamat);
-        $phpWord->setValue('gol_dar', $data['ppdbUser']->gol_darah);
-        $phpWord->setValue('tinggi', $data['ppdbUser']->tinggi_badan);
-        $phpWord->setValue('berat', $data['ppdbUser']->berat_badan);
-        $phpWord->setValue('kabkota', $data['ppdbUser']->kabupaten_kota);
-        $phpWord->setValue('provinsi', $data['ppdbUser']->provinsi);
-        $phpWord->setvalue('nama_asal_sekolah', $data['ppdbUser']->asal_sekolah);
-        $phpWord->setValue('npsn_asal_sekolah', $data['ppdbUser']->npsn_asal_sekolah);
-        $phpWord->setValue('kabkota_asal_sekolah', $data['ppdbUser']->kabkota_asal_sekolah);
-        $phpWord->setValue('nama_ayah', $data['ppdbUser']->nama_ayah);
-        $phpWord->setValue('nama_ibu', $data['ppdbUser']->nama_ibu);
-        $phpWord->setValue('pkr_ayah', $data['ppdbUser']->pekerjaan_ayah);
-        $phpWord->setValue('pkr_ibu', $data['ppdbUser']->pekerjaan_ibu);
-        $phpWord->setValue('jbtn_ayah', $data['ppdbUser']->jabatan_ayah);
-        $phpWord->setValue('jbtn_ibu', $data['ppdbUser']->jabatan_ibu);
-        $phpWord->setValue('alamat_ortu', $data['ppdbUser']->alamat_ortu);
-        $phpWord->setValue('no_hp_ayah', $data['ppdbUser']->no_hp_ayah);
-        $phpWord->setValue('no_hp_ibu', $data['ppdbUser']->no_hp_ibu);
-        $phpWord->setValue('tanggal_daftar' , $tanggal_daftar);
-        $phpWord->setValue('nama_ttd', $data['ppdbUser']->nama_lengkap);
-
-        if (!empty($data['ppdbUser']->foto)) {
-            $photoPath = storage_path('app/public/' . $data['ppdbUser']->foto);
-            // dd($photoPath);
-
-            if (file_exists($photoPath)) {
-                $phpWord->setImageValue('foto', [
-                    'path' => $photoPath,
-                    'width' => 151,  // 4 cm in pixels
-                    'height' => 227, // 6 cm in pixels
-                    'ratio' => false, // Keep exact size
-                    // 'wrappingStyle' => 'square', // Pastikan gambar tetap di dalam box
-                    'positioning' => 'absolute', // Fix posisi agar tidak bergeser
-                    'posHorizontalRel' => 'margin',
-                    'posVerticalRel' => 'line',
-                ]);
-            } else {
-                $phpWord->setValue('foto', 'Photo not available');
-            }
-        } else {
-            $phpWord->setValue('foto', 'No photo uploaded');
-        }
-
-        // --- MEMBUAT TABEL NILAI RAPOR ---
-        $table = new Table();
-
-        // Tambahkan Header Tabel
-        $table->addRow();
-        $table->addCell()->addText('Semester', ['bold' => true]);
-        $table->addCell()->addText('PAI', ['bold' => true]);
-        $table->addCell()->addText('Bahasa Indonesia', ['bold' => true]);
-        $table->addCell()->addText('Bahasa Inggris', ['bold' => true]);
-        $table->addCell()->addText('Matematika', ['bold' => true]);
-        $table->addCell()->addText('IPA', ['bold' => true]);
-        $table->addCell()->addText('IPS', ['bold' => true]);
-
-        // Looping Data Nilai Rapor (Per Semester)
-        foreach ($data['nilaiRapor'] as $semester => $nilaiSemester) {
-            $table->addRow();
-            $table->addCell()->addText($semester);
-            $table->addCell()->addText($nilaiSemester->firstWhere('mapel.mapel', 'PAI')->nilai ?? '-');
-            $table->addCell()->addText($nilaiSemester->firstWhere('mapel.mapel', 'Bahasa Indonesia')->nilai ?? '-');
-            $table->addCell()->addText($nilaiSemester->firstWhere('mapel.mapel', 'Bahasa Inggris')->nilai ?? '-');
-            $table->addCell()->addText($nilaiSemester->firstWhere('mapel.mapel', 'Matematika')->nilai ?? '-');
-            $table->addCell()->addText($nilaiSemester->firstWhere('mapel.mapel', 'IPA')->nilai ?? '-');
-            $table->addCell()->addText($nilaiSemester->firstWhere('mapel.mapel', 'IPS')->nilai ?? '-');
-        }
-
-        // Masukkan Tabel ke dalam Template
-        $phpWord->setComplexBlock('table_rapor', $table);
-
-
-        $fileName = 'form_pendaftaran_'. $data['ppdbUser']->nama_lengkap . ' ' . $data['ppdbUser']->nomor_peserta . '.docx';
-        $filePath = '/download/form/' . $fileName;
-        $dirPath = dirname(public_path($filePath));
-
-        if (!File::exists($dirPath)) {
-            File::makeDirectory($dirPath, 0755, true);
-        }
-
-        $phpWord->saveAs(public_path($filePath));
-
-        return public_path($filePath);
-    }
-
-    protected function generatePdf($data)
-    {
-        $wordFilePath = $this->generateWord($data);
-
-        $phpWord = \PhpOffice\PhpWord\IOFactory::load($wordFilePath);
-        $pdfWriter = new \PhpOffice\PhpWord\Writer\PDF\DomPDF($phpWord);
-
-        $pdfFileName = 'form_pendaftaran_'. $data['ppdbUser']->nama_lengkap . ' ' . $data['ppdbUser']->nomor_peserta . '.pdf';
-        $pdfFilePath = '/download/form/' . $pdfFileName;
-        $dirPath = dirname(public_path($pdfFilePath));
-
-        if (!File::exists($dirPath)) {
-            File::makeDirectory($dirPath, 0755, true);
-        }
-
-        $pdfWriter->save(public_path($pdfFilePath));
-
-        return public_path($pdfFilePath);
-    }
 
 }

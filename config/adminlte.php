@@ -463,7 +463,7 @@ return [
                 'submenu' => [
                     [
                         'text' => 'Pengguna',
-                        'url' => 'admin/pengguna',
+                        'url' => 'admin/users/',
                         'icon' => 'fas fa-fw fa-users',
                         'classes' => 'ml-3',
                     ],

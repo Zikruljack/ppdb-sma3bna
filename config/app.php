@@ -131,6 +131,7 @@ return [
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Laravolt\Indonesia\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Yajra\DataTables\ButtonsServiceProvider::class,
     ])->toArray(),
 
     'aliases' => Facade::defaultAliases()->merge( [

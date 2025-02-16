@@ -20,6 +20,11 @@ class AdminPpdbController extends Controller
         $ppdbs = PpdbUser::all();
         return $dataTables->render('dashboard.ppdb.peserta', compact('ppdbs'));
     }
+    // public function index(){
+    //     $id = 1;
+    //
+    //     // return view('dashboard.ppdb.kartuujian', compact('data'));
+    // }
 
     // public function detailPeserta($id = null){
     //     $user = auth()->user();
@@ -41,13 +46,16 @@ class AdminPpdbController extends Controller
         $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $data->provinsi)->first();
         $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $data->kabupaten_kota)->first();
         $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $data->kecamatan)->first();
+
+        $berkas = BerkasPpdb::where('user_id', $data->user_id)->first();
+        $sertifikat = Sertifikat::where('berkas_id', $berkas->id)->get();
         // dd($provinsi);
         $nilaiRapor = NilaiRapor::where('user_id', $data->user_id)
                 ->with('mapel')
                 ->orderBy('semester')
                 ->get()
                 ->groupBy('semester');
-        return view('dashboard.ppdb.detail', compact('data', 'nilaiRapor', 'provinsi', 'kabkota', 'kecamatan'));
+        return view('dashboard.ppdb.detail', compact('data', 'nilaiRapor', 'provinsi', 'kabkota', 'kecamatan', 'sertifikat', 'berkas'));
     }
 
     //validasi ppdb
@@ -69,7 +77,7 @@ class AdminPpdbController extends Controller
             // Tambahkan logika validasi di sini
 
             // Kirim email ke user
-            \Mail::to($userMail->email)->send(new \App\Mail\PPDBAcceptanceLetter($user));
+            // \Mail::to($userMail->email)->send(new \App\Mail\PPDBAcceptanceLetter($user));
 
             DB::commit();
             return redirect()->route('admin.ppdb.index')->with('success', 'Data berhasil disimpan dan email telah dikirim');
@@ -87,7 +95,6 @@ class AdminPpdbController extends Controller
         if (!$data) {
             return response()->json(['error' => 'Data tidak ditemukan'], 404);
         }
-
         try {
             $pdf = Pdf::loadView('dashboard.ppdb.kartuujian', compact('data'))
                 ->setPaper('A4', 'landscape'); // 10cm x 14cm

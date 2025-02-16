@@ -5,7 +5,16 @@
 @section('content')
     <div class="container mt-4">
         <div class="card">
-            <div class="card-header bg-primary text-white">Formulir Pendaftaran Online PPDB 2024 / 2025</div>
+            <div class="card-header bg-primary text-white justify-content-between">
+                <div class="row">
+                    <div class="col-6 text-left">
+                        <span>Formulir Pendaftaran Online PPDB 2024 / 2025</span>
+                    </div>
+                    <div class="col-6 text-right">
+                        <button class="btn btn-success">Validasi</button>
+                    </div>
+                </div>
+            </div>
             <div class="card-body">
                 <h5>Nomor Registrasi: {{ $data->nomor_peserta }}</h5>
                 <p><strong>Jalur Tes:</strong> {{ ucfirst($data->jalur_pendaftaran) }}</p>
