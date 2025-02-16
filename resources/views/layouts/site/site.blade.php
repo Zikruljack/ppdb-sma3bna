@@ -17,6 +17,7 @@
     <style>
         .logo-smantig {
             margin-top: 10px;
+            margin-bottom: 10px;
             width: 50px;
             height: auto;
         }

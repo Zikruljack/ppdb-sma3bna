@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
+
+Route::fallback(function () {
+    return response()->view('errors.generics', ['statusCode' => 404], 404);
+});
+
+
 Route::get('/get-kabupaten', function (Request $request) {
     $kabupaten = DB::table('indonesia_cities')
         ->where('province_code', $request->province_id)

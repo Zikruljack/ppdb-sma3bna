@@ -1,5 +1,5 @@
 <footer>
-    <div class="container pb-7">
+    <div class="container pb-7 mt-12 mb-1">
         <div class="row gx-lg-0 gy-6">
             <div class="col-lg-4">
                 <div class="widget">
