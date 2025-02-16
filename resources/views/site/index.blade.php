@@ -11,7 +11,7 @@
                             srcset="{{ asset('assets/img/i22@2x.png') }} 2x" alt="" /></figure>
                 </div>
                 <div class="col-md-10 offset-md-1 offset-lg-0 col-lg-5 text-center text-lg-start">
-                    <h1 class="display-1 mb-5 mx-md-n5 mx-lg-0">SEKOLAH SMA Negeri 3 Banda Aceh</h1>
+                    <h1 class="display-1 mb-5 mx-md-n5 mx-lg-0">SMA Negeri 3 Banda Aceh</h1>
                     <p class="lead fs-lg mb-7">Sistem Penerimaan Murid Baru akan segera dibuka, silahkan klik tombol dibawah
                     </p>
                     <span><a href="/ppdb" class="btn btn-primary rounded-pill me-2">SPMB</a></span>
@@ -26,7 +26,7 @@
         <div class="container py-14 py-md-16">
             <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
                 <div class="col-lg-7 order-lg-2">
-                    <figure><img class="w-auto" src="{{ asset('assets/img/logo_smantig.png') }}"
+                    <figure><img class="w-auto" src="{{ asset('assets/img/front-sma3-bna.jpg') }}"
                             alt="Logo SMA Negeri 3 Banda Aceh" /></figure>
                 </div>
                 <div class="col-lg-5">
