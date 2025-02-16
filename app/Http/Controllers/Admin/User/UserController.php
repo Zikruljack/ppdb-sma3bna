@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Spatie\Permission\Models\Role;
 use App\Models\User;
-
 use App\DataTables\UserDataTable;
 
 class UserController extends Controller
@@ -18,7 +17,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.user.create');
+        $roles = Role::all();
+        return view('dashboard.user.adduser', compact('roles'));
     }
 
     public function store(Request $request)
@@ -27,20 +27,25 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'roles' => 'required',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
-        return redirect()->route('admin.user.index')->with('success', 'User created successfully.');
+        $user->syncRoles($request->roles);
+
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
 
     public function edit(User $user)
     {
-        return view('admin.user.edit', compact('user'));
+        $roles = Role::all();
+        $userRoles = $user->roles->pluck('name')->toArray();
+        return view('admin.user.edit', compact('user', 'roles', 'userRoles'));
     }
 
     public function update(Request $request, User $user)
@@ -48,12 +53,15 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'roles' => 'required|array',
         ]);
 
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
         ]);
+
+        $user->syncRoles($request->roles);
 
         return redirect()->route('admin.user.index')->with('success', 'User updated successfully.');
     }

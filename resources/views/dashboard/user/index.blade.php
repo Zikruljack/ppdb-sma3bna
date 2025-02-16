@@ -8,6 +8,9 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Users</h3>
+                        <div class="card-tools">
+                            <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Add User</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         {{ $dataTable->table(['class' => 'table w-100']) }}
