@@ -33,7 +33,7 @@
                                     <img src="{{ asset('assets/icons/lineal/award.svg') }}"
                                         class="svg-inject icon-svg icon-svg-md text-yellow mb-3" alt="" />
                                     <h4>Jalur Prestasi & Kepemimpinan</h4>
-                                    <p class="mb-0">17 Februari 2025 - 27 Februari 2024</p>
+                                    <p class="mb-0">17 Februari 2025 - 27 Februari 2025</p>
                                 </div>
                                 <!--/.card-body -->
                             </div>
@@ -85,15 +85,16 @@
                 <div class="col-lg-5">
                     <h2 class="fs-15 text-uppercase text-muted mb-3">Pendaftaran SPMB</h2>
                     <h3 class="display-4 mb-5">Jalur Pendaftaran SPMB SMA NEGERI 3 BANDA ACEH</h3>
-                    <p>Pendaftaran SPMB SMA NEGERI 3 BANDA ACEH dibuka mulai tanggal 1 Januari 2024 hingga 31 Januari 2024.
+                    <p>Pendaftaran SPMB SMA NEGERI 3 BANDA ACEH dibuka mulai tanggal 17 Februari 2025.
                         Terdapat beberapa jalur pendaftaran yang dapat dipilih:</p>
                     <ul>
-                        <li><strong>Jalur Prestasi & Kepemimpinan:</strong> 1 Januari 2024 - 10 Januari 2024</li>
-                        <li><strong>Jalur Domisili:</strong> 11 Januari 2024 - 20 Januari 2024</li>
-                        <li><strong>Jalur Afirmasi:</strong> 21 Januari 2024 - 31 Januari 2024</li>
-                        <li><strong>Jalur Pindah Tugas Orang Tua:</strong> 21 Januari 2024 - 31 Januari 2024</li>
+                        <li><strong>Jalur Prestasi & Kepemimpinan:</strong> 17 Februari 2025 - 27 Februari 2025</li>
+                        <li><strong>Jalur Domisili:</strong> Segara diumumkan</li>
+                        <li><strong>Jalur Afirmasi:</strong> Segara diumumkan</li>
+                        <li><strong>Jalur Pindah Tugas Orang Tua:</strong> Segara diumumkan</li>
                     </ul>
-                    <a href="#" class="btn btn-navy rounded-pill mt-3">Selengkapnya</a>
+                    <a href="{{ asset('assets/data/JUKNIS_SPMB_PRESTASI_2025.pdf') }}"
+                        class="btn btn-navy rounded-pill mt-3" download>Selengkapnya</a>
                 </div>
                 <!--/column -->
             </div>

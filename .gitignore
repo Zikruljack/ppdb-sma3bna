@@ -25,3 +25,5 @@ yarn-error.log
 
 *.pdf
 *.docx
+
+!/public/assets/data/JUKNIS_SPMB_PRESTASI_2025.pdf
