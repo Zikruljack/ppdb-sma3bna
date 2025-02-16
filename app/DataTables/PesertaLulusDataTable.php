@@ -22,7 +22,8 @@ class PesertaLulusDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'pesertalulus.action')
+            // ->addColumn('action', 'pesertalulus.action')
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -62,13 +63,15 @@ class PesertaLulusDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('nomor_perserta'),
+            // Column::computed('action')
+            //       ->exportable(false)
+            //       ->printable(false)
+            //       ->width(60)
+            //       ->addClass('text-center'),
+            Column::make('DT_RowIndex')
+                  ->title('No')
+                  ->orderable(false),
+            Column::make('nomor_peserta'),
             Column::make('nama_lengkap'),
             Column::make('jalur_pendaftaran'),
             Column::make('status'),

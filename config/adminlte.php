@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => true,
+    'use_ico_only' => false,
     'use_full_favicon' => false,
 
     /*
@@ -380,18 +380,17 @@ return [
             [
                 'text' => 'Peserta Lulus',
                 'icon' => 'fas fa-fw fa-user-check',
-                'url'  => 'admin/ppdb/peserta-lulus',
+                'url'  => 'admin/ppdb/peserta/lulus',
                 'can' => 'manage_ppdb',
                 'classes' => 'ml-3',
             ],
-            [
-                'text' => 'Pengaturan SPMB',
-                'icon' => 'fas fa-fw fa-cog',
-                'url'  => 'admin/ppdb/settings',
-                'classes' => 'ml-3',
-                'can' => 'manage_ppdb',
-
-            ],
+            // [
+            //     'text' => 'Pengaturan SPMB',
+            //     'icon' => 'fas fa-fw fa-cog',
+            //     'url'  => 'admin/ppdb/settings',
+            //     'classes' => 'ml-3',
+            //     'can' => 'manage_ppdb',
+            // ],
 
             [
                 'text' => 'Pengumuman',

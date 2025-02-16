@@ -11,116 +11,136 @@
                         <span>Formulir Pendaftaran Online PPDB 2024 / 2025</span>
                     </div>
                     <div class="col-6 text-right">
-                        <button class="btn btn-success">Validasi</button>
+                        <button class="btn btn-success" id="validateButton">Validasi</button>
+                        <form id="validateForm" action="{{ route('admin.ppdb.validasi', $ppdbUser->id) }}" method="POST"
+                            style="display: none;">
+                            @csrf
+                        </form>
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            document.getElementById('validateButton').addEventListener('click', function() {
+                                Swal.fire({
+                                    title: 'Apakah Anda yakin?',
+                                    text: "Data akan divalidasi!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Ya, validasi!'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        document.getElementById('validateForm').submit();
+                                    }
+                                })
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <h5>Nomor Registrasi: {{ $data->nomor_peserta }}</h5>
-                <p><strong>Jalur Tes:</strong> {{ ucfirst($data->jalur_pendaftaran) }}</p>
-
-                <h5 class="mt-3">Data Diri</h5>
+                <h2 class="text-center">FORMULIR PENDAFTARAN ONLINE PPDB 2025/2026</h2>
+                <h3 class="text-center">SMA NEGERI 3 BANDA ACEH</h3>
+                <hr>
                 <div class="text-center mb-3">
-                    <img src="{{ asset('storage/' . $data->foto) }}" alt="Foto Calon Peserta" class="img-thumbnail"
+                    <img src="{{ asset('storage/' . $ppdbUser->foto) }}" alt="Foto Calon Peserta" class="img-thumbnail"
                         width="150">
                 </div>
+                <hr>
                 <table class="table table-bordered">
                     <tr>
-                        <td><strong>Nama</strong></td>
-                        <td>{{ $data->nama_lengkap }}</td>
+                        <th>Nomor Registrasi</th>
+                        <td>{{ $ppdbUser->nomor_peserta }}</td>
                     </tr>
                     <tr>
-                        <td><strong>NIK</strong></td>
-                        <td>{{ $data->nik }}</td>
+                        <th>Jalur Tes</th>
+                        <td>{{ $ppdbUser->jalur_pendaftaran }}</td>
                     </tr>
                     <tr>
-                        <td><strong>NISN</strong></td>
-                        <td>{{ $data->nisn }}</td>
+                        <th>Nama Calon Peserta Didik</th>
+                        <td>{{ $ppdbUser->nama_lengkap }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Jenis Kelamin</strong></td>
-                        <td>{{ $data->jenis_kelamin }}</td>
+                        <th>NIK</th>
+                        <td>{{ $ppdbUser->nik }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Tempat, Tanggal Lahir</strong></td>
-                        <td>{{ $data->tempat_lahir }}, {{ $data->tanggal_lahir }}</td>
+                        <th>NISN</th>
+                        <td>{{ $ppdbUser->nisn }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Alamat</strong></td>
-                        <td>{{ $data->alamat }}</td>
+                        <th>Jenis Kelamin</th>
+                        <td>{{ $ppdbUser->jenis_kelamin }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Kabupaten/Kota</strong></td>
-                        <td>{{ $kabkota->name ?? 'Tidak Diketahui' }}</td>
+                        <th>Tempat, Tanggal Lahir</th>
+                        <td>{{ $ppdbUser->tempat_lahir }}, {{ $ppdbUser->tanggal_lahir }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Provinsi</strong></td>
-                        <td>{{ $provinsi->name ?? 'Tidak Diketahui' }}</td>
+                        <th>Alamat</th>
+                        <td>{{ $ppdbUser->alamat }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Golongan Darah</strong></td>
-                        <td>{{ $data->gol_darah }}</td>
+                        <th>Kabupaten/Kota</th>
+                        <td>{{ $kabkota->name }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Tinggi Badan</strong></td>
-                        <td>{{ $data->tinggi_badan }} cm</td>
+                        <th>Provinsi</th>
+                        <td>{{ $provinsi->name }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Berat Badan</strong></td>
-                        <td>{{ $data->berat_badan }} kg</td>
+                        <th>Golongan Darah</th>
+                        <td>{{ $ppdbUser->gol_darah }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tinggi Badan</th>
+                        <td>{{ $ppdbUser->tinggi_badan }} cm</td>
+                    </tr>
+                    <tr>
+                        <th>Berat Badan</th>
+                        <td>{{ $ppdbUser->berat_badan }} kg</td>
+                    </tr>
+                    <tr>
+                        <th>Nama Sekolah Asal</th>
+                        <td>{{ $ppdbUser->asal_sekolah }}</td>
+                    </tr>
+                    <tr>
+                        <th>NPSN Sekolah</th>
+                        <td>{{ $ppdbUser->npsn_asal_sekolah }}</td>
+                    </tr>
+                    <tr>
+                        <th>Kabupaten/Kota Sekolah Asal</th>
+                        <td>{{ $ppdbUser->kabkota_asal_sekolah }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nama Ayah</th>
+                        <td>{{ $ppdbUser->nama_ayah }}</td>
+                    </tr>
+                    <tr>
+                        <th>Pekerjaan Ayah</th>
+                        <td>{{ $ppdbUser->pekerjaan_ayah }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nama Ibu</th>
+                        <td>{{ $ppdbUser->nama_ibu }}</td>
+                    </tr>
+                    <tr>
+                        <th>Pekerjaan Ibu</th>
+                        <td>{{ $ppdbUser->pekerjaan_ibu }}</td>
+                    </tr>
+                    <tr>
+                        <th>No. HP</th>
+                        <td>{{ $ppdbUser->no_hp }}</td>
                     </tr>
                 </table>
 
-                <h5 class="mt-3">Sekolah Asal</h5>
-                <table class="table table-bordered">
-                    <tr>
-                        <td><strong>NPSN</strong></td>
-                        <td>{{ $data->npsn_asal_sekolah }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nama Sekolah</strong></td>
-                        <td>{{ $data->asal_sekolah }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kabupaten/Kota</strong></td>
-                        <td>{{ $data->kabkota_asal_sekolah }}</td>
-                    </tr>
-                </table>
+                <br>
 
-                <h5 class="mt-3">Data Orang Tua</h5>
-                <table class="table table-bordered">
-                    <tr>
-                        <td><strong>Nama Ayah</strong></td>
-                        <td>{{ $data->nama_ayah }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Nama Ibu</strong></td>
-                        <td>{{ $data->nama_ibu }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Pekerjaan Ayah</strong></td>
-                        <td>{{ $data->pekerjaan_ayah }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Pekerjaan Ibu</strong></td>
-                        <td>{{ $data->pekerjaan_ibu }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jabatan Ayah</strong></td>
-                        <td>{{ $data->jabatan_ayah }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Jabatan Ibu</strong></td>
-                        <td>{{ $data->jabatan_ibu }}</td>
-                    </tr>
-                </table>
-
-                <h5 class="mt-3">Nilai Rapor</h5>
+                <h4>Nilai Rapor</h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Semester</th>
-                            <th>Agama</th>
+                            <th>PAI</th>
                             <th>Bahasa Indonesia</th>
                             <th>Bahasa Inggris</th>
                             <th>Matematika</th>
@@ -143,37 +163,128 @@
                     </tbody>
                 </table>
 
-                <h5 class="mt-3">Data Prestasi Akademik</h5>
+                <br>
+
+                {{-- berkas pendukung --}}
+                <h4>Berkas Pendukung</h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Nama Prestasi</th>
-                            <th>Penyelenggara</th>
-                            <th>Tingkat Lomba</th>
-                            <th>Juara</th>
+                            <th>Nama Berkas</th>
+                            <th>File</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="4" class="text-center">Belum ada data</td>
+                            <td>Kartu Keluarga</td>
+                            <td>
+                                @if (!empty($berkasPendukung->kk_file))
+                                    <a href="{{ asset('storage/' . $berkasPendukung->kk_file) }}" target="_blank"
+                                        class="btn btn-info">
+                                        <i class="fas fa-file-alt"></i> Lihat File
+                                    </a>
+                                @else
+                                    <span class="text-danger">Berkas belum diunggah</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Akta Kelahiran</td>
+                            <td>
+                                @if (!empty($berkasPendukung->akta_kelahiran_file))
+                                    <a href="{{ asset('storage/' . $berkasPendukung->akta_kelahiran_file) }}"
+                                        target="_blank" class="btn btn-info">
+                                        <i class="fas fa-file-alt"></i> Lihat File
+                                    </a>
+                                @else
+                                    <span class="text-danger">Berkas belum diunggah</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Surat Keterangan Aktif</td>
+                            <td>
+                                @if (!empty($berkasPendukung->surat_keterangan_aktif))
+                                    <a href="{{ asset('storage/' . $berkasPendukung->surat_keterangan_aktif) }}"
+                                        target="_blank" class="btn btn-info">
+                                        <i class="fas fa-file-alt"></i> Lihat File
+                                    </a>
+                                @else
+                                    <span class="text-danger">Berkas belum diunggah</span>
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>
 
-                <h5 class="mt-3">Data Prestasi Non Akademik</h5>
+                <br>
+
+                <h4>Sertifikat Akademik</h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Nama Prestasi</th>
-                            <th>Penyelenggara</th>
-                            <th>Tingkat Lomba</th>
+                            <th>Nama Berkas</th>
+                            <th>Tingkat Kejuaraan</th>
                             <th>Juara</th>
+                            <th>File</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @if ($sertifikat->where('jenis_sertifikat', 'akademik')->isNotEmpty())
+                            @foreach ($sertifikat->where('jenis_sertifikat', 'akademik') as $sertifikatAkademik)
+                                <tr>
+                                    <td>{{ $sertifikatAkademik->nama_sertifikat }}</td>
+                                    <td>{{ $sertifikatAkademik->tingkat_kejuaraan }}</td>
+                                    <td>{{ $sertifikatAkademik->juara }}</td>
+                                    <td>
+                                        <a href="{{ asset('storage/' . $sertifikatAkademik->file) }}" target="_blank"
+                                            class="btn btn-info">
+                                            <i class="fas fa-file-alt"></i> Lihat File
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4" class="text-center">Tidak ada sertifikat akademik</td>
+                            </tr>
+                        @endif
+
+                    </tbody>
+                </table>
+
+                <br>
+
+                <h4>Sertifikat Non Akademik</h4>
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td colspan="4" class="text-center">Belum ada data</td>
+                            <th>Nama Berkas</th>
+                            <th>Tingkat Kejuaraan</th>
+                            <th>Juara</th>
+                            <th>File</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @if ($sertifikat->where('jenis_sertifikat', 'non akademik')->isNotEmpty())
+                            @foreach ($sertifikat->where('jenis_sertifikat', 'non akademik') as $sertifikatNonAkademik)
+                                <tr>
+                                    <td>{{ $sertifikatNonAkademik->nama_sertifikat }}</td>
+                                    <td>{{ $sertifikatNonAkademik->tingkat_kejuaraan }}</td>
+                                    <td>{{ $sertifikatNonAkademik->juara }}</td>
+                                    <td>
+                                        <a href="{{ asset('storage/' . $sertifikatNonAkademik->file) }}" target="_blank"
+                                            class="btn btn-info">
+                                            <i class="fas fa-file-alt"></i> Lihat File
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4" class="text-center">Tidak ada sertifikat non akademik</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

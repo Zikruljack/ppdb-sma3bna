@@ -96,6 +96,8 @@
                     </tr>
                 </table>
 
+                <br>
+
                 <h4>Nilai Rapor</h4>
                 <table class="table table-bordered">
                     <thead>
@@ -124,6 +126,8 @@
                     </tbody>
                 </table>
 
+                <br>
+
                 {{-- berkas pendukung --}}
                 <h4>Berkas Pendukung</h4>
                 <table class="table table-bordered">
@@ -134,8 +138,49 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td>Kartu Keluarga</td>
+                            <td>
+                                @if (!empty($berkasPendukung->kk_file))
+                                    <a href="{{ asset('storage/' . $berkasPendukung->kk_file) }}" target="_blank"
+                                        class="btn btn-info">
+                                        <i class="fas fa-file-alt"></i> Lihat File
+                                    </a>
+                                @else
+                                    <span class="text-danger">Berkas belum diunggah</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Akta Kelahiran</td>
+                            <td>
+                                @if (!empty($berkasPendukung->akta_kelahiran_file))
+                                    <a href="{{ asset('storage/' . $berkasPendukung->akta_kelahiran_file) }}"
+                                        target="_blank" class="btn btn-info">
+                                        <i class="fas fa-file-alt"></i> Lihat File
+                                    </a>
+                                @else
+                                    <span class="text-danger">Berkas belum diunggah</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Surat Keterangan Aktif</td>
+                            <td>
+                                @if (!empty($berkasPendukung->surat_keterangan_aktif))
+                                    <a href="{{ asset('storage/' . $berkasPendukung->surat_keterangan_aktif) }}"
+                                        target="_blank" class="btn btn-info">
+                                        <i class="fas fa-file-alt"></i> Lihat File
+                                    </a>
+                                @else
+                                    <span class="text-danger">Berkas belum diunggah</span>
+                                @endif
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
+
+                <br>
 
                 <h4>Sertifikat Akademik</h4>
                 <table class="table table-bordered">
@@ -170,6 +215,8 @@
 
                     </tbody>
                 </table>
+
+                <br>
 
                 <h4>Sertifikat Non Akademik</h4>
                 <table class="table table-bordered">

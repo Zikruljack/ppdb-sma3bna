@@ -22,10 +22,10 @@ Route::get('/get-kecamatan', function (Request $request) {
 Route::prefix('/')->group(function () {
     Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing.page');
     Route::get('/ppdb', [App\Http\Controllers\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
-    Route::get('/ppdb/login', [App\Http\Controllers\Ppdb\PpdbController::class , 'login'])->name('login.ppdb');
-    Route::post('/ppdb/login/attempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'loginAttempt'])->name('login.attempt');
-    Route::get('/ppdb/register', [App\Http\Controllers\Ppdb\PpdbController::class , 'register'])->name('register.ppdb');
-    Route::post('/ppdb/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
+    // Route::get('/ppdb/login', [App\Http\Controllers\Ppdb\PpdbController::class , 'login'])->name('login.ppdb');
+    // Route::post('/ppdb/login/attempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'loginAttempt'])->name('login.attempt');
+    // Route::get('/ppdb/register', [App\Http\Controllers\Ppdb\PpdbController::class , 'register'])->name('register.ppdb');
+    // Route::post('/ppdb/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
     // Route::get('/profil', [App\Http\Controllers\LandingPageController::class, 'profil'])->name('profil');
     // Route::get('/berita', [App\Http\Controllers\LandingPageController::class, 'berita'])->name('berita');
     // Route::get('/berita/{slug}', [App\Http\Controllers\LandingPageController::class, 'beritaDetail'])->name('berita.detail');
@@ -73,6 +73,7 @@ Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function 
 
         Route::prefix('ppdb')->group(function () {
             Route::get('/peserta', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'index'])->name('admin.ppdb.index');
+            Route::get('/peserta/lulus', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'pesertaLulus'])->name('admin.ppdb.pesertalulus');
             Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
             Route::get('/peserta/detail/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'detailPeserta'])->name('admin.ppdb.detail.peserta');
             Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');

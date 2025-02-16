@@ -8,9 +8,14 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\PpdbUser;
+use App\Models\Mapel;
+use App\Models\BerkasPpdb;
+use App\Models\Sertifikat;
 use App\Models\NilaiRapor;
+use App\Models\User;
 
 use App\DataTables\PesertaPPDBDataTable;
+use App\DataTables\PesertaLulusDataTable;
 
 class AdminPpdbController extends Controller
 {
@@ -20,42 +25,27 @@ class AdminPpdbController extends Controller
         $ppdbs = PpdbUser::all();
         return $dataTables->render('dashboard.ppdb.peserta', compact('ppdbs'));
     }
-    // public function index(){
-    //     $id = 1;
-    //
-    //     // return view('dashboard.ppdb.kartuujian', compact('data'));
-    // }
 
-    // public function detailPeserta($id = null){
-    //     $user = auth()->user();
-
-    //     $data = PpdbUser::where('status', 'Final')->where('id', $id)->first();
-    //     $nilaiRapor = NilaiRapor::where('user_id', $user->id)
-    //                 ->with('mapel')
-    //                 ->orderBy('semester')
-    //                 ->get()
-    //                 ->groupBy('semester');
-    //     $pdf = PDF::loadView('dashboard.ppdb.pdf', compact('data', 'nilaiRapor'));
-
-    //     // return view('dashboard.ppdb.pdf', compact('userPpdb'));
-    //     return $pdf->stream('formulir-ppdb.pdf');
-    // }
+    public function pesertaLulus(PesertaLulusDataTable $dataTables)
+    {
+        return $dataTables->render('dashboard.ppdb.pesertalulus');
+    }
 
     public function detailPeserta($id = null){
-        $data = PpdbUser::where('status', 'Final')->where('id', $id)->first();
-        $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $data->provinsi)->first();
-        $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $data->kabupaten_kota)->first();
-        $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $data->kecamatan)->first();
+        $ppdbUser = PpdbUser::where('status', 'Final')->where('id', $id)->first();
+        $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
+        $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
+        $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
 
-        $berkas = BerkasPpdb::where('user_id', $data->user_id)->first();
-        $sertifikat = Sertifikat::where('berkas_id', $berkas->id)->get();
+        $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
+        $sertifikat = Sertifikat::where('berkas_id', $berkasPendukung->id)->get();
         // dd($provinsi);
-        $nilaiRapor = NilaiRapor::where('user_id', $data->user_id)
+        $nilaiRapor = NilaiRapor::where('user_id', $ppdbUser->user_id)
                 ->with('mapel')
                 ->orderBy('semester')
                 ->get()
                 ->groupBy('semester');
-        return view('dashboard.ppdb.detail', compact('data', 'nilaiRapor', 'provinsi', 'kabkota', 'kecamatan', 'sertifikat', 'berkas'));
+        return view('dashboard.ppdb.detail', compact('ppdbUser', 'nilaiRapor', 'provinsi', 'kabkota', 'kecamatan', 'sertifikat', 'berkasPendukung'));
     }
 
     //validasi ppdb

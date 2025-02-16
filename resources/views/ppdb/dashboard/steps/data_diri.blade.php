@@ -115,8 +115,17 @@
                             </div>
                             <div class="mb-3">
                                 <label for="gol_darah" class="form-label">Golongan Darah</label>
-                                <input type="text" class="form-control" id="gol_darah" name="gol_darah"
-                                    value="{{ old('gol_darah', $ppdbUser->gol_darah) }}" required>
+                                <select class="form-control select2" id="gol_darah" name="gol_darah" required>
+                                    <option value="">Pilih</option>
+                                    <option value="O"
+                                        {{ old('gol_darah', $ppdbUser->gol_darah) == 'O' ? 'selected' : '' }}>O</option>
+                                    <option value="A"
+                                        {{ old('gol_darah', $ppdbUser->gol_darah) == 'A' ? 'selected' : '' }}>A</option>
+                                    <option value="B"
+                                        {{ old('gol_darah', $ppdbUser->gol_darah) == 'B' ? 'selected' : '' }}>B</option>
+                                    <option value="AB"
+                                        {{ old('gol_darah', $ppdbUser->gol_darah) == 'AB' ? 'selected' : '' }}>AB</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="tinggi_badan" class="form-label">Tinggi Badan (cm)</label>
