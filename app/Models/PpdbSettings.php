@@ -14,7 +14,6 @@ class PpdbSettings extends Model
         'akhir_pendaftaran',
         'tanggal_pengumuman',
         'kuota',
-        'maksimal_umur',
         'status',
         'waktu_pembukaan_ppdb',
         'waktu_tutup_ppdb',

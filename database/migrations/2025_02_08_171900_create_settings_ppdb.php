@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('settings_ppdb', function (Blueprint $table) {
             $table->id();
-            $table->string('year')->unique();
+            $table->string('year')->nullable();
             $table->date('mulai_pendaftaran')->nullable();
             $table->date('akhir_pendaftaran')->nullable();
             $table->date('mulai_verifikasi')->nullable();
