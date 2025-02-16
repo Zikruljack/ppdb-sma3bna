@@ -13,6 +13,15 @@
                 <p>
                     File yang diupload harus berekstensi pdf,jpg,png dan max file 2mb.
                 </p>
+                <p>
+                    Jika ada kosong datanya maka di isi dengan <strong>"-"</strong>
+                </p>
+                @if ($ppdbUser->jalur_pendaftaran == 'kepemimpinan')
+                    <p>
+                        Untuk sertifikat kepemimpinan itu untuk ketua OSIS/OSIM harus upload berkas dari surat Keputusan
+                        Kepala satuan pendidikan atau Kepala Sekolah
+                    </p>
+                @endif
             </div>
             <form action="{{ route('ppdb.formulir.berkas.upload') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -64,6 +73,7 @@
                         <div id="sertifikat-container">
                             <div class="row mb-2">
                                 <div class="col-md-6">
+                                    <label>Sertifikat</label>
                                     <input type="file" class="form-control @error('sertifikat.*') is-invalid @enderror"
                                         name="sertifikat[]" required>
                                     @error('sertifikat.*')
@@ -71,6 +81,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
+                                    <label>Nama Sertifikat</label>
                                     <input type="text"
                                         class="form-control @error('nama_sertifikat.*') is-invalid @enderror"
                                         name="nama_sertifikat[]" placeholder="Nama Sertifikat" required>
@@ -81,6 +92,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-6">
+                                    <label>Penandatangan Sertifikat</label>
                                     <input type="text"
                                         class="form-control @error('penandatangan_sertifikat.*') is-invalid @enderror"
                                         name="penandatangan_sertifikat[]" placeholder="Penandatangan Sertifikat" required>
@@ -89,6 +101,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
+                                    <label>Jenis Sertifikat</label>
                                     <select class="form-control select2 @error('jenis_sertifikat.*') is-invalid @enderror"
                                         name="jenis_sertifikat[]" required>
                                         <option value="">Pilih Jenis Sertifikat</option>
@@ -102,6 +115,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-6">
+                                    <label>Tanggal Dikeluarkan</label>
                                     <input type="date"
                                         class="form-control @error('tanggal_dikeluarkan.*') is-invalid @enderror"
                                         name="tanggal_dikeluarkan[]" required>
@@ -110,10 +124,33 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text"
-                                        class="form-control @error('institusi_penerbit.*') is-invalid @enderror"
-                                        name="institusi_penerbit[]" placeholder="Institusi Penerbit" required>
-                                    @error('institusi_penerbit.*')
+                                    <label>Juara</label>
+                                    <select class="form-control @error('juara.*') is-invalid @enderror" name="juara[]"
+                                        required>
+                                        <option value="">Pilih Juara</option>
+                                        <option value="juara 1">Juara 1</option>
+                                        <option value="juara 2">Juara 2</option>
+                                        <option value="juara 3">Juara 3</option>
+                                        <option value="tidak ada kejuaraan">Tidak Ada Kejuaraan</option>
+                                    </select>
+                                    @error('juara.*')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label>Tingkat Kejuaraan</label>
+                                    <select class="form-control select2 @error('tingkat_kejuaraan.*') is-invalid @enderror"
+                                        name="tingkat_kejuaraan[]" required>
+                                        <option value="">Pilih Tingkat Kejuaraan</option>
+                                        <option value="kecamatan">Kecamatan</option>
+                                        <option value="kota">Kota</option>
+                                        <option value="provinsi">Provinsi</option>
+                                        <option value="nasional">Nasional</option>
+                                        <option value="internasional">Internasional</option>
+                                    </select>
+                                    @error('tingkat_kejuaraan.*')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -132,12 +169,14 @@
                                 <hr>
                                 <div class="row mb-2">
                                     <div class="col-md-6">
+                                        <label>Sertifikat Lainnya</label>
                                         <input type="file" class="form-control @error('sertifikat.*') is-invalid @enderror" name="sertifikat[]" required>
                                         @error('sertifikat.*')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Nama Sertifikat</label>
                                         <input type="text" class="form-control @error('nama_sertifikat.*') is-invalid @enderror" name="nama_sertifikat[]" placeholder="Nama Sertifikat" required>
                                         @error('nama_sertifikat.*')
                                             <div class="text-danger">{{ $message }}</div>
@@ -146,12 +185,14 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-6">
+                                        <label>Penandatangan Sertifikat</label>
                                         <input type="text" class="form-control @error('penandatangan_sertifikat.*') is-invalid @enderror" name="penandatangan_sertifikat[]" placeholder="Penandatangan Sertifikat" required>
                                         @error('penandatangan_sertifikat.*')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Jenis Sertifikat</label>
                                         <select class="form-control @error('jenis_sertifikat.*') is-invalid @enderror" name="jenis_sertifikat[]" required>
                                             <option value="">Pilih Jenis Sertifikat</option>
                                             <option value="akademik">Akademik</option>
@@ -164,14 +205,39 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-6">
+                                        <label>Tanggal Dikeluarkan</label>
                                         <input type="date" class="form-control @error('tanggal_dikeluarkan.*') is-invalid @enderror" name="tanggal_dikeluarkan[]" required>
                                         @error('tanggal_dikeluarkan.*')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control @error('institusi_penerbit.*') is-invalid @enderror" name="institusi_penerbit[]" placeholder="Institusi Penerbit" required>
-                                        @error('institusi_penerbit.*')
+                                    <label>Juara</label>
+                                    <select class="form-control @error('juara.*') is-invalid @enderror" name="juara[]" required>
+                                        <option value="">Pilih Juara</option>
+                                        <option value="juara 1">Juara 1</option>
+                                        <option value="juara 2">Juara 2</option>
+                                        <option value="juara 3">Juara 3</option>
+                                        <option value="tidak ada kejuaraan">Tidak Ada Kejuaraan</option>
+                                    </select>
+                                    @error('juara.*')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label>Tingkat Kejuaraan</label>
+                                        <select class="form-control select2 @error('tingkat_kejuaraan.*') is-invalid @enderror"
+                                        name="tingkat_kejuaraan[]" required>
+                                            <option value="">Pilih Tingkat Kejuaraan</option>
+                                            <option value="kecamatan">Kecamatan</option>
+                                            <option value="kota">Kota</option>
+                                            <option value="provinsi">Provinsi</option>
+                                            <option value="nasional">Nasional</option>
+                                            <option value="internasional">Internasional</option>
+                                        </select>
+                                        @error('tingkat_kejuaraan.*')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>

@@ -134,6 +134,32 @@ class PpdbController extends Controller{
         }
     }
 
+    public function dashboard() {
+        $user = auth()->user();
+        $ppdbUser = PpdbUser::where('user_id', $user->id)->first();
+        $mapel = Mapel::select('id', 'mapel')->get();
+        $nilaiRapors = NilaiRapor::where('user_id', $user->id)
+                ->get()
+                ->groupBy(['semester', 'mapel_id'])
+                ->map(function ($semesterGroup) {
+                    return $semesterGroup->mapWithKeys(function ($mapelGroup, $mapelId) {
+                        return [$mapelId => $mapelGroup->first()->nilai]; // Ambil nilai langsung
+                    });
+                })
+                ->toArray();
+
+        $berkas = BerkasPpdb::where('user_id', $user->id)->first();
+        $dataDiriLengkap = $ppdbUser ? true : false;
+        $nilaiRaporLengkap = !empty($nilaiRapors);
+        $berkasLengkap = !is_null($berkas);
+        $sudahValidasi = $ppdbUser->status === 'Valid'; // Sesuaikan dengan field di database
+
+        return view('ppdb.dashboard.dashboard', compact(
+            'dataDiriLengkap', 'nilaiRaporLengkap', 'berkasLengkap', 'sudahValidasi'
+        ));
+    }
+
+
     public function pendaftaran()
     {
         $user_id = auth()->id();
@@ -349,7 +375,8 @@ class PpdbController extends Controller{
         'penandatangan_sertifikat.*' => 'nullable|string|max:255',
         'jenis_sertifikat.*' => 'nullable|in:akademik,non akademik',
         'tanggal_dikeluarkan.*' => 'nullable|date',
-        'institusi_penerbit.*' => 'nullable|string|max:255',
+        'juara.*' => 'nullable|string|max:255',
+        'tingkat_kejuaraan.*' => 'nullable|string|max:255',
     ]);
 
     if ($validator->fails()) {
@@ -393,13 +420,22 @@ class PpdbController extends Controller{
             ]
         );
 
-        // Simpan sertifikat jika ada
-        if ($request->hasFile('sertifikat')) {
-            foreach ($request->file('sertifikat') as $sertifikat) {
-                $path = $sertifikat->store('berkas/sertifikat', 'public');
-                $berkas->sertifikat()->create(['file_path' => $path]);
-            }
+        // Simpan data sertifikat
+        foreach ($validatedData['sertifikat'] as $index => $sertifikat) {
+            $sertifikatPath = $sertifikat ? $sertifikat->store('berkas/sertifikat', 'public') : null;
+            Sertifikat::create([
+                'berkas_id' => $berkas->id,
+                'file_path' => $sertifikatPath,
+                'nama_sertifikat' => $validatedData['nama_sertifikat'][$index],
+                'penandatangan_sertifikat' => $validatedData['penandatangan_sertifikat'][$index],
+                'jenis_sertifikat' => $validatedData['jenis_sertifikat'][$index],
+                'tanggal_dikeluarkan' => $validatedData['tanggal_dikeluarkan'][$index],
+                'juara' => $validatedData['juara'][$index],
+                'tingkat_kejuaraan' => $validatedData['tingkat_kejuaraan'][$index],
+            ]);
         }
+
+
         DB::commit();
         return redirect()->route('ppdb.resume')->with('success', 'Berkas berhasil disimpan!');
     } catch (\Exception $e) {
@@ -423,6 +459,15 @@ class PpdbController extends Controller{
 
         $berkasPendukung = BerkasPpdb::where('user_id', $user->id)->first();
         $sertifikat = Sertifikat::where('berkas_id', $berkasPendukung->id)->get();
+
+        $dataDiriLengkap = $ppdbUser ? true : false;
+        $nilaiRaporLengkap = !empty($nilaiRapor);
+        $berkasLengkap = !is_null($berkasPendukung);
+
+        if (!$dataDiriLengkap || !$nilaiRaporLengkap || !$berkasLengkap) {
+            return redirect()->route('ppdb.pendaftaran')->with('error', 'Lengkapi semua data terlebih dahulu.');
+        }
+
         return view('ppdb.dashboard.steps.detail', compact('ppdbUser', 'mapel', 'nilaiRapor', 'berkasPendukung', 'sertifikat'));
     }
 

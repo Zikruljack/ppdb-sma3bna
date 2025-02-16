@@ -19,7 +19,8 @@ class Sertifikat extends Model
         'penandatangan_sertifikat',
         'jenis_sertifikat',
         'tanggal_dikeluarkan',
-        'institusi_penerbit'
+        'juara',
+        'tingkat_kejuaraan',
     ];
 
     public function berkas()

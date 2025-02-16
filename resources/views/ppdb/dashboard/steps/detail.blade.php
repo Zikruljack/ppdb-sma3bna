@@ -137,6 +137,72 @@
                     </tbody>
                 </table>
 
+                <h4>Sertifikat Akademik</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nama Berkas</th>
+                            <th>Tingkat Kejuaraan</th>
+                            <th>Juara</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($sertifikat->where('jenis_sertifikat', 'akademik')->isNotEmpty())
+                            @foreach ($sertifikat->where('jenis_sertifikat', 'akademik') as $sertifikatAkademik)
+                                <tr>
+                                    <td>{{ $sertifikatAkademik->nama_sertifikat }}</td>
+                                    <td>{{ $sertifikatAkademik->tingkat_kejuaraan }}</td>
+                                    <td>{{ $sertifikatAkademik->juara }}</td>
+                                    <td>
+                                        <a href="{{ asset('storage/' . $sertifikatAkademik->file) }}" target="_blank"
+                                            class="btn btn-info">
+                                            <i class="fas fa-file-alt"></i> Lihat File
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4" class="text-center">Tidak ada sertifikat akademik</td>
+                            </tr>
+                        @endif
+
+                    </tbody>
+                </table>
+
+                <h4>Sertifikat Non Akademik</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nama Berkas</th>
+                            <th>Tingkat Kejuaraan</th>
+                            <th>Juara</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($sertifikat->where('jenis_sertifikat', 'non akademik')->isNotEmpty())
+                            @foreach ($sertifikat->where('jenis_sertifikat', 'non akademik') as $sertifikatNonAkademik)
+                                <tr>
+                                    <td>{{ $sertifikatNonAkademik->nama_sertifikat }}</td>
+                                    <td>{{ $sertifikatNonAkademik->tingkat_kejuaraan }}</td>
+                                    <td>{{ $sertifikatNonAkademik->juara }}</td>
+                                    <td>
+                                        <a href="{{ asset('storage/' . $sertifikatNonAkademik->file) }}" target="_blank"
+                                            class="btn btn-info">
+                                            <i class="fas fa-file-alt"></i> Lihat File
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4" class="text-center">Tidak ada sertifikat non akademik</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
 
                 <div class="text-center mt-4">
                     <form id="finalizeForm" action="{{ route('ppdb.formulir.finalisasi') }}" method="POST">
