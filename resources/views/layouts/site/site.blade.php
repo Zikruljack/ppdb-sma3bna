@@ -44,13 +44,6 @@
                         icon: 'error',
                         title: 'Oops...',
                         text: "{{ session('error') }}",
-                        html: `
-                        <ul style="text-align: left;">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    `
                     });
                 });
             </script>

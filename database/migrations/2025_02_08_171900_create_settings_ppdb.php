@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('settings_ppdb', function (Blueprint $table) {
             $table->id();
             $table->string('year')->unique();
-            $table->date('mulai_pendaftaran');
-            $table->date('akhir_pendaftaran');
-            $table->date('mulai_verifikasi');
-            $table->date('akhir_verifikasi');
-            $table->date('jalur_pendaftaran');
-            $table->date('tanggal_pengumuman');
-            $table->integer('kuota');
+            $table->date('mulai_pendaftaran')->nullable();
+            $table->date('akhir_pendaftaran')->nullable();
+            $table->date('mulai_verifikasi')->nullable();
+            $table->date('akhir_verifikasi')->nullable();
+            $table->string('jalur_pendaftaran')->nullable();
+            $table->date('tanggal_pengumuman')->nullable();
+            $table->integer('kuota')->nullable();
             $table->integer('maksimal_umur')->nullable();
             $table->enum('status', ['buka', 'tutup', 'mendatang'])->default('mendatang');
             $table->timestamps();

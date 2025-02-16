@@ -384,13 +384,13 @@ return [
                 'can' => 'manage_ppdb',
                 'classes' => 'ml-3',
             ],
-            // [
-            //     'text' => 'Pengaturan SPMB',
-            //     'icon' => 'fas fa-fw fa-cog',
-            //     'url'  => 'admin/ppdb/settings',
-            //     'classes' => 'ml-3',
-            //     'can' => 'manage_ppdb',
-            // ],
+            [
+                'text' => 'Pengaturan SPMB',
+                'icon' => 'fas fa-fw fa-cog',
+                'url'  => 'admin/ppdb/settings',
+                'classes' => 'ml-3',
+                'can' => 'manage_ppdb',
+            ],
 
             [
                 'text' => 'Pengumuman',

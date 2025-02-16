@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
+use App\Http\Middleware\CheckRegistrationTime;
 
 Route::fallback(function () {
     return response()->view('errors.generics', ['statusCode' => 404], 404);
@@ -24,27 +24,6 @@ Route::get('/get-kecamatan', function (Request $request) {
         ->get();
     return response()->json($kecamatan);
 });
-//Landing Page
-Route::prefix('/')->group(function () {
-    Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing.page');
-    Route::get('/ppdb', [App\Http\Controllers\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
-    // Route::get('/ppdb/login', [App\Http\Controllers\Ppdb\PpdbController::class , 'login'])->name('login.ppdb');
-    // Route::post('/ppdb/login/attempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'loginAttempt'])->name('login.attempt');
-    // Route::get('/ppdb/register', [App\Http\Controllers\Ppdb\PpdbController::class , 'register'])->name('register.ppdb');
-    // Route::post('/ppdb/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
-    // Route::get('/profil', [App\Http\Controllers\LandingPageController::class, 'profil'])->name('profil');
-    // Route::get('/berita', [App\Http\Controllers\LandingPageController::class, 'berita'])->name('berita');
-    // Route::get('/berita/{slug}', [App\Http\Controllers\LandingPageController::class, 'beritaDetail'])->name('berita.detail');
-    // Route::get('/galeri', [App\Http\Controllers\LandingPageController::class, 'galeri'])->name('galeri');
-    // Route::get('/galeri/{slug}', [App\Http\Controllers\LandingPageController::class, 'galeriDetail'])->name('galeri.detail');
-    // Route::get('/pengumuman', [App\Http\Controllers\LandingPageController::class, 'pengumuman'])->name('pengumuman');
-    // // Route::get('/pengumuman/{slug}', [App\Http\Controllers\LandingPageController::class, 'pengumumanDetail'])->name('pengumuman.detail');
-    // Route::get('/kontak', [App\Http\Controllers\LandingPageController::class, 'kontak'])->name('kontak');
-    // Route::get('/tentang', [App\Http\Controllers\LandingPageController::class, 'tentang'])->name('tentang');
-    // Route::get('/prestasi', [App\Http\Controllers\LandingPageController::class, 'prestasi'])->name('prestasi');
-    // Route::get('/struktur-organisasi', [App\Http\Controllers\LandingPageController::class, 'strukturOrganisasi'])->name('struktur-organisasi');
-});
-
 
 Auth::routes([
     'register' => false,
@@ -69,6 +48,32 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 
 
+//Landing Page
+Route::prefix('/')->group(function () {
+    Route::get('/', [App\Http\Controllers\LandingPageController::class, 'index'])->name('landing.page');
+    Route::get('/ppdb', [App\Http\Controllers\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
+    Route::prefix('ppdb')->middleware(CheckRegistrationTime::class)->group(function () {
+        Route::get('/login', [App\Http\Controllers\Ppdb\PpdbController::class , 'login'])->name('login.ppdb');
+        Route::post('/ppdb/login/attempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'loginAttempt'])->name('login.attempt');
+        Route::get('/ppdb/register', [App\Http\Controllers\Ppdb\PpdbController::class , 'register'])->name('register.ppdb');
+        Route::post('/ppdb/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
+
+    });
+    // Route::get('/profil', [App\Http\Controllers\LandingPageController::class, 'profil'])->name('profil');
+    // Route::get('/berita', [App\Http\Controllers\LandingPageController::class, 'berita'])->name('berita');
+    // Route::get('/berita/{slug}', [App\Http\Controllers\LandingPageController::class, 'beritaDetail'])->name('berita.detail');
+    // Route::get('/galeri', [App\Http\Controllers\LandingPageController::class, 'galeri'])->name('galeri');
+    // Route::get('/galeri/{slug}', [App\Http\Controllers\LandingPageController::class, 'galeriDetail'])->name('galeri.detail');
+    // Route::get('/pengumuman', [App\Http\Controllers\LandingPageController::class, 'pengumuman'])->name('pengumuman');
+    // Route::get('/pengumuman/{slug}', [App\Http\Controllers\LandingPageController::class, 'pengumumanDetail'])->name('pengumuman.detail');
+    // Route::get('/kontak', [App\Http\Controllers\LandingPageController::class, 'kontak'])->name('kontak');
+    // Route::get('/tentang', [App\Http\Controllers\LandingPageController::class, 'tentang'])->name('tentang');
+    // Route::get('/prestasi', [App\Http\Controllers\LandingPageController::class, 'prestasi'])->name('prestasi');
+    // Route::get('/struktur-organisasi', [App\Http\Controllers\LandingPageController::class, 'strukturOrganisasi'])->name('struktur-organisasi');
+});
+
+
+
 //admin
 Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function () {
 
@@ -87,8 +92,8 @@ Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function 
             Route::get('/peserta/download/kartu/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'downloadKartu'])->name('admin.ppdb.download.kartu');
 
             //setting ppdb
-            Route::get('/setting', [App\Http\Controllers\Admin\Ppdb\AdminPpdbSettingController::class, 'index'])->name('admin.ppdb.setting');
-            Route::post('/setting/save', [App\Http\Controllers\Admin\Ppdb\AdminPpdbSettingController::class, 'save'])->name('admin.ppdb.setting.save');
+            Route::get('/settings', [App\Http\Controllers\Admin\Ppdb\PpdbSettingsController::class, 'index'])->name('admin.ppdb.setting');
+            Route::post('/settings/save', [App\Http\Controllers\Admin\Ppdb\PpdbSettingsController::class, 'store'])->name('admin.ppdb.setting.save');
         });
 
         //users
