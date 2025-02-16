@@ -149,8 +149,6 @@
                             <h4 class="mb-1">6. Ujian</h4>
                             <p>Ikuti ujian masuk sesuai dengan jadwal yang telah ditentukan.</p>
                         </div>
-
-
                         <!--/column -->
                     </div>
                     <!--/.row -->
@@ -162,4 +160,30 @@
         <!-- /.container -->
     </section>
     <!-- /section -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="ppdbModal" tabindex="-1" aria-labelledby="ppdbModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ppdbModalLabel">Informasi Penting</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Pendaftaran PPDB akan dibuka pada tanggal 17 Februari 2025 pukul 07.00 pagi sampai tanggal 27 Februari
+                    2025 pukul 23.59 malam. Jangan lewatkan!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ppdbModal = new bootstrap.Modal(document.getElementById('ppdbModal'));
+            ppdbModal.show();
+        });
+    </script>
 @endsection

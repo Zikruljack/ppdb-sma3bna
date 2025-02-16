@@ -1,8 +1,8 @@
 import "./bootstrap";
 import "laravel-datatables-vite";
-
 import $ from "jquery";
 window.$ = $;
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import select2 from "select2";
 

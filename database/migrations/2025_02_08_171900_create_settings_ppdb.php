@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('akhir_pendaftaran');
             $table->date('mulai_verifikasi');
             $table->date('akhir_verifikasi');
+            $table->date('jalur_pendaftaran');
             $table->date('tanggal_pengumuman');
             $table->integer('kuota');
             $table->integer('maksimal_umur')->nullable();
