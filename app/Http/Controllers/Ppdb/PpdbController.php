@@ -459,7 +459,6 @@ class PpdbController extends Controller{
     }
 }
 
-
     public function resume()
     {
         $user = auth()->user();

@@ -93,12 +93,12 @@ Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function 
 
 
             //edit delete ppdb
-            Route::get('/peserta/edit/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'edit'])->name('admin.ppdb.edit');
-            Route::post('/peserta/update/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'updateUserPpdb'])->name('admin.ppdb.update');
-            Route::post('/peserta/delete/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'destroy'])->name('admin.ppdb.destroy');
+            Route::get('/peserta/edit/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'edit'])->name('admin.ppdb.peserta.edit');
+            Route::post('/peserta/update/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'updateUserPpdb'])->name('admin.ppdb.peserta.update');
+            Route::post('/peserta/delete/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'destroy'])->name('admin.ppdb.peserta.destroy');
 
-            // Route::get('/peserta/list', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'fullListUserPpdb'])->name('admin.ppdb.list');
-            // Route::get('/peserta/list/detail/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'detailListUserPpdb'])->name('admin.ppdb.detailuser');
+            Route::get('/peserta/list', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'fullListUserPpdb'])->name('admin.ppdb.list');
+            Route::get('/peserta/list/detail/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'detailListUserPpdb'])->name('admin.ppdb.detailuser');
 
 
 

@@ -167,105 +167,29 @@ class AdminPpdbController extends Controller
         $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
         $sertifikat = $berkasPendukung ? Sertifikat::where('berkas_id', $berkasPendukung->id)->get() : collect();
 
-        $provinsi = $provinsi ? $provinsi->name : 'Data tidak ditemukan';
-        $kabkota = $kabkota ? $kabkota->name : 'Data tidak ditemukan';
-        $kecamatan = $kecamatan ? $kecamatan->name : 'Data tidak ditemukan';
-
         return view('dashboard.ppdb.detailuser', compact('ppdbUser', 'provinsi', 'kabkota', 'kecamatan', 'nilaiRapor', 'sertifikat', 'berkasPendukung'));
     }
 
 
     public function edit($id){
         $ppdbUser = PpdbUser::where('id', $id)->first();
-        return view('dashboard.ppdb.edit', compact('ppdbUser'));
+        $mapel = Mapel::select('id', 'mapel')->get();
+        $nilaiRapors = NilaiRapor::where('user_id', $ppdbUser->user_id)
+                ->get()
+                ->groupBy(['semester', 'mapel_id'])
+                ->map(function ($semesterGroup) {
+                    return $semesterGroup->mapWithKeys(function ($mapelGroup, $mapelId) {
+                        return [$mapelId => $mapelGroup->first()->nilai]; // Ambil nilai langsung
+                    });
+                })
+                ->toArray();
+                // dd($nilaiRapors);
+        return view('dashboard.ppdb.edit', compact('ppdbUser', 'mapel', 'nilaiRapors'));
     }
-
-    // public function updateUserPpdb(Request $request, $id){
-
-
-    //     $ppdbUser = PpdbUser::where('id', $id)->first();
-
-    //     $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
-    //     $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
-    //     $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
-
-    //     $nilaiRapor = NilaiRapor::where('user_id', $ppdbUser->user_id)
-    //         ->with('mapel')
-    //         ->orderBy('semester')
-    //         ->get()
-    //         ->groupBy('semester');
-    //     $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
-    //     $sertifikat = $berkasPendukung ? Sertifikat::where('berkas_id', $berkasPendukung->id)->get() : collect();
-
-
-    //     $validator = Validator::make($request->all(), [
-    //         // ppdb user
-    //         'jalur_pendaftaran' => 'nullable|in:prestasi,kepemimpinan',
-    //         'nomor_peserta' => 'nullable|numeric',
-    //         'nama_lengkap' => 'nullable|string',
-    //         'tempat_lahir' => 'nullable|string',
-    //         'tanggal_lahir' => 'nullable|date',
-    //         'jenis_kelamin' => 'nullable|in:Laki-Laki,Perempuan',
-    //         'agama' => 'nullable',
-    //         'alamat' => 'nullable|string',
-    //         'provinsi' => 'nullable|exists:indonesia_provinces,code',
-    //         'kabupaten_kota' => 'nullable|exists:indonesia_cities,code',
-    //         'kecamatan' => 'nullable|exists:indonesia_districts,code',
-    //         'no_hp' => 'nullable|string',
-    //         'email' => 'nullable|email|unique:ppdb_users,email,' . $ppdbUser->id,
-    //         'status' => 'nullable|in:Valid,Tidak Valid',
-    //         'nomor_ujian' => 'nullable_if:status,Valid|string',
-    //         'note_validasi' => 'nullable_if:status,Tidak Valid|string',
-    //         // Berkas Pendukung
-    //         'kk' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-    //         'ktp_kia' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-    //         'surat_keterangan_aktif' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-    //         'akta' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-    //         'sertifikat.*' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-    //         'nama_sertifikat.*' => 'nullable|string|max:255',
-    //         'penandatangan_sertifikat.*' => 'nullable|string|max:255',
-    //         'jenis_sertifikat.*' => 'nullable|in:akademik,non akademik',
-    //         'tanggal_dikeluarkan.*' => 'nullable|date',
-    //         'juara.*' => 'nullable|string|max:255',
-    //         'tingkat_kejuaraan.*' => 'nullable|string|max:255',
-    //         'sk_ketua_osis' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-    //         'periode' => 'nullable|string|max:255',
-
-    //         // nilai rapor
-    //         'nilai' => 'required|array',
-    //         'nilai.*' => 'required|array',
-    //         'nilai.*.*' => "required|integer|min:80|max:100",
-    //         'scan_rapor' => 'nullable|array',
-    //         'scan_rapor.*' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:2048',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return redirect()->back()->withErrors($validator)->withInput();
-    //     }
-    //     $validatedData = $validator->validated();
-
-    //     try{
-    //         DB::beginTransaction();
-
-
-
-    //         DB::commit();
-    //         return redirect()->route('admin.ppdb.index')->with('success', 'Data telah tersimpan');
-    //     }catch(Exception $e){
-    //         DB::rollBack();
-    //         \Log::error("message:" . $e->getMessage());
-    //         return redirect()->route('admin.ppdb.index')->with('error', 'Terjadi kesalahan saat menyimpan data');
-    //     }
-    // }
 
     public function updateUserPpdb(Request $request, $id)
     {
         $ppdbUser = PpdbUser::where('id', $id)->firstOrFail();
-
-        $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
-        $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
-        $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
-
         $nilaiRapor = NilaiRapor::where('user_id', $ppdbUser->user_id)
             ->with('mapel')
             ->orderBy('semester')
