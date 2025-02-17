@@ -491,7 +491,7 @@ class PpdbController extends Controller{
         try {
             DB::beginTransaction();
             $lastUser = PpdbUser::whereNotNull('nomor_peserta')->orderBy('nomor_peserta', 'desc')->first();
-            $nomorPeserta = $lastUser ? str_pad($lastUser->nomor_peserta + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            $nomorPeserta = $lastUser ? str_pad($lastUser->nomor_peserta + 1, 4, '0', STR_PAD_LEFT) : '0151';
             $ppdbUser->update(['status' => 'Final', 'nomor_peserta' => $nomorPeserta]);
             DB::commit();
             return redirect()->route('ppdb.resume')->with('success', 'Pendaftaran telah difinalisasi. Anda tidak bisa mengubah data lagi.');
