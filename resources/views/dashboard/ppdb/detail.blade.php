@@ -124,6 +124,7 @@
                             <th>Matematika</th>
                             <th>IPA</th>
                             <th>IPS</th>
+                            <th>File</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,6 +137,12 @@
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Matematika')->nilai ?? '-' }}</td>
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPA')->nilai ?? '-' }}</td>
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPS')->nilai ?? '-' }}</td>
+                                <td>
+                                    <a href="{{ asset('storage/' . $nilaiSemester->firstWhere('mapel.mapel', 'PAI')->scan_rapor) }}"
+                                        target="_blank" class="btn btn-info">
+                                        <i class="fas fa-file-alt"></i> Lihat File
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
