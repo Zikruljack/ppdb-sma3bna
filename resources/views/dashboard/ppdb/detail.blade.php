@@ -128,29 +128,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (empty($nilaiRapor))
-                            @foreach ($nilaiRapor as $semester => $nilaiSemester)
-                                <tr>
-                                    <td>{{ $semester }}</td>
-                                    <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'PAI')->nilai ?? '-' }}</td>
-                                    <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Bahasa Indonesia')->nilai ?? '-' }}
-                                    </td>
-                                    <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Bahasa Inggris')->nilai ?? '-' }}
-                                    </td>
-                                    <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Matematika')->nilai ?? '-' }}</td>
-                                    <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPA')->nilai ?? '-' }}</td>
-                                    <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPS')->nilai ?? '-' }}</td>
-                                    <td>
-                                        <a href="{{ asset('storage/' . $nilaiSemester->firstWhere('mapel.mapel', 'PAI')->scan_rapor) }}"
-                                            target="_blank" class="btn btn-info">
-                                            <i class="fas fa-file-alt"></i> Lihat File
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <span class="text-danger">Berkas belum diunggah</span>
-                        @endif
+                        @foreach ($nilaiRapor as $semester => $nilaiSemester)
+                            <tr>
+                                <td>{{ $semester }}</td>
+                                <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'PAI')->nilai ?? '-' }}</td>
+                                <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Bahasa Indonesia')->nilai ?? '-' }}
+                                </td>
+                                <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Bahasa Inggris')->nilai ?? '-' }}
+                                </td>
+                                <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Matematika')->nilai ?? '-' }}</td>
+                                <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPA')->nilai ?? '-' }}</td>
+                                <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPS')->nilai ?? '-' }}</td>
+                                <td>
+                                    <a href="{{ asset('storage/' . $nilaiSemester->firstWhere('mapel.mapel', 'PAI')->scan_rapor) }}"
+                                        target="_blank" class="btn btn-info">
+                                        <i class="fas fa-file-alt"></i> Lihat File
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
 
