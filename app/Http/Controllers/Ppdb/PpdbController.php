@@ -178,8 +178,8 @@ class PpdbController extends Controller{
 
     $validator = Validator::make($request->all(), [
         'nama_lengkap' => 'required|string|max:255',
-        'nisn' => ['required', 'min:10' , 'max:10', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
-        'nik' => ['required', 'min:16', 'max:16' ,'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
+        'nisn' => ['required', 'min:10', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
+        'nik' => ['required', 'min:16' ,'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
         'no_kk' => ['required', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
         'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'tanggal_kk_dikeluarkan' => 'required|date',
@@ -214,12 +214,10 @@ class PpdbController extends Controller{
         'nisn.numeric' => 'NISN harus berupa angka.',
         'nisn.unique' => 'NISN sudah digunakan.',
         'nisn.min' => 'NISN harus 10 digit angka',
-        'nisn.max' => 'NISN harus 10 digit angka',
         'nik.required' => 'NIK harus diisi.',
         'nik.numeric' => 'NIK harus berupa angka.',
         'nik.unique' => 'NIK sudah digunakan.',
         'nik.min' => 'NIK harus 16 digit angka',
-        'nik.max' => 'NIK harus 16 digit angka',
         'no_kk.required' => 'Nomor KK harus diisi.',
         'no_kk.numeric' => 'Nomor KK harus berupa angka.',
         'no_kk.unique' => 'Nomor KK sudah digunakan.',
