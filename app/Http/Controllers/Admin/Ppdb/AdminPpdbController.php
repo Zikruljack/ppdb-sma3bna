@@ -167,6 +167,44 @@ class AdminPpdbController extends Controller
 
     public function updateUserPpdb(Request $request, $id){
 
+
+        $ppdbUser = PpdbUser::where('id', $id)->first();
+
+        $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
+        $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
+        $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
+
+        $nilaiRapor = NilaiRapor::where('user_id', $ppdbUser->user_id)
+            ->with('mapel')
+            ->orderBy('semester')
+            ->get()
+            ->groupBy('semester');
+        $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
+        $sertifikat = $berkasPendukung ? Sertifikat::where('berkas_id', $berkasPendukung->id)->get() : collect();
+
+
+        $validator = Validator::make($request->all(), [
+            // ppdb user
+            'jalur_pendaftaran' => 'required|in:prestasi,kepemimpinan',
+            'nomor_peserta' => 'required|numeric',
+            'nama_lengkap' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
+            'agama' => 'required|in:Islam,Kristen,Katolik,Hindu,Budha,Konghuchu',
+            'alamat' => 'required|string',
+            'provinsi' => 'required|exists:indonesia_provinces,code',
+            'kabupaten_kota' => 'required|exists:indonesia_cities,code',
+            'kecamatan' => 'required|exists:indonesia_districts,code',
+            'no_hp' => 'required|string',
+            'email' => 'required|email|unique:ppdb_users,email,' . $ppdbUser->id,
+            'status' => 'required|in:Valid,Tidak Valid',
+            'nomor_ujian' => 'required_if:status,Valid|string',
+            'note_validasi' => 'required_if:status,Tidak Valid|string',
+            // Berkas Pendukung
+            'sertifikat' => 'required_if:status,Valid|array|min:1',
+
+        ]);
     }
 
 

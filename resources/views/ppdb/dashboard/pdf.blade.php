@@ -146,7 +146,11 @@
                     </table>
                 </div>
                 <div class="biodata-cell foto-container">
-                    <img src="{{ public_path('storage/' . $ppdbUser->foto) }}" alt="Foto Peserta">
+                    @if (file_exists(public_path('storage/' . $ppdbUser->foto)))
+                        <img src="{{ public_path('storage/' . $ppdbUser->foto) }}" alt="Foto Peserta">
+                    @else
+                        <p>Tidak ada foto</p>
+                    @endif
                 </div>
             </div>
         </div>

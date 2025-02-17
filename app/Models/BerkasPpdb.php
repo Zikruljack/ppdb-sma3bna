@@ -19,6 +19,9 @@ class BerkasPpdb extends Model
         'ktp_kia_file',
         'surat_keterangan_aktif',
         'akta_kelahiran_file',
+        'sk_ketua_osis',
+        'periode',
+        'penandatangan_sk',
     ];
 
     public function sertifikat()

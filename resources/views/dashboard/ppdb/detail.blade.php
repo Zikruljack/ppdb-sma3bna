@@ -20,8 +20,12 @@
                 <h3 class="text-center">SMA NEGERI 3 BANDA ACEH</h3>
                 <hr>
                 <div class="text-center mb-3">
-                    <img src="{{ asset('storage/' . $ppdbUser->foto) }}" alt="Foto Calon Peserta" class="img-thumbnail"
-                        width="150">
+                    @if (!empty($ppdbUser->foto))
+                        <img src="{{ asset('storage/' . $ppdbUser->foto) }}" alt="Foto Calon Peserta" class="img-thumbnail"
+                            width="150">
+                    @else
+                        <span class="text-danger">Foto belum diunggah</span>
+                    @endif
                 </div>
                 <hr>
                 <table class="table table-bordered">
@@ -117,13 +121,13 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Semester</th>
-                            <th>PAI</th>
-                            <th>Bahasa Indonesia</th>
-                            <th>Bahasa Inggris</th>
-                            <th>Matematika</th>
-                            <th>IPA</th>
-                            <th>IPS</th>
+                            <th style="width: 10%;">Semester</th>
+                            <th style="width: 15%;">PAI</th>
+                            <th style="width: 15%;">Bahasa Indonesia</th>
+                            <th style="width: 15%;">Bahasa Inggris</th>
+                            <th style="width: 15%;">Matematika</th>
+                            <th style="width: 15%;">IPA</th>
+                            <th style="width: 15%;">IPS</th>
                             <th>File</th>
                         </tr>
                     </thead>
@@ -201,6 +205,21 @@
                                 @endif
                             </td>
                         </tr>
+                        @if ($ppdbUser->jalur_pendaftaran == 'kepemimpinan')
+                            <tr>
+                                <td>Surat Keterangan OSIS/OSIM</td>
+                                <td>
+                                    @if (!empty($berkasPendukung->sk_ketua_osis))
+                                        <a href="{{ asset('storage/' . $berkasPendukung->sk_ketua_osis) }}" target="_blank"
+                                            class="btn btn-info">
+                                            <i class="fas fa-file-alt"></i> Lihat File
+                                        </a>
+                                    @else
+                                        <span class="text-danger">Berkas belum diunggah</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
 

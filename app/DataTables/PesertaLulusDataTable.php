@@ -57,7 +57,7 @@ class PesertaLulusDataTable extends DataTable
                     ->setTableId('pesertalulus-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([

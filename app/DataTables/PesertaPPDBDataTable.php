@@ -26,8 +26,9 @@ class PesertaPPDBDataTable extends DataTable
                 $btn = '<ul class="list-unstyled d-flex gap-2 mb-0">';
                 $btn .= '<li><a href="/admin/ppdb/peserta/detail/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="fa fa-fw fa-eye"></i></a></li>';
                 $btn .= '<li><a href="/admin/ppdb/peserta/validate/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Validasi"><i class="fa fa-fw fa-check text-success"></i></a></li>';
-                // $btn .= '<li><a href="" class="btn btn-sm delete btn-link" data-bs-toggle="tooltip" data-bs-placement="top" data-confirm-delete="true" title="Delete"><i class="fa fa-fw fa-trash text-danger"></i></a></li>';
-                // $btn .= '<li><a href="" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-fw fa-edit text-primary"></i></a></li>';
+                if($row->status == 'Valid'){
+                    $btn .= '<li><a href="/admin/ppdb/download/kartu/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Kartu"><i class="fa fa-fw fa-download"></i></a></li>';
+                }
                 $btn .= '</ul>';
                 return $btn;
             })
@@ -57,10 +58,8 @@ class PesertaPPDBDataTable extends DataTable
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
-                        // Button::make('csv'),
                         Button::make('pdf'),
                         Button::make('print'),
-                        // Button::make('reset'),
                         Button::make('reload')
                     ]);
     }
@@ -74,9 +73,7 @@ class PesertaPPDBDataTable extends DataTable
             Column::computed('DT_RowIndex') // Kolom penomoran
                 ->title('No')
                 ->orderable(false)
-                ->searchable(false)
-                ->width(30)
-                ->addClass('text-center'),
+                ->searchable(false),
             Column::make('nomor_peserta'),
             Column::make('nama_lengkap'),
             Column::make('jalur_pendaftaran'),

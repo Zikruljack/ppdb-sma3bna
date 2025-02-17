@@ -12,7 +12,8 @@
                 <h5 class="alert-heading"><i class="fas fa-info-circle"></i> Note :</h5>
                 <ul>
                     <li>File yang diupload harus berekstensi <strong>pdf, jpg, png</strong> dan max file
-                        <strong>2MB</strong>.</li>
+                        <strong>2MB</strong>.
+                    </li>
                     <li>Jika ada data yang kosong, maka diisi dengan <strong>"-".</strong></li>
                     @if ($ppdbUser->jalur_pendaftaran == 'kepemimpinan')
                         <li>Untuk sertifikat kepemimpinan, ketua OSIS/OSIM harus mengupload berkas dari surat Keputusan
@@ -33,7 +34,7 @@
                             <div class="form-group">
                                 <label>Kartu Keluarga (KK) <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control @error('kk') is-invalid @enderror" name="kk"
-                                    required>
+                                    accept="images/*, application/pdf" required>
                                 @error('kk')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -42,7 +43,7 @@
                                 <label>Surat Keterangan Aktif Sekolah <span class="text-danger">*</span></label>
                                 <input type="file"
                                     class="form-control @error('surat_keterangan_aktif') is-invalid @enderror"
-                                    name="surat_keterangan_aktif" required>
+                                    accept="images/*, application/pdf" name="surat_keterangan_aktif" required>
                                 @error('surat_keterangan_aktif')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -54,13 +55,52 @@
                             <div class="form-group">
                                 <label>Akta Kelahiran <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control @error('akta') is-invalid @enderror"
-                                    name="akta" required>
+                                    accept="images/*, application/pdf" name="akta" required>
                                 @error('akta')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                     </div>
+
+                    @if ($ppdbUser->jalur_pendaftaran == 'kepemimpinan')
+                        <div class="form-group mt-3">
+                            <label>{{ strtoupper($ppdbUser->jalur_pendaftaran) }}</label>
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <label for="sk_ketua_osis">Surat Keterangan Ketua Osis</label>
+                                    <input id="sk_ketua_osis" type="file" placeholder="Surat Keterangan Ketua OSIS/OSIM"
+                                        accept="images/*, application/pdf"
+                                        class="form-control @error('sk_ketua_osis') is-invalid @enderror"
+                                        name="sk_ketua_osis" required>
+                                    @error('sk_ketua_osis')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="sk_ketua_osis">Penandatangan Surat Keterangan</label>
+                                    <input type="text" id="penandatangan_sk" name="penandatangan_sk"
+                                        placeholder="Penandatangan Surat Keterangan" required
+                                        class="form-control @error('penandatangan_sk')
+                                        is-invalid
+                                    @enderror">
+                                    @error('penandatangan_sk')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="periode">Periode Ketua Osis</label>
+                                    <input type="text" id="periode" name="periode" placeholder="Periode" required
+                                        class="form-control @error('periode')
+                                        is-invalid
+                                    @enderror">
+                                    @error('periode')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                     <!-- Container Sertifikat -->
                     <div class="form-group mt-3">
@@ -72,7 +112,7 @@
                                 <div class="col-md-6">
                                     <label>Sertifikat</label>
                                     <input type="file" class="form-control @error('sertifikat.*') is-invalid @enderror"
-                                        name="sertifikat[]" required>
+                                        accept="images/*, application/pdf" name="sertifikat[]" required>
                                     @error('sertifikat.*')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -138,7 +178,8 @@
                             <div class="row mb-2">
                                 <div class="col-md-6">
                                     <label>Tingkat Kejuaraan</label>
-                                    <select class="form-control select2 @error('tingkat_kejuaraan.*') is-invalid @enderror"
+                                    <select
+                                        class="form-control select2 @error('tingkat_kejuaraan.*') is-invalid @enderror"
                                         name="tingkat_kejuaraan[]" required>
                                         <option value="">Pilih Tingkat Kejuaraan</option>
                                         <option value="kecamatan">Kecamatan</option>
@@ -167,7 +208,7 @@
                                 <div class="row mb-2">
                                     <div class="col-md-6">
                                         <label>Sertifikat Lainnya</label>
-                                        <input type="file" class="form-control @error('sertifikat.*') is-invalid @enderror" name="sertifikat[]" required>
+                                        <input type="file" class="form-control @error('sertifikat.*') is-invalid @enderror" accept="images/*, application/pdf" name="sertifikat[]" required>
                                         @error('sertifikat.*')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror

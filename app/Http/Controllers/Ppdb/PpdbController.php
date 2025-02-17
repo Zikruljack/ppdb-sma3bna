@@ -180,7 +180,7 @@ class PpdbController extends Controller{
         'nama_lengkap' => 'required|string|max:255',
         'nisn' => ['required', 'min:10', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
         'nik' => ['required', 'min:16' ,'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
-        'no_kk' => ['required', 'numeric', Rule::unique('ppdb_user')->ignore($userId, 'user_id')],
+        'no_kk' => ['required', 'numeric'],
         'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'tanggal_kk_dikeluarkan' => 'required|date',
         'tempat_lahir' => 'required|string|max:255',
@@ -220,7 +220,6 @@ class PpdbController extends Controller{
         'nik.min' => 'NIK harus 16 digit angka',
         'no_kk.required' => 'Nomor KK harus diisi.',
         'no_kk.numeric' => 'Nomor KK harus berupa angka.',
-        'no_kk.unique' => 'Nomor KK sudah digunakan.',
         'foto.image' => 'Foto harus berupa gambar.',
         'foto.mimes' => 'Foto harus berformat jpeg, png, jpg, gif, atau svg.',
         'foto.max' => 'Foto tidak boleh lebih dari 2048 kilobytes.',
@@ -385,6 +384,8 @@ class PpdbController extends Controller{
         'tanggal_dikeluarkan.*' => 'nullable|date',
         'juara.*' => 'nullable|string|max:255',
         'tingkat_kejuaraan.*' => 'nullable|string|max:255',
+        'sk_ketua_osis' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
+        'periode' => 'nullable|string|max:255',
     ]);
 
     if ($validator->fails()) {
@@ -414,9 +415,10 @@ class PpdbController extends Controller{
 
         // Upload file Surat Keterangan Aktif (Opsional)
         $suratAktifPath = $request->hasFile('surat_keterangan_aktif')
-            ? $request->file('surat_keterangan_aktif')->store('berkas/surat_keterangan_aktif', 'public')
-            : null;
+        ? $request->file('surat_keterangan_aktif')->store('berkas/surat_keterangan_aktif', 'public')
+        : null;
 
+        $skKetuaOsisFile = $request->hasFile('sk_ketua_osis') ? $request->file('sk_ketua_osis')->store('berkas/ketuaOsis/', 'public') : null;
         // Simpan atau update data di database
         $berkas = BerkasPpdb::updateOrCreate(
             ['user_id' => $userId],
@@ -425,8 +427,12 @@ class PpdbController extends Controller{
                 'ktp_kia_file' => $ktpKiaPath,
                 'surat_keterangan_aktif' => $suratAktifPath,
                 'akta_kelahiran_file' => $aktaPath,
+                'sk_ketua_osis' => $skKetuaOsisFile,
+                'penandatangan_sk' => $request->penandatangan_sk ? $request->penandatangan_sk : null,
+                'periode' => $request->periode ? $request->periode : null,
             ]
         );
+
 
         // Simpan data sertifikat
         foreach ($validatedData['sertifikat'] as $index => $sertifikat) {

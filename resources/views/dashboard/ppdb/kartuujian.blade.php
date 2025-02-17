@@ -186,7 +186,11 @@
 
         <div class="footer">
             <div class="photo">
-                <img src="{{ storage_path('app/public/' . $data->foto) }}" class="student-photo" alt="Foto Siswa">
+                @if (file_exists(storage_path('app/public/' . $data->foto)))
+                    <img src="{{ storage_path('app/public/' . $data->foto) }}" class="student-photo" alt="Foto Siswa">
+                @else
+                    <p>Tidak ada foto, harap upload ulang.</p>
+                @endif
             </div>
             <div class="signature">
                 <p>Ketua Panitia,</p>
