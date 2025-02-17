@@ -23,6 +23,14 @@ class ListPpdbUserDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             // ->addColumn('action', 'listppdbuser.action')
+            ->addColumn('action', function($row){
+                $btn = '<ul class="list-unstyled d-flex gap-2 mb-0">';
+                $btn .= '<li><a href="/admin/ppdb/peserta/list/detail/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail"><i class="fa fa-fw fa-eye"></i></a></li>';
+                // $btn .= '<li><a href="" class="btn btn-sm delete btn-link" data-bs-toggle="tooltip" data-bs-placement="top" data-confirm-delete="true" title="Delete"><i class="fa fa-fw fa-trash text-danger"></i></a></li>';
+                // $btn .= '<li><a href="" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-fw fa-edit text-primary"></i></a></li>';
+                $btn .= '</ul>';
+                return $btn;
+            })
             ->addIndexColumn()
             ->setRowId('id');
     }
@@ -67,6 +75,7 @@ class ListPpdbUserDataTable extends DataTable
             Column::make('nama_lengkap')->title('Nama Lengkap'),
             Column::make('nomor_peserta')->title('Nomor Peserta'),
             Column::make('status'),
+            Column::make('action'),
         ];
     }
 

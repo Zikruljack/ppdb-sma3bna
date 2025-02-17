@@ -10,9 +10,6 @@
                     <div class="col-6 text-left">
                         <span>Formulir Pendaftaran Online PPDB 2024 / 2025</span>
                     </div>
-                    <div class="col-6 text-right">
-                        <a href="{{ route('admin.ppdb.validasi.view', $ppdbUser->id) }}" class="btn btn-success">Validasi</a>
-                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -149,7 +146,7 @@
                                 </tr>
                             @endforeach
                         @else
-                            <span class="text-danger">Berkas belum diunggah</span>
+                            <span class="text-danger">Rapor belum diunggah</span>
                         @endif
                     </tbody>
                 </table>

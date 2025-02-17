@@ -155,13 +155,13 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Semester</th>
-                    <th>PAI</th>
-                    <th>Bahasa Indonesia</th>
-                    <th>Bahasa Inggris</th>
-                    <th>Matematika</th>
-                    <th>IPA</th>
-                    <th>IPS</th>
+                    <th style="width: 10%;">Semester</th>
+                    <th style="width: 15%;">PAI</th>
+                    <th style="width: 15%;">Bahasa Indonesia</th>
+                    <th style="width: 15%;">Bahasa Inggris</th>
+                    <th style="width: 15%;">Matematika</th>
+                    <th style="width: 15%;">IPA</th>
+                    <th style="width: 15%;">IPS</th>
                 </tr>
             </thead>
             <tbody>

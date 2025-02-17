@@ -138,6 +138,27 @@ class AdminPpdbController extends Controller
         return $dataTables->render('dashboard.ppdb.list');
     }
 
+    public function detailListUserPpdb($id){
+        $ppdbUser = PpdbUser::where('id', $id)->first();
+        $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
+        $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
+        $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
+        $nilaiRapor = NilaiRapor::where('user_id', $ppdbUser->user_id)
+            ->with('mapel')
+            ->orderBy('semester')
+            ->get()
+            ->groupBy('semester');
+
+        $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
+        $sertifikat = $berkasPendukung ? Sertifikat::where('berkas_id', $berkasPendukung->id)->get() : collect();
+
+        $provinsi = $provinsi ? $provinsi->name : 'Data tidak ditemukan';
+        $kabkota = $kabkota ? $kabkota->name : 'Data tidak ditemukan';
+        $kecamatan = $kecamatan ? $kecamatan->name : 'Data tidak ditemukan';
+
+        return view('dashboard.ppdb.detailuser', compact('ppdbUser', 'provinsi', 'kabkota', 'kecamatan', 'nilaiRapor', 'sertifikat', 'berkasPendukung'));
+    }
+
 
     public function edit($id){
         $ppdbUser = PpdbUser::where('id', $id)->first();
