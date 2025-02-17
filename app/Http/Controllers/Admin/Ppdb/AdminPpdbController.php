@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin\Ppdb;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use App\Models\PpdbUser;
 use App\Models\Mapel;
@@ -19,6 +22,8 @@ use App\Models\User;
 use App\DataTables\PesertaPPDBDataTable;
 use App\DataTables\PesertaLulusDataTable;
 use App\DataTables\ListPpdbUserDataTable;
+
+use App\Mail\PPDBSelectionResult;
 
 class AdminPpdbController extends Controller
 {
@@ -75,49 +80,51 @@ class AdminPpdbController extends Controller
         $validatedData = $validator->validated();
 
 
-        $data = PpdbUser::find($id);
-        $userMail = User::where('id', $data->user_id)->first();
+        $ppdbUser = PpdbUser::where('id', $id)->first();
+        //this is for user ppdb to sending email only
+        $user = User::where('id', $ppdbUser->user_id)->first();
+
         try {
             DB::beginTransaction();
+
             $lastUser = PpdbUser::whereNotNull('nomor_ujian')->orderBy('nomor_ujian', 'desc')->first();
             $nomorUjian = $lastUser ? str_pad($lastUser->nomorUjian + 1, 4, '0', STR_PAD_LEFT) : '0001';
-            $jalur_pendaftaran = $data->jalur_pendaftaran;
+            $jalur_pendaftaran = $ppdbUser->jalur_pendaftaran;
+
             if($jalur_pendaftaran == 'prestasi'){
                 $jalur_pendaftaran = 'PRES';
             }else if($jalur_pendaftaran == 'kepemimpinan'){
                 $jalur_pendaftaran = 'KEPEM';
             }
-            Log::info($request->all());
-            if ($data->status == 'tidak_valid') {
-                $data->update([
+
+            if ($request->status == 'tidak_valid') {
+                $ppdbUser->update([
                     'status' => 'Tidak Valid',
                     'note_validasi' => $request->note_validasi
                 ]);
-                return redirect()->route('admin.ppdb.index')->with('success', 'Data berhasil disimpan');
-            }elseif($data->status == 'perbaikan'){
+            }else if($request->status == 'perbaikan'){
                 //userppdb harus memperbaiki data diri
-                $data->update([
+                $ppdbUser->update([
                     'status' => 'Perbaikan',
                     'note_validasi' => $request->note_validasi
                 ]);
-                return redirect()->route('admin.ppdb.index')->with('success', 'Data berhasil disimpan');
-            }else{
-                $data->update([
+            }else if($request->status == 'valid'){
+                $ppdbUser->update([
                     'status' => 'Valid',
                     'nomor_ujian' => $jalur_pendaftaran .' - ' . $nomorUjian,
                     'note_validasi' => $request->note_validasi
                 ]);
                 $pdf = Pdf::loadView('dashboard.ppdb.kartuujian', compact('data'))
                     ->setPaper('A4', 'landscape'); // 10cm x 14cm
-                    return $pdf->download('kartuujian-' . $data->nama_lengkap . '.pdf');
+                    return $pdf->download('kartuujian-' . $ppdbUser->nama_lengkap . '.pdf');
             }
 
             // Tambahkan logika validasi di sini
-
             // Kirim email ke user
-            // \Mail::to($userMail->email)->send(new \App\Mail\PPDBAcceptanceLetter($user));
+            Mail::to($user->email)->send(new PPDBSelectionResult($user, $ppdbUser));
 
             DB::commit();
+            return redirect()->route('admin.ppdb.index')->with('success', 'Data berhasil disimpan');
         } catch (Exception $e) {
             DB::rollBack();
             \Log::error("message:" . $e->getMessage());

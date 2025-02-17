@@ -9,16 +9,23 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+use App\Models\PpdbUser;
+
 class PPDBSelectionResult extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $user;
+    public $ppdbUser;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($user, PpdbUser $ppdbUser)
     {
         //
+        $this->user = $user;
+        $this->ppdbUser = $ppdbUser;
     }
 
     /**
@@ -27,7 +34,7 @@ class PPDBSelectionResult extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'P P D B Selection Result',
+            subject: 'SMPM-Validasi Formulir Peserta Didik Baru',
         );
     }
 
@@ -37,7 +44,7 @@ class PPDBSelectionResult extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.validasi',
         );
     }
 
