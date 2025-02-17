@@ -373,6 +373,13 @@ return [
             [
                 'text' => 'Daftar Peserta SPMB',
                 'icon' => 'fas fa-fw fa-users',
+                'url'  => 'admin/ppdb/peserta/list',
+                'can' => 'manage_gallery',
+                'classes' => 'ml-3',
+            ],
+            [
+                'text' => 'Daftar Peserta SPMB',
+                'icon' => 'fas fa-fw fa-users',
                 'url'  => 'admin/ppdb/peserta',
                 'can' => 'manage_ppdb',
                 'classes' => 'ml-3',

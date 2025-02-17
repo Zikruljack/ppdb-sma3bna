@@ -17,6 +17,7 @@ use App\Models\User;
 
 use App\DataTables\PesertaPPDBDataTable;
 use App\DataTables\PesertaLulusDataTable;
+use App\DataTables\ListPpdbUserDataTable;
 
 class AdminPpdbController extends Controller
 {
@@ -131,6 +132,10 @@ class AdminPpdbController extends Controller
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function fullListUserPpdb(ListPpdbUserDataTable $dataTables){
+        return $dataTables->render('dashboard.ppdb.list');
     }
 
 
