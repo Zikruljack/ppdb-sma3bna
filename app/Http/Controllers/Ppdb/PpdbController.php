@@ -343,6 +343,7 @@ class PpdbController extends Controller{
                     ],
                     [
                         'nilai' => $nilai,
+                        'scan_rapor' => $request->hasFile("scan_rapor.$semester") ? $request->file("scan_rapor.$semester")->store('rapor', 'public') : null
                     ]
                 );
             }

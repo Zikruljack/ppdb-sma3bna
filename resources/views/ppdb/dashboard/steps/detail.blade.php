@@ -109,10 +109,12 @@
                             <th>Matematika</th>
                             <th>IPA</th>
                             <th>IPS</th>
+                            <th>Berkas</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($nilaiRapor as $semester => $nilaiSemester)
+                            {{-- {{ dd($nilaiSemester) }} --}}
                             <tr>
                                 <td>{{ $semester }}</td>
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'PAI')->nilai ?? '-' }}</td>
@@ -121,6 +123,12 @@
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Matematika')->nilai ?? '-' }}</td>
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPA')->nilai ?? '-' }}</td>
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPS')->nilai ?? '-' }}</td>
+                                <td>
+                                    <a href="{{ asset('storage/' . $nilaiSemester->firstWhere('mapel.mapel', 'PAI')->scan_rapor) }}"
+                                        target="_blank" class="btn btn-info">
+                                        <i class="fas fa-file-alt"></i> Lihat File
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -195,12 +203,13 @@
                     <tbody>
                         @if ($sertifikat->where('jenis_sertifikat', 'akademik')->isNotEmpty())
                             @foreach ($sertifikat->where('jenis_sertifikat', 'akademik') as $sertifikatAkademik)
+                                {{-- {{ dd($sertifikatAkademik) }} --}}
                                 <tr>
                                     <td>{{ $sertifikatAkademik->nama_sertifikat }}</td>
                                     <td>{{ $sertifikatAkademik->tingkat_kejuaraan }}</td>
                                     <td>{{ $sertifikatAkademik->juara }}</td>
                                     <td>
-                                        <a href="{{ asset('storage/' . $sertifikatAkademik->file) }}" target="_blank"
+                                        <a href="{{ asset('storage/' . $sertifikatAkademik->file_path) }}" target="_blank"
                                             class="btn btn-info">
                                             <i class="fas fa-file-alt"></i> Lihat File
                                         </a>
@@ -236,8 +245,8 @@
                                     <td>{{ $sertifikatNonAkademik->tingkat_kejuaraan }}</td>
                                     <td>{{ $sertifikatNonAkademik->juara }}</td>
                                     <td>
-                                        <a href="{{ asset('storage/' . $sertifikatNonAkademik->file) }}" target="_blank"
-                                            class="btn btn-info">
+                                        <a href="{{ asset('storage/' . $sertifikatNonAkademik->file_path) }}"
+                                            target="_blank" class="btn btn-info">
                                             <i class="fas fa-file-alt"></i> Lihat File
                                         </a>
                                     </td>

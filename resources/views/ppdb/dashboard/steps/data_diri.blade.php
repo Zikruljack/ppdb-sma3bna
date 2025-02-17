@@ -4,22 +4,22 @@
     <div class="card">
         <div class="card-body">
             <div class="alert alert-info">
-                <h5 class="alert-heading">Note :</h5>
-                <p>
-                    File yang diupload harus berekstensi pdf,jpg,png dan max file 2mb.
-                </p>
-                <p>
-                    Jika ada kosong datanya maka di isi dengan <strong>"-". </strong>
-                </p>
+                <h5 class="alert-heading"><i class="fas fa-info-circle"></i> Note :</h5>
+                <ul class="mb-0">
+                    <li>File yang diupload harus berekstensi <strong>pdf, jpg, png</strong> dan max file
+                        <strong>2MB</strong>.</li>
+                    <li>Jika ada kosong datanya maka di isi dengan <strong>"-".</strong></li>
+                    <li>Ukuran foto <strong>3x4</strong> dengan latar belakang <strong>biru</strong>.</li>
+                </ul>
             </div>
-            <form id="dataDiriForm" action="{{ route('ppdb.formulir.data_diri') }}" method="POST"
-                enctype="multipart/form-data">
-                @csrf
-                @if ($ppdbUser->status == 'Final')
-                    <div class="alert alert-warning">
-                        Data tidak bisa diubah karena status sudah final.
-                    </div>
-                @else
+            @if ($ppdbUser->status == 'Final')
+                <div class="alert alert-warning">
+                    Data tidak bisa diubah karena status sudah final.
+                </div>
+            @else
+                <form id="dataDiriForm" action="{{ route('ppdb.formulir.data_diri') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
                     <div class="mb-3">
                         <p class="text-muted">
 
@@ -276,8 +276,8 @@
 
                     <button type="submit" id="btn-lanjut" class="btn btn-primary">Simpan &
                         Lanjut</button>
-                @endif
-            </form>
+                </form>
+            @endif
         </div>
     </div>
 @endsection

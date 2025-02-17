@@ -9,19 +9,16 @@
         <div class="card-body">
 
             <div class="alert alert-info">
-                <h5 class="alert-heading">Note :</h5>
-                <p>
-                    File yang diupload harus berekstensi pdf,jpg,png dan max file 2mb.
-                </p>
-                <p>
-                    Jika ada kosong datanya maka di isi dengan <strong>"-". </strong>
-                </p>
-                @if ($ppdbUser->jalur_pendaftaran == 'kepemimpinan')
-                    <p>
-                        Untuk sertifikat kepemimpinan itu untuk ketua OSIS/OSIM harus upload berkas dari surat Keputusan
-                        Kepala satuan pendidikan atau Kepala Sekolah
-                    </p>
-                @endif
+                <h5 class="alert-heading"><i class="fas fa-info-circle"></i> Note :</h5>
+                <ul>
+                    <li>File yang diupload harus berekstensi <strong>pdf, jpg, png</strong> dan max file
+                        <strong>2MB</strong>.</li>
+                    <li>Jika ada data yang kosong, maka diisi dengan <strong>"-".</strong></li>
+                    @if ($ppdbUser->jalur_pendaftaran == 'kepemimpinan')
+                        <li>Untuk sertifikat kepemimpinan, ketua OSIS/OSIM harus mengupload berkas dari surat Keputusan
+                            Kepala satuan pendidikan atau Kepala Sekolah.</li>
+                    @endif
+                </ul>
             </div>
             <form action="{{ route('ppdb.formulir.berkas.upload') }}" method="POST" enctype="multipart/form-data">
                 @csrf

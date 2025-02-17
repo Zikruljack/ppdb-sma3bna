@@ -12,7 +12,7 @@ class NilaiRapor extends Model
 
     protected $table = 'nilai_rapor';
 
-    protected $fillable = ['user_id', 'mapel_id', 'semester', 'nilai'];
+    protected $fillable = ['user_id', 'mapel_id', 'semester', 'nilai', 'scan_rapor'];
 
 
     public function user()
