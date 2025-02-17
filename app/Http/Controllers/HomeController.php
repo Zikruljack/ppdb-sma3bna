@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\PpdbUser;
+
 class HomeController extends Controller
 {
     /**
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+
+        $totalPendaftar = PpdbUser::where('nisn', '=', null)->count();
+        $totalLengkap = PpdbUser::where('status', '=', 'Final')->count();
+        $totalLulus = PpdbUser::where('status', '=', 'Valid')->count();
+        return view('dashboard.index', compact('totalPendaftar', 'totalLengkap', 'totalLulus'));
     }
 }
