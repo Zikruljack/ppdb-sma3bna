@@ -224,7 +224,7 @@
                                     <td>{{ $sertifikatAkademik->tingkat_kejuaraan }}</td>
                                     <td>{{ $sertifikatAkademik->juara }}</td>
                                     <td>
-                                        <a href="{{ asset('storage/' . $sertifikatAkademik->file) }}" target="_blank"
+                                        <a href="{{ asset('storage/' . $sertifikatAkademik->file_path) }}" target="_blank"
                                             class="btn btn-info">
                                             <i class="fas fa-file-alt"></i> Lihat File
                                         </a>
@@ -260,8 +260,8 @@
                                     <td>{{ $sertifikatNonAkademik->tingkat_kejuaraan }}</td>
                                     <td>{{ $sertifikatNonAkademik->juara }}</td>
                                     <td>
-                                        <a href="{{ asset('storage/' . $sertifikatNonAkademik->file) }}" target="_blank"
-                                            class="btn btn-info">
+                                        <a href="{{ asset('storage/' . $sertifikatNonAkademik->file_path) }}"
+                                            target="_blank" class="btn btn-info">
                                             <i class="fas fa-file-alt"></i> Lihat File
                                         </a>
                                     </td>
