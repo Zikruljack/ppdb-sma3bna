@@ -91,6 +91,15 @@ Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function 
             Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
             Route::get('/peserta/download/kartu/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'downloadKartu'])->name('admin.ppdb.download.kartu');
 
+
+            //edit delete ppdb
+            Route::get('/peserta/edit/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'edit'])->name('admin.ppdb.edit');
+            Route::post('/peserta/update/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'updateUserPpdb'])->name('admin.ppdb.update');
+            Route::post('/peserta/delete/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'destroy'])->name('admin.ppdb.destroy');
+
+
+
+
             //setting ppdb
             Route::get('/settings', [App\Http\Controllers\Admin\Ppdb\PpdbSettingsController::class, 'index'])->name('admin.ppdb.setting');
             Route::post('/settings/save', [App\Http\Controllers\Admin\Ppdb\PpdbSettingsController::class, 'store'])->name('admin.ppdb.setting.save');

@@ -62,7 +62,7 @@
                                     value="{{ old('no_kk', $ppdbUser->no_kk) }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="foto" class="form-label">Foto</label>
+                                <label for="foto" class="form-label">Pas Foto</label>
                                 <input type="file" class="form-control" id="foto" name="foto" accept="image/*"
                                     required>
                             </div>

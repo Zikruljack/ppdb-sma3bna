@@ -134,4 +134,14 @@ class AdminPpdbController extends Controller
     }
 
 
+    public function edit($id){
+        $ppdbUser = PpdbUser::where('id', $id)->first();
+        return view('dashboard.ppdb.edit', compact('ppdbUser'));
+    }
+
+    public function updateUserPpdb(Request $request, $id){
+
+    }
+
+
 }
