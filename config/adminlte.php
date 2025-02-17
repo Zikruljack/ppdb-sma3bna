@@ -371,7 +371,7 @@ return [
                 'can' => 'manage_ppdb',
             ],
             [
-                'text' => 'Daftar Peserta SPMB',
+                'text' => 'List Pendaftar SPMB',
                 'icon' => 'fas fa-fw fa-users',
                 'url'  => 'admin/ppdb/peserta/list',
                 'can' => 'manage_gallery',

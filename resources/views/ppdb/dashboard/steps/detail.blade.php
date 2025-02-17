@@ -279,10 +279,10 @@
                 <div class="text-center mt-4">
                     <form id="finalizeForm" action="{{ route('ppdb.formulir.finalisasi') }}" method="POST">
                         @csrf
-                        <button type="button" class="btn btn-primary @if ($ppdbUser->nomor_peserta) d-none @endif"
+                        <button type="button" class="btn btn-primary @if ($ppdbUser->status == 'Pendaftar' || $ppdbUser->status == 'Perbaikan') @else d-none @endif"
                             onclick="confirmFinalization()">Finalisasi</button>
                     </form>
-                    @if ($ppdbUser->nomor_peserta)
+                    @if ($ppdbUser->status == 'Final')
                         <a href="{{ route('ppdb.download', $ppdbUser->id) }}" class="btn btn-success">Download Formulir</a>
                     @endif
                 </div>

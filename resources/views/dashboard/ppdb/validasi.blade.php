@@ -31,6 +31,7 @@
                                 <select name="status" id="status" class="form-control">
                                     <option value="valid">Valid</option>
                                     <option value="tidak_valid">Tidak Valid</option>
+                                    <option value="perbaikan">Perlu Perbaikan Data</option>
                                 </select>
                             </div>
                             <div class="form-group">

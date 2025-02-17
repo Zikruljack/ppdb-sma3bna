@@ -63,14 +63,14 @@ class PpdbController extends Controller{
             }
 
             auth()->login($user);
-            Log::info('User logged in successfully', ['email' => $request->email]);
+            // Log::info('User logged in successfully', ['email' => $request->email]);
 
             DB::commit();
             return redirect()->route('ppdb.dashboard')->with('success', 'Login successful');
 
         } catch (\Exception $e) {
             DB::rollback(); // Rollback transaction
-            Log::error('Login Error: ' . $e->getMessage(), ['trace' => $e->getTrace()]);
+            // Log::error('Login Error: ' . $e->getMessage(), ['trace' => $e->getTrace()]);
             return redirect()->back()->withInput()->with(['error' => 'Terjadi error pada server.']);
         }
     }
@@ -129,7 +129,7 @@ class PpdbController extends Controller{
             return redirect()->route('login.ppdb')->with('success', 'Registrasi berhasil, mohon cek email untuk verifikasi email anda.');
         } catch (\Exception $e) {
             DB::rollback();
-            Log::error(['error' => $e->getMessage(), 'trace' => $e->getTrace()]);
+            // Log::error(['error' => $e->getMessage(), 'trace' => $e->getTrace()]);
             return redirect()->back()->withInput()->with('error', 'Terjadi error pada server: ' . $e->getMessage());
         }
     }
