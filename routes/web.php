@@ -54,9 +54,9 @@ Route::prefix('/')->group(function () {
     Route::get('/ppdb', [App\Http\Controllers\Ppdb\PpdbController::class, 'index'])->name('ppdb.index');
     Route::prefix('ppdb')->middleware(CheckRegistrationTime::class)->group(function () {
         Route::get('/login', [App\Http\Controllers\Ppdb\PpdbController::class , 'login'])->name('login.ppdb');
-        Route::post('/ppdb/login/attempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'loginAttempt'])->name('login.attempt');
-        Route::get('/ppdb/register', [App\Http\Controllers\Ppdb\PpdbController::class , 'register'])->name('register.ppdb');
-        Route::post('/ppdb/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
+        Route::post('/login/attempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'loginAttempt'])->name('login.attempt');
+        Route::get('/register', [App\Http\Controllers\Ppdb\PpdbController::class , 'register'])->name('register.ppdb');
+        Route::post('/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
 
     });
     // Route::get('/profil', [App\Http\Controllers\LandingPageController::class, 'profil'])->name('profil');

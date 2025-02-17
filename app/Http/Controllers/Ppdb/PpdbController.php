@@ -100,7 +100,7 @@ class PpdbController extends Controller{
         );
 
         if ($validation->fails()) {
-            Log::warning('Validation failed', ['errors' => $validation->errors()]);
+            // Log::warning('Validation failed', ['errors' => $validation->errors()]);
             return redirect()->back()->withErrors($validation)->withInput()->with('error', 'Tidak bisa disimpan!', $validation->errors());
         }
 
@@ -331,6 +331,7 @@ class PpdbController extends Controller{
     }
 
     try {
+        DB::beginTransaction();
         $nilaiRapors = $request->input('nilai');
 
         foreach ($nilaiRapors as $semester => $mapels) {
@@ -349,8 +350,10 @@ class PpdbController extends Controller{
             }
         }
 
+        DB::commit();
         return redirect()->route('ppdb.formulir.berkas')->with('success', 'Data Diri berhasil disimpan!');
     } catch (\Exception $e) {
+        DB::rollback();
         Log::error("Error: " . $e->getMessage());
         return redirect()->back()->withErrors($validatedData)->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data.');
     }
@@ -516,5 +519,47 @@ class PpdbController extends Controller{
         return $pdf->download('formulir-pendaftaran.pdf');
     }
 
+
+    public function profile(){
+        $user = auth()->user();
+        $ppdbUser = PpdbUser::where('user_id', $user->id)->first();
+        return view('ppdb.dashboard.profile', compact('ppdbUser'));
+    }
+
+    public function profileAttempt(Request $request)
+{
+    $user = Auth::user();
+
+    try {
+        DB::beginTransaction();
+        // Validasi input
+        $request->validate([
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6|confirmed',
+        ]);
+
+        // Update email
+        $user->email = $request->email;
+
+        // Update password jika diisi
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        DB::commit();
+        return back()->with('success', 'Profil berhasil diperbarui!');
+    } catch (\Exception $e) {
+        // Log error
+        Log::error('Error updating profile: ' . $e->getMessage(), [
+            'user_id' => $user->id,
+            'email' => $request->email,
+        ]);
+
+        DB::rollback();
+        return back()->with('error', 'Terjadi kesalahan saat memperbarui profil.');
+    }
+}
 
 }

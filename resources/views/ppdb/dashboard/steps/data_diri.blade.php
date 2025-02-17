@@ -7,7 +7,8 @@
                 <h5 class="alert-heading"><i class="fas fa-info-circle"></i> Note :</h5>
                 <ul class="mb-0">
                     <li>File yang diupload harus berekstensi <strong>pdf, jpg, png</strong> dan max file
-                        <strong>2MB</strong>.</li>
+                        <strong>2MB</strong>.
+                    </li>
                     <li>Jika ada kosong datanya maka di isi dengan <strong>"-".</strong></li>
                     <li>Ukuran foto <strong>3x4</strong> dengan latar belakang <strong>biru</strong>.</li>
                 </ul>
