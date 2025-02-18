@@ -73,6 +73,7 @@ class ListPpdbUserDataTable extends DataTable
             Column::make('DT_RowIndex')->title('No')->searchable(false)->orderable(false),
             Column::make('nama_lengkap')->title('Nama Lengkap'),
             Column::make('nomor_peserta')->title('Nomor Peserta'),
+            Column::make('asal_sekolah')->title('Asal Sekolah'),
             Column::make('status'),
             Column::make('action'),
         ];
