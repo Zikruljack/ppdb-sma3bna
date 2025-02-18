@@ -18,85 +18,74 @@ class Handler extends ExceptionHandler
     /**
      * Render the exception as an HTTP response.
      */
-    protected $dontReport = [
-        \Illuminate\Auth\AuthenticationException::class,
-        \Illuminate\Validation\ValidationException::class,
-        // Add other exceptions here as needed
-    ];
-
-    public function report(Throwable $exception)
-    {
-        parent::report($exception);
-    }
+    use Illuminate\Auth\Access\AuthorizationException;
 
     public function render($request, Throwable $exception)
     {
-
-        if ($exception instanceof TokenMismatchException) {
-            Alert::warning('Sesi Kedaluwarsa', 'Anda akan dialihkan ke login.');
-            return redirect('/');
-        }
-        // Check if the request expects a JSON response (API)
-        if ($request->wantsJson()) {
-            return $this->handleApiException($request, $exception);
+        // Menangani error 4xx dan 5xx untuk Web
+        if ($request->isMethod('get') && !$request->wantsJson()) {
+            return $this->handleWebException($request, $exception);
         }
 
-
-        // For non-API requests (web requests), customize error pages for 4xx and 5xx
-        return $this->handleWebException($request, $exception);
-    }
-
-    protected function handleApiException($request, Throwable $exception)
-    {
-        $response = [
-            'success' => false,
-            'message' => $exception->getMessage(),
-        ];
-
-        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
-            return new JsonResponse($response, 404);
-        }
-
-        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
-            return new JsonResponse($response, 401);
-        }
-
-        if ($exception instanceof \Illuminate\Validation\ValidationException) {
-            $response['errors'] = $exception->errors();
-            return new JsonResponse($response, 422);
-        }
-
-        return new JsonResponse($response, 500);
-    }
-
-    // Custom method to handle web exceptions and return custom error pages
-    protected function handleWebException($request, Throwable $exception)
-    {
-        if ($exception instanceof NotFoundHttpException) {
-            // Render custom 404 page
-            return response()->view('errors.generics', [], 404);
-        }
-
-        if ($exception instanceof HttpException) {
-            $statusCode = $exception->getStatusCode();
-
-            if ($statusCode >= 500) {
-                // Render custom 500 page
-                return response()->view('errors.generics', [], $statusCode);
-            }
-
-            // For other 4xx errors, render a general error page or specific ones like 403, 401, etc.
-            if ($statusCode == 403) {
-                return response()->view('errors.generics', [], $statusCode);
-            }
-
-            if ($statusCode == 401) {
-                return response()->view('errors.generics', [], $statusCode);
-            }
-        }
-
-        // Fallback to the default parent method if no custom handling is found
         return parent::render($request, $exception);
     }
+
+    protected function handleWebException($request, Throwable $exception)
+    {
+        // Handle 404 error (NotFoundHttpException)
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->view('errors.generics', [
+                'status_code' => 404,
+                'message' => 'The page you are looking for could not be found.'
+            ], 404);
+        }
+
+        // Handle 403 error (AuthorizationException)
+        if ($exception instanceof AuthorizationException) {
+            return response()->view('errors.generics', [
+                'status_code' => 403,
+                'message' => 'You do not have permission to access this page.'
+            ], 403);
+        }
+
+        // Handle other HttpExceptions (4xx and 5xx)
+        if ($exception instanceof HttpException) {
+            $statusCode = $exception->getStatusCode();
+            $message = $this->getErrorMessage($statusCode);
+
+            // Handle error codes >= 500
+            if ($statusCode >= 500) {
+                return response()->view('errors.generics', [
+                    'status_code' => $statusCode,
+                    'message' => $message
+                ], $statusCode);
+            }
+
+            // Handle other 4xx errors (e.g. 401, 403, etc.)
+            return response()->view('errors.generics', [
+                'status_code' => $statusCode,
+                'message' => $message
+            ], $statusCode);
+        }
+
+        return parent::render($request, $exception);
+    }
+
+    private function getErrorMessage($statusCode)
+    {
+        $messages = [
+            400 => 'Bad Request. The server could not understand the request.',
+            401 => 'Unauthorized. Please login to access this page.',
+            403 => 'Forbidden. You do not have permission to view this page.',
+            404 => 'Not Found. The page you requested could not be found.',
+            500 => 'Internal Server Error. Something went wrong on our end.',
+            502 => 'Bad Gateway. The server received an invalid response.',
+            503 => 'Service Unavailable. The server is temporarily unavailable.',
+            504 => 'Gateway Timeout. The server took too long to respond.',
+        ];
+
+        return $messages[$statusCode] ?? 'An unexpected error occurred.';
+    }
+
 
 }
