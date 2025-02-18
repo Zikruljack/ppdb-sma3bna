@@ -33,7 +33,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Kartu Keluarga (KK) <span class="text-danger">*</span></label>
-                                @if ($berkasPendukung->kk_file)
+                                @if ($berkasPendukung && $berkasPendukung->kk_file)
                                     <a href="{{ asset('storage/' . $berkasPendukung->kk_file) }}" target="_blank"
                                         class="btn btn-info">
                                         <i class="fas fa-file-alt"></i> Lihat File
@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Surat Keterangan Aktif Sekolah <span class="text-danger">*</span></label>
-                                @if ($berkasPendukung->surat_keterangan_aktif)
+                                @if ($berkasPendukung && $berkasPendukung->surat_keterangan_aktif)
                                     <a href="{{ asset('storage/' . $berkasPendukung->surat_keterangan_aktif) }}"
                                         target="_blank" class="btn btn-info">
                                         <i class="fas fa-file-alt"></i> Lihat File
@@ -79,7 +79,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Akta Kelahiran <span class="text-danger">*</span></label>
-                                @if ($berkasPendukung->akta_kelahiran_file)
+                                @if ($berkasPendukung && $berkasPendukung->akta_kelahiran_file)
                                     <a href="{{ asset('storage/' . $berkasPendukung->akta_kelahiran_file) }}"
                                         target="_blank" class="btn btn-info">
                                         <i class="fas fa-file-alt"></i> Lihat File
@@ -106,7 +106,7 @@
                             <div class="row mb-2">
                                 <div class="col-md-4">
                                     <label for="sk_ketua_osis">Surat Keterangan Ketua Osis</label>
-                                    @if ($berkasPendukung->sk_ketua_osis)
+                                    @if ($berkasPendukung && $berkasPendukung->sk_ketua_osis)
                                         <a href="{{ asset('storage/' . $berkasPendukung->sk_ketua_osis) }}" target="_blank"
                                             class="btn btn-info">
                                             <i class="fas fa-file-alt"></i> Lihat File
@@ -265,9 +265,9 @@
                                                 class="form-control @error('tingkat_kejuaraan.' . $key) is-invalid @enderror"
                                                 name="tingkat_kejuaraan[]" required>
                                                 <option value="">Pilih Tingkat Kejuaraan</option>
-                                                <option value="kecamatan"
-                                                    {{ old('tingkat_kejuaraan.' . $key, $s->tingkat_kejuaraan) == 'kecamatan' ? 'selected' : '' }}>
-                                                    Kecamatan</option>
+                                                <option value="kabupaten"
+                                                    {{ old('tingkat_kejuaraan.' . $key, $s->tingkat_kejuaraan) == 'kabupaten' ? 'selected' : '' }}>
+                                                    Kabupaten</option>
                                                 <option value="kota"
                                                     {{ old('tingkat_kejuaraan.' . $key, $s->tingkat_kejuaraan) == 'kota' ? 'selected' : '' }}>
                                                     Kota</option>
@@ -287,6 +287,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
                             @endforeach
                         </div>
                         <button type="button" class="btn btn-success" onclick="addSertifikat()">Tambah
@@ -295,6 +296,13 @@
                             <i class="fas fa-trash"></i> Hapus
                         </button>
                     </div>
+                    @if ($ppdbUser->jalur_pendaftaran == 'prestasi' && count($sertifikat) == 0)
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                addSertifikat();
+                            });
+                        </script>
+                    @endif
 
                     <script>
                         function addSertifikat() {
@@ -302,7 +310,6 @@
                             var newInput = document.createElement('div');
                             newInput.classList.add('sertifikat-item', 'border', 'p-3', 'mb-3');
                             newInput.innerHTML = `
-                                <hr>
                                 <div class="row mb-2">
                                     <div class="col-md-6">
                                         <label>Sertifikat Lainnya</label>

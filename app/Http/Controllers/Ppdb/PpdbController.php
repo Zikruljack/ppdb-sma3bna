@@ -360,8 +360,8 @@ class PpdbController extends Controller{
 
     public function formulirBerkasView(){
         $ppdbUser = PpdbUser::where('user_id', auth()->id())->first();
-        $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
-        $sertifikat = Sertifikat::where('berkas_id', $berkasPendukung->id)->get();
+        $berkasPendukung = $ppdbUser ? BerkasPpdb::where('user_id', $ppdbUser->user_id)->first() : null;
+        $sertifikat = $berkasPendukung ? Sertifikat::where('berkas_id', $berkasPendukung->id)->get() : collect();
         // $nilaiRapor = NilaiRapor::where('user_id', auth()->id())->first();
 
         return view('ppdb.dashboard.steps.berkas', compact('ppdbUser', 'berkasPendukung', 'sertifikat'));
@@ -474,6 +474,10 @@ class PpdbController extends Controller{
                 ->orderBy('semester')
                 ->get()
                 ->groupBy('semester');
+
+        // $nilaiRataRata = hitungRataRataPerSemester($nilaiRapor);
+
+        // dd($nilaiRataRata);
 
         $berkasPendukung = BerkasPpdb::where('user_id', $user->id)->first();
         if($berkasPendukung != null){
