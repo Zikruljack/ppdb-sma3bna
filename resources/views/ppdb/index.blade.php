@@ -13,7 +13,7 @@
                         Penerimaan Murid Baru
                     </p>
                     <p class="lead fs-lg px-md-3 px-lg-7 px-xl-9 px-xxl-10">SMA Negeri 3 Banda Aceh</p>
-                    <a href="/ppdb/login" class="btn btn-primary rounded-pill">Masuk SPMB</a>
+                    <a href="/ppdb/register" class="btn btn-primary rounded-pill">Daftar SPMB</a>
                 </div>
                 <!-- /column -->
             </div>
@@ -177,7 +177,7 @@
                 </div>
                 <div class="modal-body">
                     Pendaftaran SMPB SMA NEGERI 3 BANDA ACEH akan dibuka pada tanggal 17 Februari 2025 pukul 08.00 pagi
-                    sampai tanggal 27 Februari
+                    sampai tanggal 17 Februari
                     2025 pukul 23.59 malam. Jangan lewatkan!
                 </div>
                 <div class="modal-footer">

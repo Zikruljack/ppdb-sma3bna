@@ -16,11 +16,11 @@
                         </tr>
                         <tr>
                             <th>Jalur Tes</th>
-                            <td>{{ $ppdbUser->jalur_pendaftaran }}</td>
+                            <td>{{ Str::ucfirst($ppdbUser->jalur_pendaftaran) }}</td>
                         </tr>
                         <tr>
                             <th>Nama Calon Peserta Didik</th>
-                            <td>{{ $ppdbUser->nama_lengkap }}</td>
+                            <td>{{ Str::ucfirst($ppdbUser->nama_lengkap) }}</td>
                         </tr>
                         <tr>
                             <th>NIK</th>
@@ -44,11 +44,11 @@
                         </tr>
                         <tr>
                             <th>Kabupaten/Kota</th>
-                            <td>{{ $ppdbUser->kabkota_asal_sekolah }}</td>
+                            <td>{{ Str::ucfirst($kabkota->name) }}</td>
                         </tr>
                         <tr>
                             <th>Provinsi</th>
-                            <td>{{ $ppdbUser->provinsi }}</td>
+                            <td>{{ Str::ucfirst($provinsi->name) }}</td>
                         </tr>
                         <tr>
                             <th>Golongan Darah</th>

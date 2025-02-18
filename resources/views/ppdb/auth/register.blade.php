@@ -112,7 +112,7 @@
                                     </form>
                                     <!-- /form -->
                                     <p class="mb-0">Sudah Mempunyai akun? <a href="{{ route('login.ppdb') }}"
-                                            class="hover">Masuk</a></p>
+                                            class="btn btn-secondary rounded-pill btn-register w-100 mt-2">Masuk</a></p>
 
                                     <!--/.social -->
                                 </div>

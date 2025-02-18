@@ -360,9 +360,11 @@ class PpdbController extends Controller{
 
     public function formulirBerkasView(){
         $ppdbUser = PpdbUser::where('user_id', auth()->id())->first();
+        $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
+        $sertifikat = Sertifikat::where('berkas_id', $berkasPendukung->id)->get();
         // $nilaiRapor = NilaiRapor::where('user_id', auth()->id())->first();
 
-        return view('ppdb.dashboard.steps.berkas', compact('ppdbUser'));
+        return view('ppdb.dashboard.steps.berkas', compact('ppdbUser', 'berkasPendukung', 'sertifikat'));
     }
 
     public function formulirBerkas(Request $request)
@@ -463,6 +465,9 @@ class PpdbController extends Controller{
     {
         $user = auth()->user();
         $ppdbUser = PpdbUser::where('user_id', $user->id)->first();
+        $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
+        $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
+        $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
         $mapel = Mapel::select('id', 'mapel')->get();
         $nilaiRapor = NilaiRapor::where('user_id', $user->id)
                 ->with('mapel')
@@ -483,7 +488,7 @@ class PpdbController extends Controller{
             return redirect()->route('ppdb.pendaftaran')->with('error', 'Lengkapi semua data terlebih dahulu.');
         }
 
-        return view('ppdb.dashboard.steps.detail', compact('ppdbUser', 'mapel', 'nilaiRapor', 'berkasPendukung', 'sertifikat'));
+        return view('ppdb.dashboard.steps.detail', compact('ppdbUser', 'mapel', 'nilaiRapor', 'berkasPendukung', 'sertifikat', 'provinsi', 'kabkota', 'kecamatan'));
     }
 
     public function finalisasi()

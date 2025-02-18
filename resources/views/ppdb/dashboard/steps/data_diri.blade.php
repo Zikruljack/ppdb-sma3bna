@@ -63,8 +63,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="foto" class="form-label">Pas Foto</label>
+                                @if ($ppdbUser->foto)
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/' . $ppdbUser->foto) }}" alt="Pas Foto"
+                                            class="img-thumbnail" width="150">
+                                    </div>
+                                @endif
                                 <input type="file" class="form-control" id="foto" name="foto" accept="image/*"
-                                    required>
+                                    {{ $ppdbUser->foto ? '' : 'required' }}>
                             </div>
                             <div class="mb-3">
                                 <label for="tanggal_kk_dikeluarkan" class="form-label">Tanggal KK Dikeluarkan</label>

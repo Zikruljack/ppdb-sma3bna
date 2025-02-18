@@ -59,7 +59,7 @@
                                     <!-- /form -->
                                     <p class="mb-1"><a href="#" class="hover">Lupa Password?</a></p>
                                     <p class="mb-0">Tidak punya akun? <a href="{{ route('register.ppdb') }}"
-                                            class="hover">Daftar</a></p>
+                                            class="btn btn-secondary rounded-pill btn-register w-100 mt-2">Daftar</a></p>
                                 </div>
                                 <!--/div -->
                             </div>
