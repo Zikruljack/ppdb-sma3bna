@@ -34,16 +34,17 @@
                             <div class="form-group">
                                 <label>Kartu Keluarga (KK) <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control @error('kk') is-invalid @enderror" name="kk"
-                                    accept="images/*, application/pdf" required>
+                                    accept="images/*, application/pdf">
                                 @error('kk')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
+                                @if ($ppd)
                             </div>
                             <div class="form-group">
                                 <label>Surat Keterangan Aktif Sekolah <span class="text-danger">*</span></label>
                                 <input type="file"
                                     class="form-control @error('surat_keterangan_aktif') is-invalid @enderror"
-                                    accept="images/*, application/pdf" name="surat_keterangan_aktif" required>
+                                    accept="images/*, application/pdf" name="surat_keterangan_aktif">
                                 @error('surat_keterangan_aktif')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -55,7 +56,7 @@
                             <div class="form-group">
                                 <label>Akta Kelahiran <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control @error('akta') is-invalid @enderror"
-                                    accept="images/*, application/pdf" name="akta" required>
+                                    accept="images/*, application/pdf" name="akta">
                                 @error('akta')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -72,7 +73,7 @@
                                     <input id="sk_ketua_osis" type="file" placeholder="Surat Keterangan Ketua OSIS/OSIM"
                                         accept="images/*, application/pdf"
                                         class="form-control @error('sk_ketua_osis') is-invalid @enderror"
-                                        name="sk_ketua_osis" required>
+                                        name="sk_ketua_osis">
                                     @error('sk_ketua_osis')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -80,7 +81,7 @@
                                 <div class="col-md-4">
                                     <label for="sk_ketua_osis">Penandatangan Surat Keterangan</label>
                                     <input type="text" id="penandatangan_sk" name="penandatangan_sk"
-                                        placeholder="Penandatangan Surat Keterangan" required
+                                        placeholder="Penandatangan Surat Keterangan"
                                         class="form-control @error('penandatangan_sk')
                                         is-invalid
                                     @enderror">
@@ -90,7 +91,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="periode">Periode Ketua Osis</label>
-                                    <input type="text" id="periode" name="periode" placeholder="Periode" required
+                                    <input type="text" id="periode" name="periode" placeholder="Periode"
                                         class="form-control @error('periode')
                                         is-invalid
                                     @enderror">

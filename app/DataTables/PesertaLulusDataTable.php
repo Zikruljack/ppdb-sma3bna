@@ -39,9 +39,9 @@ class PesertaLulusDataTable extends DataTable
             ->addColumn('jenis_kelamin', function ($row) {
                 return $row->jenis_kelamin == 'Laki-laki' ? 'L' : 'P';
             })
-            ->addColumn('total_nilai', function ($row) {
-                return $row->bobot_nilai_rapor + $row->bobot_nilai_sertifikat + $row->bobot_nilai_wawancara + $row->bobot_nilai_baca_quran;
-            })
+            // ->addColumn('total_nilai', function ($row) {
+            //     return $row->bobot_nilai_rapor + $row->bobot_nilai_sertifikat + $row->bobot_nilai_wawancara + $row->bobot_nilai_baca_quran;
+            // })
             ->addColumn('nama_lengkap', function ($row) {
                 return ucfirst($row->nama_lengkap);
             })
@@ -58,10 +58,10 @@ class PesertaLulusDataTable extends DataTable
     public function query(PpdbUser $model): QueryBuilder
     {
         return $model->newQuery()
-        // ->leftJoin('users', 'ppdb_user.user_id', '=', 'users.id')
-        ->leftJoin('penilaian_peserta', 'ppdb_user.user_id', '=', 'penilaian_peserta.user_id')
-        ->select('ppdb_user.*', 'penilaian_peserta.*')
         ->where('status', 'Valid');
+        // ->leftJoin('users', 'ppdb_user.user_id', '=', 'users.id')
+        // ->leftJoin('penilaian_peserta', 'ppdb_user.user_id', '=', 'penilaian_peserta.user_id')
+        // ->select('ppdb_user.*', 'penilaian_peserta.*')
         // ->groupBy('ppdb_user.nomor_peserta');
     }
 

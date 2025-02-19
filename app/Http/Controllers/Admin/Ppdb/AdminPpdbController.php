@@ -42,11 +42,11 @@ class AdminPpdbController extends Controller
     }
 
     public function detailPeserta($id){
-        $ppdbUser = PpdbUser::whereNotIn('status', ['Tidak Valid', 'Pendaftar'])->where('id', $id)->first();
+        $ppdbUser = PpdbUser::where('id', $id)->first();
         // dd($ppdbUser);
-        if($ppdbUser == null){
-            return redirect()->back()->with('error', 'Data tidak ditemukan');
-        }
+            if($ppdbUser == null){
+                return redirect()->back()->with('error', 'Data tidak ditemukan');
+            }
         // dd($ppdbUser);
         $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
         $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
