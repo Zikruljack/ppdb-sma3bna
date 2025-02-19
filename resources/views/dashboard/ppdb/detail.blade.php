@@ -10,9 +10,12 @@
                     <div class="col-6 text-left">
                         <span>Formulir Pendaftaran Online PPDB 2024 / 2025</span>
                     </div>
-                    <div class="col-6 text-right">
-                        <a href="{{ route('admin.ppdb.validasi.view', $ppdbUser->id) }}" class="btn btn-success">Validasi</a>
-                    </div>
+                    @if ($ppdbUser->status != 'Valid')
+                        <div class="col-6 text-right">
+                            <a href="{{ route('admin.ppdb.validasi.view', $ppdbUser->id) }}"
+                                class="btn btn-success">Validasi</a>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="card-body">
@@ -27,6 +30,30 @@
                         <span class="text-danger">Foto belum diunggah</span>
                     @endif
                 </div>
+
+                <h4>Hasil Penilaian</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nilai Rapor</th>
+                            <th>Nilai Sertifikat</th>
+                            <th>Nilai Ujian</th>
+                            <th>Nilai Baca Quran</th>
+                            <th>Total Nilai</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="nilai-rapor">{{ $penilaian->bobot_nilai_rapor }}</td>
+                            <td id="nilai-sertifikat">{{ $penilaian->bobot_nilai_sertifikat }}</td>
+                            <td id="nilai-ujian">0</td>
+                            <td id="nilai-baca-quran">0</td>
+                            <td id="total-nilai">{{ $penilaian->bobot_nilai_rapor + $penilaian->bobot_nilai_sertifikat }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <hr>
                 <table class="table table-bordered">
                     <tr>
@@ -122,13 +149,14 @@
                     <thead>
                         <tr>
                             <th style="width: 10%;">Semester</th>
-                            <th style="width: 15%;">PAI</th>
+                            <th style="width: 10%;">PAI</th>
                             <th style="width: 15%;">Bahasa Indonesia</th>
                             <th style="width: 15%;">Bahasa Inggris</th>
                             <th style="width: 15%;">Matematika</th>
-                            <th style="width: 15%;">IPA</th>
-                            <th style="width: 15%;">IPS</th>
-                            <th>File</th>
+                            <th style="width: 10%;">IPA</th>
+                            <th style="width: 10%;">IPS</th>
+                            <th style="width: 15%">Rata Rata</th>
+                            <th style="width: 10%">File</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,6 +171,7 @@
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Matematika')->nilai ?? '-' }}</td>
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPA')->nilai ?? '-' }}</td>
                                 <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPS')->nilai ?? '-' }}</td>
+                                <td>{{ $nilaiRataRata[$semester] }}</td>
                                 <td>
                                     <a href="{{ asset('storage/' . $nilaiSemester->firstWhere('mapel.mapel', 'PAI')->scan_rapor) }}"
                                         target="_blank" class="btn btn-info">
@@ -296,4 +325,7 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
 @endsection

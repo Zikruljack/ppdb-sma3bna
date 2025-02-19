@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -18,6 +19,7 @@ use App\Models\BerkasPpdb;
 use App\Models\Sertifikat;
 use App\Models\NilaiRapor;
 use App\Models\User;
+use App\Models\PenilaianPeserta;
 
 use App\DataTables\PesertaPPDBDataTable;
 use App\DataTables\PesertaLulusDataTable;
@@ -42,6 +44,10 @@ class AdminPpdbController extends Controller
     public function detailPeserta($id){
         $ppdbUser = PpdbUser::whereNotIn('status', ['Tidak Valid', 'Pendaftar'])->where('id', $id)->first();
         // dd($ppdbUser);
+        if($ppdbUser == null){
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+        // dd($ppdbUser);
         $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
         $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
         $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
@@ -54,13 +60,42 @@ class AdminPpdbController extends Controller
                 ->orderBy('semester')
                 ->get()
                 ->groupBy('semester');
-        return view('dashboard.ppdb.detail', compact('ppdbUser', 'nilaiRapor', 'provinsi', 'kabkota', 'kecamatan', 'sertifikat', 'berkasPendukung'));
+
+        $nilaiRataRata = $this->nilaiRataRataPerSemester($nilaiRapor);
+
+        $penilaian = PenilaianPeserta::where('user_id', $ppdbUser->user_id)->first();
+
+        return view('dashboard.ppdb.detail', compact('ppdbUser', 'nilaiRapor', 'provinsi', 'kabkota', 'kecamatan', 'sertifikat', 'berkasPendukung', 'nilaiRataRata', 'penilaian'));
     }
 
     //validasi ppdb
     public function validasiView($id){
-        $ppdbUser = PpdbUser::where('id', $id)->first();
-        return view('dashboard.ppdb.validasi', compact('ppdbUser'));
+        $ppdbUser = PpdbUser::whereNotIn('status', ['Tidak Valid', 'Pendaftar'])->where('id', $id)->first();
+
+        // dd($ppdbUser);
+
+        // check data ada apa tidak
+        if($ppdbUser == null){
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+        // dd($ppdbUser);
+        $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
+        $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
+        $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
+
+        $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
+        $sertifikat = Sertifikat::where('berkas_id', $berkasPendukung->id)->get();
+        // dd($sertifikat);
+        $nilaiRapor = NilaiRapor::where('user_id', $ppdbUser->user_id)
+                ->with('mapel')
+                ->orderBy('semester')
+                ->get()
+                ->groupBy('semester');
+
+        $nilaiRataRata = $this->nilaiRataRataPerSemester($nilaiRapor);
+
+        $penilaian = PenilaianPeserta::where('user_id', $ppdbUser->user_id)->first();
+        return view('dashboard.ppdb.validasi', compact('ppdbUser', 'provinsi', 'kabkota', 'kecamatan', 'berkasPendukung', 'sertifikat', 'nilaiRapor', 'nilaiRataRata', 'penilaian'));
 
     }
 
@@ -69,6 +104,8 @@ class AdminPpdbController extends Controller
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:valid,tidak_valid,perbaikan',
             'note_validasi' => 'nullable|string',
+            'nilai_rapor' => 'nullable|string',
+            'nilai_sertifikat' => 'nullable|string',
         ],[
             'status.required' => 'Status validasi harus dipilih.',
             'note_validasi' => 'Note validasi harus diisi.',
@@ -79,16 +116,23 @@ class AdminPpdbController extends Controller
         }
         $validatedData = $validator->validated();
 
+        // dd($request->all());
+
+        $verifikator = auth()->user()->name;
 
         $ppdbUser = PpdbUser::where('id', $id)->first();
         //this is for user ppdb to sending email only
         $user = User::where('id', $ppdbUser->user_id)->first();
 
+        $penilaian = PenilaianPeserta::where('user_id', $ppdbUser->user_id)->first();
+
+        $totalNilai = $request->nilai_rapor + $request->nilai_sertifikat;
+
         try {
             DB::beginTransaction();
 
             $lastUser = PpdbUser::whereNotNull('nomor_ujian')->orderBy('nomor_ujian', 'desc')->first();
-            $nomorUjian = $lastUser ? str_pad($lastUser->nomorUjian + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            $nomorUjian = $lastUser ? str_pad($lastUser->nomorUjian + 1, 4, '0', STR_PAD_LEFT) : '0151';
             $jalur_pendaftaran = $ppdbUser->jalur_pendaftaran;
 
             if($jalur_pendaftaran == 'prestasi'){
@@ -102,21 +146,37 @@ class AdminPpdbController extends Controller
                     'status' => 'Tidak Valid',
                     'note_validasi' => $request->note_validasi
                 ]);
+                PenilaianPeserta::create([
+                    'user_id' => $user->id,
+                    'bobot_nilai_rapor' => $request->nilai_rapor,
+                    'bobot_nilai_sertifikat' => $request->nilai_sertifikat,
+                    'verifikator' => $verifikator
+                ]);
             }else if($request->status == 'perbaikan'){
                 //userppdb harus memperbaiki data diri
                 $ppdbUser->update([
                     'status' => 'Perbaikan',
                     'note_validasi' => $request->note_validasi
                 ]);
+                PenilaianPeserta::create([
+                    'user_id' => $user->id,
+                    'bobot_nilai_rapor' => $request->nilai_rapor,
+                    'bobot_nilai_sertifikat' => $request->nilai_sertifikat,
+                    'verifikator' => $verifikator
+                ]);
+
             }else if($request->status == 'valid'){
                 $ppdbUser->update([
                     'status' => 'Valid',
                     'nomor_ujian' => $jalur_pendaftaran .' - ' . $nomorUjian,
                     'note_validasi' => $request->note_validasi
                 ]);
-                $pdf = Pdf::loadView('dashboard.ppdb.kartuujian', compact('data'))
-                    ->setPaper('A4', 'landscape'); // 10cm x 14cm
-                    return $pdf->download('kartuujian-' . $ppdbUser->nama_lengkap . '.pdf');
+                PenilaianPeserta::create([
+                    'user_id' => $user->id,
+                    'bobot_nilai_rapor' => $request->nilai_rapor,
+                    'bobot_nilai_sertifikat' => $request->nilai_sertifikat,
+                    'verifikator' => $verifikator
+                ]);
             }
 
             // Tambahkan logika validasi di sini
@@ -124,7 +184,9 @@ class AdminPpdbController extends Controller
             Mail::to($user->email)->send(new PPDBSelectionResult($user, $ppdbUser));
 
             DB::commit();
+
             return redirect()->route('admin.ppdb.index')->with('success', 'Data berhasil disimpan');
+
         } catch (Exception $e) {
             DB::rollBack();
             \Log::error("message:" . $e->getMessage());
@@ -256,5 +318,56 @@ class AdminPpdbController extends Controller
         }
     }
 
+
+    private function nilaiRataRataPerSemester($nilaiRapor){
+        $rataRataPerSemester = [];
+
+        foreach ($nilaiRapor as $semester => $nilaiMapel) {
+            // Ambil semua nilai untuk semester tertentu
+            $totalNilai = 0;
+            $jumlahMapel = count($nilaiMapel);
+
+            foreach ($nilaiMapel as $nilai) {
+                $totalNilai += $nilai->nilai; // Penjumlahan nilai untuk semester ini
+            }
+
+            // Hitung rata-rata untuk semester ini
+            $rataRataPerSemester[$semester] = $jumlahMapel > 0 ? $totalNilai / $jumlahMapel : 0;
+        }
+
+        return $rataRataPerSemester;
+    }
+
+    public function updateSertifikat(Request $request, $id, $id_sertifikat) {
+        $ppdbUser = PpdbUser::where('id', $id)->firstOrFail();
+        $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
+        $sertifikat = Sertifikat::where('id', $id_sertifikat)->firstOrFail();
+
+        $validator = Validator::make($request->all(), [
+            'tingkat_kejuaraan' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            Log::error($validator->errors());
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            // Simpan perubahan sertifikat
+            $sertifikat->update([
+                'tingkat_kejuaraan' => $request->tingkat_kejuaraan
+            ]);
+
+            DB::commit();
+            return response()->json('Data telah tersimpan');
+            return redirect()->route('admin.ppdb.index')->with('success', 'Data telah tersimpan');
+        } catch (Exception $e) {
+            DB::rollBack();
+            \Log::error("message:" . $e->getMessage());
+            return redirect()->route('admin.ppdb.index')->with('error', 'Terjadi kesalahan saat menyimpan data');
+        }
+    }
 
 }

@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\File;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 
-
 use App\Models\User;
 use App\Models\PpdbUser;
 use App\Models\NilaiRapor;
@@ -474,8 +473,7 @@ class PpdbController extends Controller{
                 ->orderBy('semester')
                 ->get()
                 ->groupBy('semester');
-
-        // $nilaiRataRata = hitungRataRataPerSemester($nilaiRapor);
+        $nilaiRataRata = $this->nilaiRataRataPerSemester($nilaiRapor);
 
         // dd($nilaiRataRata);
 
@@ -492,7 +490,7 @@ class PpdbController extends Controller{
             return redirect()->route('ppdb.pendaftaran')->with('error', 'Lengkapi semua data terlebih dahulu.');
         }
 
-        return view('ppdb.dashboard.steps.detail', compact('ppdbUser', 'mapel', 'nilaiRapor', 'berkasPendukung', 'sertifikat', 'provinsi', 'kabkota', 'kecamatan'));
+        return view('ppdb.dashboard.steps.detail', compact('ppdbUser', 'mapel', 'nilaiRapor', 'berkasPendukung', 'sertifikat', 'provinsi', 'kabkota', 'kecamatan', 'nilaiRataRata'));
     }
 
     public function finalisasi()
@@ -575,5 +573,25 @@ class PpdbController extends Controller{
         return back()->with('error', 'Terjadi kesalahan saat memperbarui profil.');
     }
 }
+
+
+    private function nilaiRataRataPerSemester($nilaiRapor){
+        $rataRataPerSemester = [];
+
+        foreach ($nilaiRapor as $semester => $nilaiMapel) {
+            // Ambil semua nilai untuk semester tertentu
+            $totalNilai = 0;
+            $jumlahMapel = count($nilaiMapel);
+
+            foreach ($nilaiMapel as $nilai) {
+                $totalNilai += $nilai->nilai; // Penjumlahan nilai untuk semester ini
+            }
+
+            // Hitung rata-rata untuk semester ini
+            $rataRataPerSemester[$semester] = $jumlahMapel > 0 ? $totalNilai / $jumlahMapel : 0;
+        }
+
+        return $rataRataPerSemester;
+    }
 
 }

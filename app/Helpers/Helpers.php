@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Helpers;
+namespace App\Helpers;
 
 if(!function_exists('hitungRataRataPerSemester')){
     function hitungRataRataPerSemester($arrNilai){

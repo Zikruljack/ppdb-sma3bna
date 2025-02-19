@@ -28,7 +28,7 @@ class PesertaPPDBDataTable extends DataTable
                 $btn .= '<li><a href="/admin/ppdb/peserta/edit/'. $row->id.' " class="btn btn-sm btn-link data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a></li>';
                 $btn .= '<li><a href="/admin/ppdb/peserta/validate/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Validasi"><i class="fa fa-fw fa-check text-success"></i></a></li>';
                 if($row->status == 'Valid'){
-                    $btn .= '<li><a href="/admin/ppdb/download/kartu/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Kartu"><i class="fa fa-fw fa-download"></i></a></li>';
+                    $btn .= '<li><a href="/admin/ppdb/peserta/download/kartu/'.$row->id.'" class="btn btn-sm btn-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Kartu"><i class="fa fa-fw fa-download"></i></a></li>';
                 }
                 $btn .= '</ul>';
                 return $btn;

@@ -370,13 +370,13 @@ return [
                 'header' => 'SPMB',
                 'can' => 'manage_ppdb',
             ],
-            [
-                'text' => 'List Pendaftar SPMB',
-                'icon' => 'fas fa-fw fa-users',
-                'url'  => 'admin/ppdb/peserta/list',
-                'can' => 'manage_gallery',
-                'classes' => 'ml-3',
-            ],
+            // [
+            //     'text' => 'List Pendaftar SPMB',
+            //     'icon' => 'fas fa-fw fa-users',
+            //     'url'  => 'admin/ppdb/peserta/list',
+            //     'can' => 'manage_gallery',
+            //     'classes' => 'ml-3',
+            // ],
             [
                 'text' => 'Daftar Peserta SPMB',
                 'icon' => 'fas fa-fw fa-users',

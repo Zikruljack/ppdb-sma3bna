@@ -105,13 +105,14 @@
                         <thead>
                             <tr>
                                 <th style="width: 10%;">Semester</th>
-                                <th style="width: 15%;">PAI</th>
+                                <th style="width: 10%;">PAI</th>
                                 <th style="width: 15%;">Bahasa Indonesia</th>
                                 <th style="width: 15%;">Bahasa Inggris</th>
                                 <th style="width: 15%;">Matematika</th>
-                                <th style="width: 15%;">IPA</th>
-                                <th style="width: 15%;">IPS</th>
-                                <th>Berkas</th>
+                                <th style="width: 10%;">IPA</th>
+                                <th style="width: 10%;">IPS</th>
+                                <th style="width: 15%">Total Nilai</th>
+                                <th style="width: 20%">Berkas</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -126,6 +127,7 @@
                                     <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'Matematika')->nilai ?? '-' }}</td>
                                     <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPA')->nilai ?? '-' }}</td>
                                     <td>{{ $nilaiSemester->firstWhere('mapel.mapel', 'IPS')->nilai ?? '-' }}</td>
+                                    <td>{{ $nilaiRataRata[$semester] }}</td>
                                     <td>
                                         <a href="{{ asset('storage/' . $nilaiSemester->firstWhere('mapel.mapel', 'PAI')->scan_rapor) }}"
                                             target="_blank" class="btn btn-info">

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('penilaian_peserta', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('bobot_nilai_rapor');
-            $table->string('bobot_nilai_sertifikat');
-            $table->string('bobot_nilai_wawancara');
-            $table->string('bobot_nilai_baca_quran');
+            $table->string('bobot_nilai_rapor')->nullable();
+            $table->string('bobot_nilai_sertifikat')->nullable();
+            $table->string('bobot_nilai_wawancara')->nullable();
+            $table->string('bobot_nilai_baca_quran')->nullable();
             $table->string('verifikator');
             $table->timestamps();
             $table->softDeletes();

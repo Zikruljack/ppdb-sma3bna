@@ -177,7 +177,7 @@
                 </div>
                 <div class="modal-body">
                     Pendaftaran SMPB SMA NEGERI 3 BANDA ACEH akan dibuka pada tanggal 17 Februari 2025 pukul 08.00 pagi
-                    sampai tanggal 17 Februari
+                    sampai tanggal 21 Februari
                     2025 pukul 23.59 malam. Jangan lewatkan!
                 </div>
                 <div class="modal-footer">

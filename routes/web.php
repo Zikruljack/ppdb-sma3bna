@@ -89,6 +89,8 @@ Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function 
             Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
             Route::get('/peserta/detail/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'detailPeserta'])->name('admin.ppdb.detail.peserta');
             Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
+            Route::post('/peserta/validasi/penilaian/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'storePenilaian'])->name('admin.ppdb.validasi.penilaian');
+            Route::post('/peserta/validasi/penilaian/update/sertifikat/{id}/{id_sertifikat}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'updateSertifikat'])->name('admin.ppdb.validasi.penilaian.update.sertifikat');
             Route::get('/peserta/download/kartu/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'downloadKartu'])->name('admin.ppdb.download.kartu');
 
 
