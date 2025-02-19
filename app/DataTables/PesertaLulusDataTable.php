@@ -11,6 +11,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Facades\DB;
 
 class PesertaLulusDataTable extends DataTable
 {
@@ -42,14 +43,14 @@ class PesertaLulusDataTable extends DataTable
             ->addColumn('total_nilai', function ($row) {
                 return 0;
             })
-            // // ->addColumn('total_nilai', function ($row) {
-            // //     $nilaiRapor = $row->bobot_nilai_rapor;
-            // //     $nilaiSertifikat = $row->bobot_nilai_sertifikat;
-            // //     $niliaWawancara = $row->bobot_nilai_wawancara;
-            // //     $nilaiQuran = $row->bobot_nilai_baca_quran;
-            // //     $totalNilai = $nilaiRapor + $nilaiSertifikat + $niliaWawancara + $nilaiQuran;
-            // //     return $totalNilai ?? 0;
-            // })
+            ->addColumn('total_nilai', function ($row) {
+                $nilaiRapor = $row->bobot_nilai_rapor;
+                $nilaiSertifikat = $row->bobot_nilai_sertifikat;
+                $niliaWawancara = $row->bobot_nilai_wawancara;
+                $nilaiQuran = $row->bobot_nilai_baca_quran;
+                $totalNilai = $nilaiRapor + $nilaiSertifikat + $niliaWawancara + $nilaiQuran;
+                return $totalNilai ?? 0;
+            })
             ->addColumn('nama_lengkap', function ($row) {
                 return ucfirst($row->nama_lengkap) ?? '';
             })
@@ -64,15 +65,32 @@ class PesertaLulusDataTable extends DataTable
      * Get the query source of dataTable.
      */
     public function query(PpdbUser $model): QueryBuilder
-    {
-        return $model->newQuery()
-        ->where('status', 'Valid');
-        // ->leftJoin('penilaian_peserta', 'ppdb_user.user_id', '=', 'penilaian_peserta.user_id');
-        // ->leftJoin('users', 'ppdb_user.user_id', '=', 'users.id')
-        // ->leftJoin('penilaian_peserta', 'ppdb_user.user_id', '=', 'penilaian_peserta.user_id')
-        // ->select('ppdb_user.*', 'penilaian_peserta.*')
-        // ->groupBy('ppdb_user.nomor_peserta');
-    }
+{
+    return $model->newQuery()
+        ->where('status', 'Valid')
+        ->leftJoin('penilaian_peserta', function ($join) {
+            $join->on('ppdb_user.user_id', '=', 'penilaian_peserta.user_id')
+                ->whereRaw('penilaian_peserta.bobot_nilai_rapor = (
+                    SELECT MAX(bobot_nilai_rapor)
+                    FROM penilaian_peserta
+                    WHERE penilaian_peserta.user_id = ppdb_user.user_id
+                )');
+        })
+        ->leftJoin('users', 'ppdb_user.user_id', '=', 'users.id')
+        ->select(
+            'ppdb_user.nama_lengkap',
+            'ppdb_user.nomor_peserta',
+            'ppdb_user.jalur_pendaftaran',
+            'ppdb_user.status',
+            'ppdb_user.asal_sekolah',
+            'penilaian_peserta.bobot_nilai_rapor',
+            'penilaian_peserta.bobot_nilai_sertifikat',
+            'penilaian_peserta.bobot_nilai_wawancara',
+            'penilaian_peserta.bobot_nilai_baca_quran',
+            'ppdb_user.jenis_kelamin'
+        );
+}
+
 
     /**
      * Optional method if you want to use the html builder.
