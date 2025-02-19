@@ -70,14 +70,7 @@ class AdminPpdbController extends Controller
 
     //validasi ppdb
     public function validasiView($id){
-        $ppdbUser = PpdbUser::where('id', $id)->where('status', 'Final')->first();
-
-        // dd($ppdbUser);
-
-        // dd($ppdbUser);
-        $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
-        $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();
-        $kecamatan = DB::table('indonesia_districts')->select('name')->where('code', $ppdbUser->kecamatan)->first();
+        $ppdbUser = PpdbUser::where('id', $id)->first();
 
         $berkasPendukung = BerkasPpdb::where('user_id', $ppdbUser->user_id)->first();
         $sertifikat = Sertifikat::where('berkas_id', $berkasPendukung->id)->get();
@@ -142,8 +135,9 @@ class AdminPpdbController extends Controller
                     'status' => 'Tidak Valid',
                     'note_validasi' => $request->note_validasi
                 ]);
-                PenilaianPeserta::create([
+                PenilaianPeserta::updateOrCreate([
                     'user_id' => $ppdbUser->user_id,
+                ], [
                     'bobot_nilai_rapor' => $request->nilai_rapor,
                     'bobot_nilai_sertifikat' => $request->nilai_sertifikat,
                     'verifikator' => $verifikator
@@ -154,8 +148,9 @@ class AdminPpdbController extends Controller
                     'status' => 'Perbaikan',
                     'note_validasi' => $request->note_validasi
                 ]);
-                PenilaianPeserta::create([
-                    'user_id' => $user->id,
+                PenilaianPeserta::updateOrCreate([
+                    'user_id' => $ppdbUser->user_id,
+                ], [
                     'bobot_nilai_rapor' => $request->nilai_rapor,
                     'bobot_nilai_sertifikat' => $request->nilai_sertifikat,
                     'verifikator' => $verifikator
@@ -167,8 +162,9 @@ class AdminPpdbController extends Controller
                     'nomor_ujian' => $jalur_pendaftaran .' - ' . $nomorUjian,
                     'note_validasi' => $request->note_validasi
                 ]);
-                PenilaianPeserta::create([
+                PenilaianPeserta::updateOrCreate([
                     'user_id' => $ppdbUser->user_id,
+                ], [
                     'bobot_nilai_rapor' => $request->nilai_rapor,
                     'bobot_nilai_sertifikat' => $request->nilai_sertifikat,
                     'verifikator' => $verifikator
