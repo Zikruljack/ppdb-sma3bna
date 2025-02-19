@@ -29,6 +29,8 @@ class HomeController extends Controller
         $totalPendaftar = PpdbUser::where('nisn', '=', null)->count();
         $totalLengkap = PpdbUser::where('status', '=', 'Final')->count();
         $totalLulus = PpdbUser::where('status', '=', 'Valid')->count();
-        return view('dashboard.index', compact('totalPendaftar', 'totalLengkap', 'totalLulus'));
+        $totalPendaftarPrestasi = PpdbUser::where('status', '=', 'prestasi')->count();
+        $totalPendaftarKepemimpinan = PpdbUser::where('status', '=', 'kepemimpinan')->count();
+        return view('dashboard.index', compact('totalPendaftar', 'totalLengkap', 'totalLulus', 'totalPendaftarPrestasi', 'totalPendaftarKepemimpinan'));
     }
 }
