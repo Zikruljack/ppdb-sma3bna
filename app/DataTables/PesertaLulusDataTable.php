@@ -49,7 +49,7 @@ class PesertaLulusDataTable extends DataTable
                 $niliaWawancara = $row->bobot_nilai_wawancara;
                 $nilaiQuran = $row->bobot_nilai_baca_quran;
                 $totalNilai = $nilaiRapor + $nilaiSertifikat + $niliaWawancara + $nilaiQuran;
-                return $totalNilai ?? 0;
+                return number_format($totalNilai, 2, '.', ',') ?? 0;
             })
             ->addColumn('nama_lengkap', function ($row) {
                 return ucfirst($row->nama_lengkap) ?? '';
