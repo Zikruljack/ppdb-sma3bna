@@ -14,6 +14,7 @@
                     <li>File yang diupload harus berekstensi <strong>pdf, jpg, png</strong> dan max file
                         <strong>2MB</strong>.
                     </li>
+                    <li>1 berkas Sertifikat 1 halaman,</li>
                     <li>Jika ada data yang kosong, maka diisi dengan <strong>"-".</strong></li>
                     @if ($ppdbUser->jalur_pendaftaran == 'kepemimpinan')
                         <li>Untuk sertifikat kepemimpinan, ketua OSIS/OSIM harus mengupload berkas dari surat Keputusan
