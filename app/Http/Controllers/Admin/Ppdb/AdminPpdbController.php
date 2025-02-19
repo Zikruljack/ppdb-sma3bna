@@ -147,7 +147,7 @@ class AdminPpdbController extends Controller
                     'note_validasi' => $request->note_validasi
                 ]);
                 PenilaianPeserta::create([
-                    'user_id' => $user->id,
+                    'user_id' => $ppdbUser->user_id,
                     'bobot_nilai_rapor' => $request->nilai_rapor,
                     'bobot_nilai_sertifikat' => $request->nilai_sertifikat,
                     'verifikator' => $verifikator
@@ -172,7 +172,7 @@ class AdminPpdbController extends Controller
                     'note_validasi' => $request->note_validasi
                 ]);
                 PenilaianPeserta::create([
-                    'user_id' => $user->id,
+                    'user_id' => $ppdbUser->user_id,
                     'bobot_nilai_rapor' => $request->nilai_rapor,
                     'bobot_nilai_sertifikat' => $request->nilai_sertifikat,
                     'verifikator' => $verifikator
