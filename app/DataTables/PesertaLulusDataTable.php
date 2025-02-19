@@ -78,6 +78,7 @@ class PesertaLulusDataTable extends DataTable
         })
         ->leftJoin('users', 'ppdb_user.user_id', '=', 'users.id')
         ->select(
+            'ppdb_user.id',
             'ppdb_user.nama_lengkap',
             'ppdb_user.nomor_peserta',
             'ppdb_user.jalur_pendaftaran',
