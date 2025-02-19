@@ -46,7 +46,7 @@
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3>{{ $totalPendaftarPrestasi }}</h3>
-                        <p>Total Prestasi</p>
+                        <p>Total Peserta Pendaftaran Prestasi</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-trophy"></i>
@@ -57,10 +57,21 @@
                 <div class="small-box bg-primary">
                     <div class="inner">
                         <h3>{{ $totalPendaftarKepemimpinan }}</h3>
-                        <p>Total Kepemimpinan</p>
+                        <p>Total Peserta Pendaftaran Kepemimpinan</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>{{ $totalSiswaDenganNilai }}</h3>
+                        <p>Total Peserta Yang Sudah Test Semuanya</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-star"></i>
                     </div>
                 </div>
             </div>

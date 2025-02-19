@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\PpdbUser;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -26,11 +27,20 @@ class HomeController extends Controller
     public function index()
     {
 
-        $totalPendaftar = PpdbUser::where('nisn', '=', null)->count();
+        $totalPendaftar = User::role('siswa')->count();
         $totalLengkap = PpdbUser::where('status', '=', 'Final')->count();
         $totalLulus = PpdbUser::where('status', '=', 'Valid')->count();
         $totalPendaftarPrestasi = PpdbUser::where('jalur_pendaftaran', '=', 'prestasi')->count();
         $totalPendaftarKepemimpinan = PpdbUser::where('jalur_pendaftaran', '=', 'kepemimpinan')->count();
-        return view('dashboard.index', compact('totalPendaftar', 'totalLengkap', 'totalLulus', 'totalPendaftarPrestasi', 'totalPendaftarKepemimpinan'));
+        $totalSiswaDenganNilai = PpdbUser::where('status', 'Valid')
+                                ->whereHas('penilaianPeserta', function ($query) {
+                                    $query->whereNotNull('bobot_nilai_rapor')
+                                        ->whereNotNull('bobot_nilai_sertifikat')
+                                        ->whereNotNull('bobot_nilai_wawancara')
+                                        ->whereNotNull('bobot_nilai_baca_quran');
+                                })
+                                ->count();
+
+        return view('dashboard.index', compact('totalPendaftar', 'totalLengkap', 'totalLulus', 'totalPendaftarPrestasi', 'totalPendaftarKepemimpinan', 'totalSiswaDenganNilai'));
     }
 }

@@ -65,4 +65,10 @@ class PpdbUser extends Model
     {
         return $this->belongsTo(NilaiRapor::class);
     }
+
+    public function penilaianPeserta()
+{
+    return $this->hasOne(PenilaianPeserta::class, 'user_id', 'user_id');
+}
+
 }

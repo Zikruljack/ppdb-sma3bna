@@ -65,32 +65,32 @@ class PesertaLulusDataTable extends DataTable
      * Get the query source of dataTable.
      */
     public function query(PpdbUser $model): QueryBuilder
-{
-    return $model->newQuery()
-        ->where('status', 'Valid')
-        ->leftJoin('penilaian_peserta', function ($join) {
-            $join->on('ppdb_user.user_id', '=', 'penilaian_peserta.user_id')
-                ->whereRaw('penilaian_peserta.bobot_nilai_rapor = (
-                    SELECT MAX(bobot_nilai_rapor)
-                    FROM penilaian_peserta
-                    WHERE penilaian_peserta.user_id = ppdb_user.user_id
-                )');
-        })
-        ->leftJoin('users', 'ppdb_user.user_id', '=', 'users.id')
-        ->select(
-            'ppdb_user.id',
-            'ppdb_user.nama_lengkap',
-            'ppdb_user.nomor_peserta',
-            'ppdb_user.jalur_pendaftaran',
-            'ppdb_user.status',
-            'ppdb_user.asal_sekolah',
-            'penilaian_peserta.bobot_nilai_rapor',
-            'penilaian_peserta.bobot_nilai_sertifikat',
-            'penilaian_peserta.bobot_nilai_wawancara',
-            'penilaian_peserta.bobot_nilai_baca_quran',
-            'ppdb_user.jenis_kelamin'
-        );
-}
+    {
+        return $model->newQuery()
+            ->where('status', 'Valid')
+            ->leftJoin('penilaian_peserta', function ($join) {
+                $join->on('ppdb_user.user_id', '=', 'penilaian_peserta.user_id')
+                    ->whereRaw('penilaian_peserta.bobot_nilai_rapor = (
+                        SELECT MAX(bobot_nilai_rapor)
+                        FROM penilaian_peserta
+                        WHERE penilaian_peserta.user_id = ppdb_user.user_id
+                    )');
+            })
+            ->leftJoin('users', 'ppdb_user.user_id', '=', 'users.id')
+            ->select(
+                'ppdb_user.id',
+                'ppdb_user.nama_lengkap',
+                'ppdb_user.nomor_peserta',
+                'ppdb_user.jalur_pendaftaran',
+                'ppdb_user.status',
+                'ppdb_user.asal_sekolah',
+                'penilaian_peserta.bobot_nilai_rapor',
+                'penilaian_peserta.bobot_nilai_sertifikat',
+                'penilaian_peserta.bobot_nilai_wawancara',
+                'penilaian_peserta.bobot_nilai_baca_quran',
+                'ppdb_user.jenis_kelamin'
+            );
+    }
 
 
     /**
