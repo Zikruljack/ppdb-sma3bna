@@ -74,10 +74,6 @@ class AdminPpdbController extends Controller
 
         // dd($ppdbUser);
 
-        // check data ada apa tidak
-        if($ppdbUser == null){
-            return redirect()->back()->with('error', 'Data tidak ditemukan');
-        }
         // dd($ppdbUser);
         $provinsi = DB::table('indonesia_provinces')->select('name')->where('code', $ppdbUser->provinsi)->first();
         $kabkota = DB::table('indonesia_cities')->select('name')->where('code', $ppdbUser->kabupaten_kota)->first();

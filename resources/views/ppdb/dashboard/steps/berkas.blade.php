@@ -38,7 +38,6 @@
                                 @error('kk')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                                @if ($ppd)
                             </div>
                             <div class="form-group">
                                 <label>Surat Keterangan Aktif Sekolah <span class="text-danger">*</span></label>
