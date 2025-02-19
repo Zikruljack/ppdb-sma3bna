@@ -39,14 +39,19 @@ class PesertaLulusDataTable extends DataTable
             ->addColumn('jenis_kelamin', function ($row) {
                 return $row->jenis_kelamin == 'Laki-laki' ? 'L' : 'P';
             })
-            // ->addColumn('total_nilai', function ($row) {
-            //     return $row->bobot_nilai_rapor + $row->bobot_nilai_sertifikat + $row->bobot_nilai_wawancara + $row->bobot_nilai_baca_quran;
-            // })
+            ->addColumn('total_nilai', function ($row) {
+                $nilaiRapor = $row->bobot_nilai_rapor;
+                $nilaiSertifikat = $row->bobot_nilai_sertifikat;
+                $niliaWawancara = $row->bobot_nilai_wawancara;
+                $nilaiQuran = $row->bobot_nilai_baca_quran;
+                $totalNilai = $nilaiRapor + $nilaiSertifikat + $niliaWawancara + $nilaiQuran;
+                return $totalNilai ?? 0;
+            })
             ->addColumn('nama_lengkap', function ($row) {
-                return ucfirst($row->nama_lengkap);
+                return ucfirst($row->nama_lengkap) ?? '';
             })
             ->addColumn('asal_sekolah', function ($row) {
-                return ucfirst($row->asal_sekolah);
+                return ucfirst($row->asal_sekolah) ?? '';
             })
             ->rawColumns(['aksi'])
             ->setRowId('id');
@@ -58,7 +63,8 @@ class PesertaLulusDataTable extends DataTable
     public function query(PpdbUser $model): QueryBuilder
     {
         return $model->newQuery()
-        ->where('status', 'Valid');
+        ->where('status', 'Valid')
+        ->leftJoin('penilaian_peserta', 'ppdb_user.user_id', '=', 'penilaian_peserta.user_id');
         // ->leftJoin('users', 'ppdb_user.user_id', '=', 'users.id')
         // ->leftJoin('penilaian_peserta', 'ppdb_user.user_id', '=', 'penilaian_peserta.user_id')
         // ->select('ppdb_user.*', 'penilaian_peserta.*')
