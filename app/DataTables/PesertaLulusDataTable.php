@@ -36,6 +36,18 @@ class PesertaLulusDataTable extends DataTable
                 $jalur = $row->jalur_pendaftaran;
                 return $jalur;
             })
+            ->addColumn('jenis_kelamin', function ($row) {
+                return $row->jenis_kelamin == 'Laki-laki' ? 'L' : 'P';
+            })
+            ->addColumn('total_nilai', function ($row) {
+                return $row->bobot_nilai_rapor + $row->bobot_nilai_sertifikat + $row->bobot_nilai_wawancara + $row->bobot_nilai_baca_quran;
+            })
+            ->addColumn('nama_lengkap', function ($row) {
+                return ucfirst($row->nama_lengkap);
+            })
+            ->addColumn('asal_sekolah', function ($row) {
+                return ucfirst($row->asal_sekolah);
+            })
             ->rawColumns(['aksi'])
             ->setRowId('id');
     }
@@ -45,7 +57,12 @@ class PesertaLulusDataTable extends DataTable
      */
     public function query(PpdbUser $model): QueryBuilder
     {
-        return $model->newQuery()->where('status', 'Valid');
+        return $model->newQuery()
+        // ->leftJoin('users', 'ppdb_user.user_id', '=', 'users.id')
+        ->leftJoin('penilaian_peserta', 'ppdb_user.user_id', '=', 'penilaian_peserta.user_id')
+        ->select('ppdb_user.*', 'penilaian_peserta.*')
+        ->where('status', 'Valid');
+        // ->groupBy('ppdb_user.nomor_peserta');
     }
 
     /**
@@ -79,6 +96,7 @@ class PesertaLulusDataTable extends DataTable
             Column::make('nomor_peserta'),
             Column::make('nama_lengkap'),
             Column::make('jalur_pendaftaran'),
+            Column::make('total_nilai'),
             Column::make('status'),
             Column::computed('aksi')
                   ->exportable(false)

@@ -109,7 +109,7 @@
     </div>
 @endsection
 
-@section('footer')
+{{-- @section('footer')
     <div class="footer-content ">
         <div class="float-right">
             <small>Version: {{ config('app.version', '1.0.0') }}</small>
@@ -121,7 +121,7 @@
         <br>
 
     </div>
-@endsection
+@endsection --}}
 
 
 @section('js')
