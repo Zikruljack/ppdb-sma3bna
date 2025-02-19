@@ -91,9 +91,15 @@ Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function 
             Route::post('/peserta/validasi/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'validasi'])->name('admin.ppdb.validasi');
             Route::post('/peserta/validasi/penilaian/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'storePenilaian'])->name('admin.ppdb.validasi.penilaian');
             Route::post('/peserta/validasi/penilaian/update/sertifikat/{id}/{id_sertifikat}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'updateSertifikat'])->name('admin.ppdb.validasi.penilaian.update.sertifikat');
+
+            Route::get('/peserta/input-nilai/', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'inputNilaiLainView'])->name('admin.ppdb.input.nilai');
+            Route::post('/peserta/input-nilai/wawancara/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'inputNilaiWawancara'])->name('admin.ppdb.input.nilai.wawancara');
+            Route::post('/peserta/input-nilai/quran/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'inputNilaiQuran'])->name('admin.ppdb.input.nilai.quran');
+
             Route::get('/peserta/download/kartu/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'downloadKartu'])->name('admin.ppdb.download.kartu');
 
 
+            Route::get('/peserta/list/cari', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'cariPeserta'])->name('admin.ppdb.cari.peserta');
             //edit delete ppdb
             Route::get('/peserta/edit/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'edit'])->name('admin.ppdb.peserta.edit');
             Route::post('/peserta/update/{id}', [App\Http\Controllers\Admin\Ppdb\AdminPpdbController::class, 'updateUserPpdb'])->name('admin.ppdb.peserta.update');

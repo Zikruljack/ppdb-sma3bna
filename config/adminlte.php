@@ -327,7 +327,14 @@ return [
 
         // Sidebar items:
             // ['header' => 'DASHBOARD'],
-            ['header' => 'MENAJEMEN', 'can' => 'admin'],
+            ['header' => 'MENAJEMEN', 'can' => 'manage_ppdb'],
+
+            [
+                'text' => 'Dashboard Admin',
+                'icon' => 'fas fa-fw fa-tachometer-alt',
+                'url' => 'admin/dashboard',
+                'can' => 'manage_ppdb',
+            ],
 
             [
                 'text' => 'Berita',
@@ -383,6 +390,13 @@ return [
                 'url'  => 'admin/ppdb/peserta',
                 'can' => 'manage_ppdb',
                 'classes' => 'ml-3',
+            ],
+            [
+                'text' => 'Input Nilai',
+                'icon' => 'fas fa-fw fa-user-edit',
+                'url' => 'admin/ppdb/peserta/input-nilai/',
+                'can' => 'manage_ppdb',
+                'classes' => 'ml-3'
             ],
             [
                 'text' => 'Peserta Lulus',

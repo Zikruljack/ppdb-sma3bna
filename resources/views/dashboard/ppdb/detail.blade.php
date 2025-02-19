@@ -46,10 +46,10 @@
                         <tr>
                             <td id="nilai-rapor">{{ $penilaian->bobot_nilai_rapor ?? 0 }}</td>
                             <td id="nilai-sertifikat">{{ $penilaian->bobot_nilai_sertifikat ?? 0 }}</td>
-                            <td id="nilai-ujian">0</td>
-                            <td id="nilai-baca-quran">0</td>
+                            <td id="nilai-ujian">{{ $penilaian->bobot_nilai_wawancara ?? 0 }}</td>
+                            <td id="nilai-baca-quran">{{ $penilaian->bobot_nilai_baca_quran ?? 0 }}</td>
                             <td id="total-nilai">
-                                {{ ($penilaian->bobot_nilai_rapor ?? 0) + ($penilaian->bobot_nilai_sertifikat ?? 0) }}
+                                {{ ($penilaian->bobot_nilai_rapor ?? 0) + ($penilaian->bobot_nilai_sertifikat ?? 0) + ($penilaian->bobot_nilai_wawancara ?? 0) + ($penilaian->bobot_nilai_baca_quran ?? 0) }}
                             </td>
 
                         </tr>

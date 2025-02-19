@@ -370,4 +370,80 @@ class AdminPpdbController extends Controller
         }
     }
 
+
+    public function inputNilaiLainView()
+    {
+        return view('dashboard.ppdb.ujian.nilai');
+    }
+
+    public function cariPeserta(Request $request)
+    {
+        // Pastikan ada nomor yang dicari
+        if (!$request->has('nomor')) {
+            return response()->json(['error' => 'Nomor tidak boleh kosong'], 400);
+        }
+
+        try {
+            // Cari berdasarkan nomor peserta atau nomor ujian
+            $ppdbUser = PpdbUser::where('nomor_peserta', $request->nomor)
+                                ->orWhere('nomor_ujian', $request->nomor)
+                                ->firstOrFail();
+
+            return response()->json($ppdbUser);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['error' => 'Peserta tidak ditemukan'], 404);
+        }
+    }
+
+
+    public function inputNilaiWawancara(Request $request, $id){
+
+        $verifikator = auth()->user()->name;
+        // dd($request->all());
+
+        $request->validate([
+            'bobot_wawancara' => 'required|numeric|min:0|max:100',
+            'verifikator' => 'required|string|max:255',
+        ]);
+
+        $penilaian = PenilaianPeserta::updateOrCreate(
+            ['user_id' => $id],
+            [
+                'bobot_nilai_wawancara' => $request->bobot_wawancara * 0.1,
+                'verifikator' => $verifikator,
+            ]
+        );
+
+        return response()->json([
+            'message' => 'Nilai wawancara berhasil disimpan',
+            'data' => $penilaian
+        ]);
+
+    }
+
+    public function inputNilaiQuran(Request $request, $id){
+        $verifikator = auth()->user()->name;
+        // dd($request->all());
+
+        $request->validate([
+            'bobot_baca_quran' => 'required|numeric|min:0|max:100',
+            'verifikator' => 'required|string|max:255',
+        ]);
+
+        $penilaian = PenilaianPeserta::updateOrCreate(
+            ['user_id' => $id],
+            [
+                'bobot_nilai_baca_quran' => $request->bobot_baca_quran * 0.1,
+                'verifikator' => $verifikator,
+            ]
+        );
+
+        return response()->json([
+            'message' => 'Nilai wawancara berhasil disimpan',
+            'data' => $penilaian
+        ]);
+
+    }
+
+
 }

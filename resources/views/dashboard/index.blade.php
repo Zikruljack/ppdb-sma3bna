@@ -35,7 +35,7 @@
                 <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>{{ $totalLulus }}</h3>
-                        <p>Total yang Lulus</p>
+                        <p>Total yang Lulus Pemberkasan</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-graduation-cap"></i>

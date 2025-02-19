@@ -13,8 +13,8 @@ class PenilaianPeserta extends Model
         'user_id',
         'bobot_nilai_rapor',
         'bobot_nilai_sertifikat',
-        'bobot_wawancara',
-        'bobot_baca_quran',
+        'bobot_nilai_wawancara',
+        'bobot_nilai_baca_quran',
         'verifikator',
     ];
 }
