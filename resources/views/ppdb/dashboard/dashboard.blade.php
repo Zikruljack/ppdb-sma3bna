@@ -44,7 +44,7 @@
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-hourglass-half text-warning fa-2x mr-3"></i>
                                 <p class="mb-0">Mohon ditunggu, data Anda sedang divalidasi oleh panitia.</p>
-                                <a href="{{ route('ppdb.pendaftaran') }}" class="btn btn-primary mt-2">
+                                <a href="{{ route('ppdb.resume') }}" class="btn btn-primary mt-2">
                                     <i class="fas fa-edit"></i> Resume
                                 </a>
                             </div>
