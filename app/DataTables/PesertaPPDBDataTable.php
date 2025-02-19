@@ -42,7 +42,7 @@ class PesertaPPDBDataTable extends DataTable
      */
     public function query(PpdbUser $model): QueryBuilder
     {
-        return $model->newQuery()->where('status', 'Final');
+        return $model->newQuery();
     }
 
     /**
