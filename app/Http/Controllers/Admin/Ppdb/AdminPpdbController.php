@@ -70,7 +70,7 @@ class AdminPpdbController extends Controller
 
     //validasi ppdb
     public function validasiView($id){
-        $ppdbUser = PpdbUser::whereNotIn('status', ['Tidak Valid', 'Pendaftar'])->where('id', $id)->first();
+        $ppdbUser = PpdbUser::where('id', $id)->where('status', 'Final')->first();
 
         // dd($ppdbUser);
 
