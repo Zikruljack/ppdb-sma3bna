@@ -370,6 +370,8 @@ class PpdbController extends Controller{
 {
     $userId = auth()->id();
 
+    $ppdbUser = PpdbUser::where('user_id', $userId)->first();
+
     // dd($request->all());
 
     // Validasi input
@@ -436,18 +438,20 @@ class PpdbController extends Controller{
 
 
         // Simpan data sertifikat
-        foreach ($validatedData['sertifikat'] as $index => $sertifikat) {
-            $sertifikatPath = $sertifikat ? $sertifikat->store('berkas/sertifikat', 'public') : null;
-            Sertifikat::create([
-                'berkas_id' => $berkas->id,
-                'file_path' => $sertifikatPath,
-                'nama_sertifikat' => $validatedData['nama_sertifikat'][$index],
-                'penandatangan_sertifikat' => $validatedData['penandatangan_sertifikat'][$index],
-                'jenis_sertifikat' => $validatedData['jenis_sertifikat'][$index],
-                'tanggal_dikeluarkan' => $validatedData['tanggal_dikeluarkan'][$index],
-                'juara' => $validatedData['juara'][$index],
-                'tingkat_kejuaraan' => $validatedData['tingkat_kejuaraan'][$index],
-            ]);
+        if($ppdbUser->jalur_pendaftaran == 'prestasi'){
+            foreach ($validatedData['sertifikat'] as $index => $sertifikat) {
+                $sertifikatPath = $sertifikat ? $sertifikat->store('berkas/sertifikat', 'public') : null;
+                Sertifikat::create([
+                    'berkas_id' => $berkas->id,
+                    'file_path' => $sertifikatPath,
+                    'nama_sertifikat' => $validatedData['nama_sertifikat'][$index],
+                    'penandatangan_sertifikat' => $validatedData['penandatangan_sertifikat'][$index],
+                    'jenis_sertifikat' => $validatedData['jenis_sertifikat'][$index],
+                    'tanggal_dikeluarkan' => $validatedData['tanggal_dikeluarkan'][$index],
+                    'juara' => $validatedData['juara'][$index],
+                    'tingkat_kejuaraan' => $validatedData['tingkat_kejuaraan'][$index],
+                ]);
+            }
         }
 
 
