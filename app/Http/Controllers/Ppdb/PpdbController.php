@@ -478,9 +478,7 @@ class PpdbController extends Controller{
         // dd($nilaiRataRata);
 
         $berkasPendukung = BerkasPpdb::where('user_id', $user->id)->first();
-        if($berkasPendukung != null){
-            $sertifikat = Sertifikat::where('berkas_id', $berkasPendukung->id)->get();
-        }
+        $sertifikat = $berkasPendukung ? Sertifikat::where('berkas_id', $berkasPendukung->id)->get() : null;
 
         $dataDiriLengkap = $ppdbUser ? true : false;
         $nilaiRaporLengkap = !empty($nilaiRapor);

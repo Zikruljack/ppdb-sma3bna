@@ -120,12 +120,13 @@ class PesertaLulusDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')
             ->title('No')
+            ->searchable(false)
             ->orderable(false),
-            Column::make('nomor_peserta'),
-            Column::make('nama_lengkap'),
-            Column::make('jalur_pendaftaran'),
-            Column::make('total_nilai'),
-            Column::make('status'),
+            Column::make('nomor_peserta')->title('Nomor Peserta'),
+            Column::make('nama_lengkap')->title('Nama Lengkap'),
+            Column::make('jalur_pendaftaran')->title('Jalur Pendaftaran'),
+            Column::make('total_nilai')->title('Total Nilai'),
+            Column::make('status')->title('status'),
             Column::computed('aksi')
                   ->exportable(false)
                   ->printable(false)
