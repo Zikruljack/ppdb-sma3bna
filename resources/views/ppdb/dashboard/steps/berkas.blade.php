@@ -115,7 +115,7 @@
                                         <label>Sertifikat</label>
                                         <input type="file"
                                             class="form-control @error('sertifikat.*') is-invalid @enderror"
-                                            accept="images/*, application/pdf" name="sertifikat[]" required>
+                                            accept="images/*, application/pdf" name="sertifikat[]">
                                         @error('sertifikat.*')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -124,7 +124,7 @@
                                         <label>Nama Sertifikat</label>
                                         <input type="text"
                                             class="form-control @error('nama_sertifikat.*') is-invalid @enderror"
-                                            name="nama_sertifikat[]" placeholder="Nama Sertifikat" required>
+                                            name="nama_sertifikat[]" placeholder="Nama Sertifikat">
                                         @error('nama_sertifikat.*')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -135,8 +135,7 @@
                                         <label>Penandatangan Sertifikat</label>
                                         <input type="text"
                                             class="form-control @error('penandatangan_sertifikat.*') is-invalid @enderror"
-                                            name="penandatangan_sertifikat[]" placeholder="Penandatangan Sertifikat"
-                                            required>
+                                            name="penandatangan_sertifikat[]" placeholder="Penandatangan Sertifikat">
                                         @error('penandatangan_sertifikat.*')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -145,7 +144,7 @@
                                         <label>Jenis Sertifikat</label>
                                         <select
                                             class="form-control select2 @error('jenis_sertifikat.*') is-invalid @enderror"
-                                            name="jenis_sertifikat[]" required>
+                                            name="jenis_sertifikat[]">
                                             <option value="">Pilih Jenis Sertifikat</option>
                                             <option value="akademik">Akademik</option>
                                             <option value="non akademik">Non Akademik</option>
@@ -160,15 +159,15 @@
                                         <label>Tanggal Dikeluarkan</label>
                                         <input type="date"
                                             class="form-control @error('tanggal_dikeluarkan.*') is-invalid @enderror"
-                                            name="tanggal_dikeluarkan[]" required>
+                                            name="tanggal_dikeluarkan[]">
                                         @error('tanggal_dikeluarkan.*')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
                                         <label>Juara</label>
-                                        <select class="form-control @error('juara.*') is-invalid @enderror" name="juara[]"
-                                            required>
+                                        <select class="form-control @error('juara.*') is-invalid @enderror"
+                                            name="juara[]">
                                             <option value="">Pilih Juara</option>
                                             <option value="juara 1">Juara 1</option>
                                             <option value="juara 2">Juara 2</option>
@@ -185,7 +184,7 @@
                                         <label>Tingkat Kejuaraan</label>
                                         <select
                                             class="form-control select2 @error('tingkat_kejuaraan.*') is-invalid @enderror"
-                                            name="tingkat_kejuaraan[]" required>
+                                            name="tingkat_kejuaraan[]">
                                             <option value="">Pilih Tingkat Kejuaraan</option>
                                             <option value="kabupaten">Kabupaten</option>
                                             <option value="kota">Kota</option>
