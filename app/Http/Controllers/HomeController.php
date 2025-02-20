@@ -30,8 +30,8 @@ class HomeController extends Controller
         $totalPendaftar = User::role('siswa')->count();
         $totalLengkap = PpdbUser::where('status', '=', 'Final')->count();
         $totalLulus = PpdbUser::where('status', '=', 'Valid')->count();
-        $totalPendaftarPrestasi = PpdbUser::where('jalur_pendaftaran', '=', 'prestasi')->count();
-        $totalPendaftarKepemimpinan = PpdbUser::where('jalur_pendaftaran', '=', 'kepemimpinan')->count();
+        $totalPendaftarPrestasi = PpdbUser::where('jalur_pendaftaran', '=', 'prestasi')->where('nisn', '!=', null)->count();
+        $totalPendaftarKepemimpinan = PpdbUser::where('jalur_pendaftaran', '=', 'kepemimpinan')->where('nisn', '!=', null)->count();
         $totalSiswaDenganNilai = PpdbUser::where('status', 'Valid')
                                 ->whereHas('penilaianPeserta', function ($query) {
                                     $query->whereNotNull('bobot_nilai_rapor')
