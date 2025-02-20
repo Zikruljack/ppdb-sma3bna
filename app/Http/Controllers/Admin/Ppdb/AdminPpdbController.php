@@ -84,7 +84,7 @@ class AdminPpdbController extends Controller
         $nilaiRataRata = $this->nilaiRataRataPerSemester($nilaiRapor);
 
         $penilaian = PenilaianPeserta::where('user_id', $ppdbUser->user_id)->first();
-        return view('dashboard.ppdb.validasi', compact('ppdbUser', 'provinsi', 'kabkota', 'kecamatan', 'berkasPendukung', 'sertifikat', 'nilaiRapor', 'nilaiRataRata', 'penilaian'));
+        return view('dashboard.ppdb.validasi', compact('ppdbUser', 'berkasPendukung', 'sertifikat', 'nilaiRapor', 'nilaiRataRata', 'penilaian'));
 
     }
 
