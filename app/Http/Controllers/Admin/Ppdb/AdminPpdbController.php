@@ -120,9 +120,8 @@ class AdminPpdbController extends Controller
         try {
             DB::beginTransaction();
 
-            $lastUser = PpdbUser::whereNotNull('nomor_ujian')->orderBy('nomor_ujian', 'desc')->first();
-            $nomorUjian = $lastUser ? str_pad($lastUser->nomorUjian + 1, 4, '0', STR_PAD_LEFT) : '0151';
             $jalur_pendaftaran = $ppdbUser->jalur_pendaftaran;
+            $nomorUjian = $ppdbUser->nomor_peserta;
 
             if($jalur_pendaftaran == 'prestasi'){
                 $jalur_pendaftaran = 'PRES';
