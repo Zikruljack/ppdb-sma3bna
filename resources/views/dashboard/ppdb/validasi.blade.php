@@ -235,7 +235,20 @@
                                                         Internasional</option>
                                                 </select>
                                             </td>
-                                            <td>{{ $sertifikatAkademik->juara }}</td>
+                                            <td><select class="form-control edit-juara">
+                                                    <option value="juara 1"
+                                                        {{ $sertifikatAkademik->juara == 'juara 1' ? 'selected' : '' }}>
+                                                        Juara 1</option>
+                                                    <option value="juara 2"
+                                                        {{ $sertifikatAkademik->juara == 'juara 2' ? 'selected' : '' }}>
+                                                        Juara 2</option>
+                                                    <option value="juara 3"
+                                                        {{ $sertifikatAkademik->juara == 'juara 3' ? 'selected' : '' }}>
+                                                        Juara 3</option>
+                                                    <option value="tidak ada kejuaraan"
+                                                        {{ $sertifikatAkademik->juara == 'tidak ada kejuaraan' ? 'selected' : '' }}>
+                                                        Tidak Ada Kejuaraan</option>
+                                                </select></td>
                                             <td>
                                                 <a href="{{ asset('storage/' . $sertifikatAkademik->file_path) }}"
                                                     target="_blank" class="btn btn-info">
@@ -289,7 +302,23 @@
                                                             Internasional</option>
                                                     </select>
                                                 </td>
-                                                <td>{{ $sertifikatNonAkademik->juara }}</td>
+                                                <td>
+                                                    <select class="form-control edit-juara">
+                                                        <option value="juara 1"
+                                                            {{ $sertifikatNonAkademik->juara == 'juara 1' ? 'selected' : '' }}>
+                                                            Juara 1</option>
+                                                        <option value="juara 2"
+                                                            {{ $sertifikatNonAkademik->juara == 'juara 2' ? 'selected' : '' }}>
+                                                            Juara 2</option>
+                                                        <option value="juara 3"
+                                                            {{ $sertifikatNonAkademik->juara == 'juara 3' ? 'selected' : '' }}>
+                                                            Juara 3</option>
+                                                        <option value="tidak ada kejuaraan"
+                                                            {{ $sertifikatNonAkademik->juara == 'tidak ada kejuaraan' ? 'selected' : '' }}>
+                                                            Tidak Ada Kejuaraan</option>
+                                                    </select>
+                                                </td>
+                                                {{-- <td>{{ $sertifikatNonAkademik->juara }}</td> --}}
                                                 <td>
                                                     <a href="{{ asset('storage/' . $sertifikatNonAkademik->file_path) }}"
                                                         target="_blank" class="btn btn-info">
@@ -401,7 +430,7 @@
 
                 $(".sertifikat-validasi:checked").each(function() {
                     let tingkat = $(this).closest("tr").find(".edit-tingkat").val().toLowerCase();
-                    let juaraText = $(this).data("juara");
+                    let juaraText = $(this).closest("tr").find('.edit-juara').val().toLowerCase();
                     let jenis = $(this).data("jenis");
                     let nilai = 0;
 
@@ -477,6 +506,7 @@
                 let row = $(this).closest("tr");
                 let id = $(this).data("id");
                 let tingkat_kejuaraan = $(this).val();
+                let juara_text = $(this).closest("tr").find(".edit-juara").val();
                 console.log(id);
                 let url =
                     "{{ route('admin.ppdb.validasi.penilaian.update.sertifikat', ['id' => $ppdbUser->id, 'id_sertifikat' => '__ID__']) }}";
@@ -489,7 +519,8 @@
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
-                        tingkat_kejuaraan: tingkat_kejuaraan
+                        tingkat_kejuaraan: tingkat_kejuaraan,
+                        juara: juara_text
                     },
                     success: function(response) {
                         Swal.fire({

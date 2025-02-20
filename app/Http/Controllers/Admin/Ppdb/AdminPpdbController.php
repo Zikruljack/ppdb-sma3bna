@@ -348,7 +348,8 @@ class AdminPpdbController extends Controller
 
             // Simpan perubahan sertifikat
             $sertifikat->update([
-                'tingkat_kejuaraan' => $request->tingkat_kejuaraan
+                'tingkat_kejuaraan' => $request->tingkat_kejuaraan,
+                'juara' => $request->juara
             ]);
 
             DB::commit();
