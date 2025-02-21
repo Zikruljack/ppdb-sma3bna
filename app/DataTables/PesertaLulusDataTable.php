@@ -126,11 +126,11 @@ class PesertaLulusDataTable extends DataTable
             Column::make('nama_lengkap')->title('Nama Lengkap'),
             Column::make('jalur_pendaftaran')->title('Jalur Pendaftaran'),
             Column::make('asal_sekolah')->title('Asal Sekolah'),
-            Column::make('bobot_nilai_rapor')->title('Nilai Rapor'),
-            Column::make('bobot_nilai_sertifikat')->title('Nilai Sertifikat'),
-            Column::make('bobot_nilai_wawancara')->title('Nilai Wawancara'),
-            Column::make('bobot_nilai_baca_quran')->title('Nilai Baca Quran'),
-            Column::make('total_nilai')->title('Total Nilai'),
+            Column::make('bobot_nilai_rapor')->title('Nilai Rapor')->searchable(false),
+            Column::make('bobot_nilai_sertifikat')->title('Nilai Sertifikat')->searchable(false),
+            Column::make('bobot_nilai_wawancara')->title('Nilai Wawancara')->searchable(false),
+            Column::make('bobot_nilai_baca_quran')->title('Nilai Baca Quran')->searchable(false),
+            Column::make('total_nilai')->title('Total Nilai')->searchable(false),
             Column::make('status')->title('status'),
             Column::computed('aksi')
                   ->exportable(false)
