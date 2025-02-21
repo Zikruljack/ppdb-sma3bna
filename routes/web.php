@@ -72,8 +72,6 @@ Route::prefix('/')->group(function () {
     // Route::get('/struktur-organisasi', [App\Http\Controllers\LandingPageController::class, 'strukturOrganisasi'])->name('struktur-organisasi');
 });
 
-
-
 //admin
 Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function () {
 
