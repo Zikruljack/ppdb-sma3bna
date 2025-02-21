@@ -42,7 +42,7 @@ class PpdbController extends Controller{
 
     public function loginAttempt(Request $request){
 
-        return redirect()->back()->with('error', 'Waktu Pendaftaran Sudah ditutup!');
+        return redirect()->back()->with('error', 'Pendaftaran SPMB SMA Negeri 3 Banda Aceh jalur Prestasi dan Kepemimpinan Sudah ditutup!');
 
         // $validation = Validator::make($request->all(), [
         //     'email' => 'required|email',
@@ -83,7 +83,7 @@ class PpdbController extends Controller{
 
     public function registerAttempt(Request $request){
 
-        return redirect()->back()->with('error', 'Waktu Pendaftaran Sudah ditutup!');
+        return redirect()->back()->with('error', 'Pendaftaran SPMB SMA Negeri 3 Banda Aceh jalur Prestasi dan Kepemimpinan Sudah ditutup!');
 
         // $validation = Validator::make($request->all(), [
         //         'name' => 'required|string|max:255',
