@@ -44,7 +44,7 @@ class PesertaPPDBDataTable extends DataTable
      */
     public function query(PpdbUser $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('nomor_peserta', '!=', null);
     }
 
     /**
