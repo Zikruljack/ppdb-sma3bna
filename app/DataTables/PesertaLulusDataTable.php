@@ -131,7 +131,7 @@ class PesertaLulusDataTable extends DataTable
             Column::make('bobot_nilai_wawancara')->title('Nilai Wawancara')->searchable(false),
             Column::make('bobot_nilai_baca_quran')->title('Nilai Baca Quran')->searchable(false),
             Column::make('total_nilai')->title('Total Nilai')->searchable(false),
-            Column::make('status')->title('status'),
+            Column::make('status')->title('Status'),
             Column::computed('aksi')
                   ->exportable(false)
                   ->printable(false)

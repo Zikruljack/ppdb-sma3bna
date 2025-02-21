@@ -42,39 +42,39 @@ class PpdbController extends Controller{
 
     public function loginAttempt(Request $request){
 
-        // return redirect()->back()->with('error', 'Waktu Pendaftaran Sudah ditutup!');
+        return redirect()->back()->with('error', 'Waktu Pendaftaran Sudah ditutup!');
 
-        $validation = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        // $validation = Validator::make($request->all(), [
+        //     'email' => 'required|email',
+        //     'password' => 'required',
+        // ]);
 
-        if ($validation->fails()) {
-            Log::warning('Validation failed', ['errors' => $validation->errors()]);
-            return redirect()->back()->withErrors($validation)->withInput()->with('error', 'Tidak bisa disimpan!');
-        }
+        // if ($validation->fails()) {
+        //     Log::warning('Validation failed', ['errors' => $validation->errors()]);
+        //     return redirect()->back()->withErrors($validation)->withInput()->with('error', 'Tidak bisa disimpan!');
+        // }
 
-        try {
-            DB::beginTransaction();
-            $user = User::where('email', $request->email)->first();
+        // try {
+        //     DB::beginTransaction();
+        //     $user = User::where('email', $request->email)->first();
 
-            if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect, please try again'],
-            ]);
-            }
+        //     if (!$user || !Hash::check($request->password, $user->password)) {
+        //     throw ValidationException::withMessages([
+        //         'email' => ['The provided credentials are incorrect, please try again'],
+        //     ]);
+        //     }
 
-            auth()->login($user);
-            // Log::info('User logged in successfully', ['email' => $request->email]);
+        //     auth()->login($user);
+        //     // Log::info('User logged in successfully', ['email' => $request->email]);
 
-            DB::commit();
-            return redirect()->route('ppdb.dashboard')->with('success', 'Login successful');
+        //     DB::commit();
+        //     return redirect()->route('ppdb.dashboard')->with('success', 'Login successful');
 
-        } catch (\Exception $e) {
-            DB::rollback(); // Rollback transaction
-            // Log::error('Login Error: ' . $e->getMessage(), ['trace' => $e->getTrace()]);
-            return redirect()->back()->withInput()->with(['error' => 'Terjadi error pada server.']);
-        }
+        // } catch (\Exception $e) {
+        //     DB::rollback(); // Rollback transaction
+        //     // Log::error('Login Error: ' . $e->getMessage(), ['trace' => $e->getTrace()]);
+        //     return redirect()->back()->withInput()->with(['error' => 'Terjadi error pada server.']);
+        // }
     }
 
     public function register(){
@@ -83,58 +83,58 @@ class PpdbController extends Controller{
 
     public function registerAttempt(Request $request){
 
-        // return redirect()->back()->with('error', 'Waktu Pendaftaran Sudah ditutup!');
+        return redirect()->back()->with('error', 'Waktu Pendaftaran Sudah ditutup!');
 
-        $validation = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8|confirmed',
-                'jalur_pendaftaran' => 'required|in:prestasi,kepemimpinan',
-            ],[
-                'name.required' => 'Nama harus diisi.',
-                'email.required' => 'Email harus diisi.',
-                'email.unique' => 'Email sudah digunakan.',
-                'email.email' => 'Format email tidak valid.',
-                'password.required' => 'Password harus diisi.',
-                'password.min' => 'Password harus memiliki minimal 8 karakter.',
-                'password.confirmed' => 'Password tidak cocok.',
-                'jalur_pendaftaran.required' => 'Jalur pendaftaran harus dipilih.',
-            ]
-        );
+        // $validation = Validator::make($request->all(), [
+        //         'name' => 'required|string|max:255',
+        //         'email' => 'required|string|email|max:255|unique:users',
+        //         'password' => 'required|string|min:8|confirmed',
+        //         'jalur_pendaftaran' => 'required|in:prestasi,kepemimpinan',
+        //     ],[
+        //         'name.required' => 'Nama harus diisi.',
+        //         'email.required' => 'Email harus diisi.',
+        //         'email.unique' => 'Email sudah digunakan.',
+        //         'email.email' => 'Format email tidak valid.',
+        //         'password.required' => 'Password harus diisi.',
+        //         'password.min' => 'Password harus memiliki minimal 8 karakter.',
+        //         'password.confirmed' => 'Password tidak cocok.',
+        //         'jalur_pendaftaran.required' => 'Jalur pendaftaran harus dipilih.',
+        //     ]
+        // );
 
-        if ($validation->fails()) {
-            // Log::warning('Validation failed', ['errors' => $validation->errors()]);
-            return redirect()->back()->withErrors($validation)->withInput()->with('error', 'Tidak bisa disimpan!', $validation->errors());
-        }
+        // if ($validation->fails()) {
+        //     // Log::warning('Validation failed', ['errors' => $validation->errors()]);
+        //     return redirect()->back()->withErrors($validation)->withInput()->with('error', 'Tidak bisa disimpan!', $validation->errors());
+        // }
 
-        try {
-            DB::beginTransaction();
+        // try {
+        //     DB::beginTransaction();
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
+        //     $user = User::create([
+        //         'name' => $request->name,
+        //         'email' => $request->email,
+        //         'password' => bcrypt($request->password),
+        //     ]);
 
-            $userPpdb = PpdbUser::create([
-                'user_id' => $user->id,
-                'nama_lengkap' => $request->name,
-                'jalur_pendaftaran' => $request->jalur_pendaftaran,
-            ]);
+        //     $userPpdb = PpdbUser::create([
+        //         'user_id' => $user->id,
+        //         'nama_lengkap' => $request->name,
+        //         'jalur_pendaftaran' => $request->jalur_pendaftaran,
+        //     ]);
 
-            $user->assignRole('siswa');
+        //     $user->assignRole('siswa');
 
-            //send email verification
-            $user->sendEmailVerificationNotification();
+        //     //send email verification
+        //     $user->sendEmailVerificationNotification();
 
-            DB::commit();
+        //     DB::commit();
 
-            return redirect()->route('login.ppdb')->with('success', 'Registrasi berhasil, mohon cek email untuk verifikasi email anda.');
-        } catch (\Exception $e) {
-            DB::rollback();
-            // Log::error(['error' => $e->getMessage(), 'trace' => $e->getTrace()]);
-            return redirect()->back()->withInput()->with('error', 'Terjadi error pada server: ' . $e->getMessage());
-        }
+        //     return redirect()->route('login.ppdb')->with('success', 'Registrasi berhasil, mohon cek email untuk verifikasi email anda.');
+        // } catch (\Exception $e) {
+        //     DB::rollback();
+        //     // Log::error(['error' => $e->getMessage(), 'trace' => $e->getTrace()]);
+        //     return redirect()->back()->withInput()->with('error', 'Terjadi error pada server: ' . $e->getMessage());
+        // }
     }
 
     public function dashboard() {
