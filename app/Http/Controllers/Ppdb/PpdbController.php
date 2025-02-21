@@ -41,6 +41,9 @@ class PpdbController extends Controller{
     }
 
     public function loginAttempt(Request $request){
+
+        
+
         $validation = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
@@ -79,6 +82,7 @@ class PpdbController extends Controller{
     }
 
     public function registerAttempt(Request $request){
+
 
 
         $validation = Validator::make($request->all(), [

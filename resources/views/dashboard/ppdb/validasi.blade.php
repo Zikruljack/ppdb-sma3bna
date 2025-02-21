@@ -424,9 +424,10 @@
                     nilaiSertifikat += 40 * 0.4;
                 }
 
-                // Hitung Nilai Sertifikat Akademik & Non Akademik
-                let nilaiSertifikatAkademik = 0;
-                let nilaiSertifikatNonAkademik = 0;
+                let totalNilaiSertifikatAkademik = 0;
+                let totalNilaiSertifikatNonAkademik = 0;
+                let jumlahSertifikatAkademik = 0;
+                let jumlahSertifikatNonAkademik = 0;
 
                 $(".sertifikat-validasi:checked").each(function() {
                     let tingkat = $(this).closest("tr").find(".edit-tingkat").val().toLowerCase();
@@ -473,11 +474,23 @@
                     }
 
                     if (jenis === "akademik") {
-                        nilaiSertifikatAkademik += nilai;
+                        totalNilaiSertifikatAkademik += nilai;
+                        jumlahSertifikatAkademik++;
                     } else {
-                        nilaiSertifikatNonAkademik += nilai;
+                        totalNilaiSertifikatNonAkademik += nilai;
+                        jumlahSertifikatNonAkademik++;
                     }
                 });
+
+                // Hitung nilai akhir dengan membagi jumlah sertifikat
+                let nilaiSertifikatAkademik = jumlahSertifikatAkademik > 0 ? totalNilaiSertifikatAkademik /
+                    jumlahSertifikatAkademik : 0;
+                let nilaiSertifikatNonAkademik = jumlahSertifikatNonAkademik > 0 ? totalNilaiSertifikatNonAkademik /
+                    jumlahSertifikatNonAkademik : 0;
+
+                console.log("Nilai Akhir Akademik:", nilaiSertifikatAkademik);
+                console.log("Nilai Akhir Non-Akademik:", nilaiSertifikatNonAkademik);
+
 
                 let totalSertifikat = (nilaiSertifikatAkademik * 0.7) + (nilaiSertifikatNonAkademik * 0.3);
                 nilaiSertifikat += totalSertifikat * 0.2;
