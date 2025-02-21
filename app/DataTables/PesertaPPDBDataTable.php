@@ -80,6 +80,7 @@ class PesertaPPDBDataTable extends DataTable
             Column::make('nomor_peserta'),
             Column::make('nama_lengkap'),
             Column::make('jalur_pendaftaran'),
+            Column::make('asal_sekolah')->title('Asal Sekolah'),
             Column::make('status'),
             Column::make('action'),
         ];

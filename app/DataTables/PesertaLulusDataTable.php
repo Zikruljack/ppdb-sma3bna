@@ -125,6 +125,7 @@ class PesertaLulusDataTable extends DataTable
             Column::make('nomor_peserta')->title('Nomor Peserta'),
             Column::make('nama_lengkap')->title('Nama Lengkap'),
             Column::make('jalur_pendaftaran')->title('Jalur Pendaftaran'),
+            Column::make('asal_sekolah')->title('Asal Sekolah'),
             Column::make('total_nilai')->title('Total Nilai'),
             Column::make('status')->title('status'),
             Column::computed('aksi')
