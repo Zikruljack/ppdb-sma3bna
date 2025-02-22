@@ -40,6 +40,7 @@
                             <th>Nilai Ujian</th>
                             <th>Nilai Baca Quran</th>
                             <th>Total Nilai</th>
+                            <th>Note Validasi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +52,7 @@
                             <td id="total-nilai">
                                 {{ ($penilaian->bobot_nilai_rapor ?? 0) + ($penilaian->bobot_nilai_sertifikat ?? 0) + ($penilaian->bobot_nilai_wawancara ?? 0) + ($penilaian->bobot_nilai_baca_quran ?? 0) }}
                             </td>
+                            <td>{{ $ppdbUser->note_validasi }}</td>
 
                         </tr>
                     </tbody>
