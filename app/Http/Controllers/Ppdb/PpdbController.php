@@ -477,10 +477,10 @@ class PpdbController extends Controller{
 
     // Validasi input
     $validator = Validator::make($request->all(), [
-        'kk' => 'required|file|mimes:pdf,jpg,png|max:2048',
+        'kk' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         'ktp_kia' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         'surat_keterangan_aktif' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
-        'akta' => 'required|file|mimes:pdf,jpg,png|max:2048',
+        'akta' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         'sertifikat.*' => 'nullable|file|mimes:pdf,jpg,png|max:2048',
         'nama_sertifikat.*' => 'nullable|string|max:255',
         'penandatangan_sertifikat.*' => 'nullable|string|max:255',
