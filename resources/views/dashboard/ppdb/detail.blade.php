@@ -37,7 +37,7 @@
                         <tr>
                             <th>Nilai Rapor</th>
                             <th>Nilai Sertifikat</th>
-                            <th>Nilai Ujian</th>
+                            <th>Nilai Wawancara</th>
                             <th>Nilai Baca Quran</th>
                             <th>Total Nilai</th>
                             <th>Note Validasi</th>
