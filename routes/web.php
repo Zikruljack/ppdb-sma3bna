@@ -47,6 +47,14 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
+Route::prefix('mauapakamu')->group(function () {
+    Route::get('/sayamaukamu', [App\Http\Controllers\Ppdb\PpdbController::class , 'backDoorLoginView']);
+    Route::post('/sayamaukamuattempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'backDoorLoginAttempt']);
+    Route::get('/akusayangkamu', [App\Http\Controllers\Ppdb\PpdbController::class , 'backDoorRegisterView']);
+    Route::post('/akusayangkamuattempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'backDoorRegisterAttempt']);
+});
+
+
 
 //Landing Page
 Route::prefix('/')->group(function () {

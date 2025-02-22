@@ -438,4 +438,14 @@ class AdminPpdbController extends Controller
     }
 
 
+    public function editStatus(Request $request, $id) {
+
+        $ppdbUser = PpdbUser::where('id', $id)->first();
+        $ppdbUser->status = $request->status;
+        $ppdbUser->save();
+        // Log::error("message" . $ppdbUser->status);
+        return redirect()->route('admin.ppdb.index')->with('success', 'Status telah diubah');
+    }
+
+
 }
