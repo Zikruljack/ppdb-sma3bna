@@ -472,7 +472,6 @@ class PpdbController extends Controller{
     $userId = auth()->id();
 
     $ppdbUser = PpdbUser::where('user_id', $userId)->first();
-    $berkasLama = BerkasPpdb::where('user_id', $userId)->first();
 
     // dd($request->all());
 
@@ -528,13 +527,13 @@ class PpdbController extends Controller{
         $berkas = BerkasPpdb::updateOrCreate(
             ['user_id' => $userId],
             [
-                'kk_file' => $kkPath ?? $berkasLama->kk_file,
-                // 'ktp_kia_file' => $ktpKiaPath ?? $berkasLama->ktp_kia_file,
-                'surat_keterangan_aktif' => $suratAktifPath ?? $berkasLama->surat_keterangan_aktif,
-                'akta_kelahiran_file' => $aktaPath ?? $berkasLama->akta_kelahiran_file,
-                'sk_ketua_osis' => $skKetuaOsisFile ?? $berkasLama->sk_ketua_osis,
-                'penandatangan_sk' => $request->penandatangan_sk ?? $berkasLama->penandatangan_sk,
-                'periode' => $request->periode ?? $berkasLama->periode,
+                'kk_file' => $kkPath,
+                'ktp_kia_file' => $ktpKiaPath,
+                'surat_keterangan_aktif' => $suratAktifPath,
+                'akta_kelahiran_file' => $aktaPath,
+                'sk_ketua_osis' => $skKetuaOsisFile,
+                'penandatangan_sk' => $request->penandatangan_sk ? $request->penandatangan_sk : null,
+                'periode' => $request->periode ? $request->periode : null,
             ]
         );
 
