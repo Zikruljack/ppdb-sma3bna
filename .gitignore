@@ -27,3 +27,4 @@ yarn-error.log
 *.docx
 
 !/public/assets/data/JUKNIS_SPMB_PRESTASI_2025.pdf
+!/public/assets/data/Kemampuan_Literasi_Bahasa_Inggris_dan_Keagamaan.pdf
