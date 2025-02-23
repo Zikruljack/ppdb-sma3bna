@@ -12,9 +12,10 @@
                 </div>
                 <div class="col-md-10 offset-md-1 offset-lg-0 col-lg-5 text-center text-lg-start">
                     <h1 class="display-1 mb-5 mx-md-n5 mx-lg-0">SMA Negeri 3 Banda Aceh</h1>
-                    <p class="lead fs-lg mb-7">Sistem Penerimaan Murid Baru akan segera dibuka, silahkan klik tombol dibawah
+                    <p class="lead fs-lg mb-7">Pengumuman hasil seleksi pemberkasan SPMB telah keluar. Silakan cek informasi
+                        tahap selanjutnya.</p>
                     </p>
-                    <span><a href="/ppdb" class="btn btn-primary rounded-pill me-2">SPMB</a></span>
+                    <span><a href="/ppdb#pengumumanSection" class="btn btn-primary rounded-pill me-2">SPMB</a></span>
                 </div>
             </div>
         </div>
@@ -97,4 +98,5 @@
             </div>
         </div>
     </section>
+
 @endsection

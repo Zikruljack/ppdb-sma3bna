@@ -47,14 +47,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
-Route::prefix('mauapakamu')->group(function () {
-    Route::get('/sayamaukamu', [App\Http\Controllers\Ppdb\PpdbController::class , 'backDoorLoginView']);
-    Route::post('/sayamaukamuattempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'backDoorLoginAttempt']);
-    Route::get('/akusayangkamu', [App\Http\Controllers\Ppdb\PpdbController::class , 'backDoorRegisterView']);
-    Route::post('/akusayangkamuattempt', [App\Http\Controllers\Ppdb\PpdbController::class , 'backDoorRegisterAttempt']);
-});
-
-
 
 //Landing Page
 Route::prefix('/')->group(function () {
@@ -67,12 +59,13 @@ Route::prefix('/')->group(function () {
         Route::post('/register/attempt' , [App\Http\Controllers\Ppdb\PpdbController::class , 'registerAttempt'])->name('register.attempt');
 
     });
+
     // Route::get('/profil', [App\Http\Controllers\LandingPageController::class, 'profil'])->name('profil');
     // Route::get('/berita', [App\Http\Controllers\LandingPageController::class, 'berita'])->name('berita');
     // Route::get('/berita/{slug}', [App\Http\Controllers\LandingPageController::class, 'beritaDetail'])->name('berita.detail');
     // Route::get('/galeri', [App\Http\Controllers\LandingPageController::class, 'galeri'])->name('galeri');
     // Route::get('/galeri/{slug}', [App\Http\Controllers\LandingPageController::class, 'galeriDetail'])->name('galeri.detail');
-    // Route::get('/pengumuman', [App\Http\Controllers\LandingPageController::class, 'pengumuman'])->name('pengumuman');
+    Route::get('/pengumuman', [App\Http\Controllers\LandingPageController::class, 'pengumuman'])->name('pengumuman');
     // Route::get('/pengumuman/{slug}', [App\Http\Controllers\LandingPageController::class, 'pengumumanDetail'])->name('pengumuman.detail');
     // Route::get('/kontak', [App\Http\Controllers\LandingPageController::class, 'kontak'])->name('kontak');
     // Route::get('/tentang', [App\Http\Controllers\LandingPageController::class, 'tentang'])->name('tentang');

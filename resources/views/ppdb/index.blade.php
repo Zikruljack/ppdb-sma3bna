@@ -13,7 +13,6 @@
                         Penerimaan Murid Baru
                     </p>
                     <p class="lead fs-lg px-md-3 px-lg-7 px-xl-9 px-xxl-10">SMA Negeri 3 Banda Aceh</p>
-                    <a href="/ppdb/register" class="btn btn-primary rounded-pill">Daftar SPMB</a>
                 </div>
                 <!-- /column -->
             </div>
@@ -26,7 +25,7 @@
 @section('content')
     <section class="wrapper bg-light">
         <div class="container pt-14 pb-12 pt-md-16 pb-md-14">
-            <div class="row gx-lg-8 gx-xl-12 gy-10 mb-lg-22 mb-xl-24 align-items-center">
+            <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
                 <div class="col-lg-7 order-lg-2">
                     <div class="row gx-md-5 gy-5">
                         <div class="col-md-5 offset-md-1 align-self-end">
@@ -85,7 +84,7 @@
                 </div>
                 <!--/column -->
                 <div class="col-lg-5">
-                    <h2 class="fs-15 text-uppercase text-muted mb-3">Pendaftaran SPMB</h2>
+                    <h2 class="fs-15 text-uppercase text-primary mb-3">Pendaftaran SPMB</h2>
                     <h3 class="display-4 mb-5">Jalur Pendaftaran SPMB SMA NEGERI 3 BANDA ACEH</h3>
                     <p>Pendaftaran SPMB SMA NEGERI 3 BANDA ACEH dibuka mulai tanggal 17 Februari 2025.
                         Terdapat beberapa jalur pendaftaran yang dapat dipilih:</p>
@@ -96,7 +95,7 @@
                         <li><strong>Jalur Pindah Tugas Orang Tua:</strong> Segara diumumkan</li>
                     </ul>
                     <a href="{{ asset('assets/data/JUKNIS_SPMB_PRESTASI_2025.pdf') }}"
-                        class="btn btn-navy rounded-pill mt-3" download>Selengkapnya</a>
+                        class="btn btn-navy rounded-pill mt-3" download>Lihat Selengkapnya</a>
                 </div>
                 <!--/column -->
             </div>
@@ -104,8 +103,97 @@
         </div>
         <!-- /.container -->
     </section>
+
+    <section id="pengumumanSection" class="wrapper bg-soft-orange angled upper-end lower-end">
+        <div class="container py-14 py-md-16">
+            <div class="row gx-lg-8 gx-xl-12 gy-10">
+                <div class="col-lg-6 mb-0">
+                    <h2 class="fs-15 text-uppercase text-primary mb-3">Pengumuman</h2>
+                    <h3 class="display-5 mb-4">Tahap Selanjutnya Seleksi SPMB Jalur Prestasi dan Kepemimpinan</h3>
+                    <p class="lead mb-6">Selamat kepada calon siswa yang telah lolos tahap pertama! Pastikan Anda tidak
+                        melewatkan tahap seleksi berikutnya.</p>
+                    <p class="lead mb-6">Cek nomor peserta Anda dalam daftar resmi yang telah diumumkan.</p>
+                    <p class="lead mb-6"><strong>Unduh file PDF di bawah ini untuk melihat daftar nomor peserta yang wajib
+                            mengikuti seleksi tahap selanjutnya dan ruangan berapa peserta harus datang.</strong></p>
+                    <a href="{{ asset('assets/data/Kemampuan_Literasi_Bahasa_Inggris_dan_Keagamaan.pdf') }}"
+                        class="btn btn-navy rounded-pill mt-3">Lihat Selengkapnya</a>
+                </div>
+
+                <div class="col-lg-6">
+                    <div id="accordion-3" class="accordion-wrapper">
+                        <div class="card accordion-item">
+                            <div class="card-header" id="accordion-heading-3-1">
+                                <button class="collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-3-1"
+                                    aria-expanded="false" aria-controls="accordion-collapse-3-1">
+                                    Jadwal Wawancara dan Tes Literasi dan Baca Al-Qur’an
+                                </button>
+                            </div>
+                            <div id="accordion-collapse-3-1" class="collapse" aria-labelledby="accordion-heading-3-1"
+                                data-bs-target="#accordion-3">
+                                <div class="card-body">
+                                    <p><strong>Senin, 24 Februari 2025</strong></p>
+                                    <ul>
+                                        <li>Pukul 14.00 WIB s.d 17.00 WIB</li>
+                                        <li>Memakai seragam SMP/MTs sekolah asal</li>
+                                        <li>Membawa kartu peserta SPMB</li>
+                                    </ul>
+                                    <p><strong>Selasa, 25 Februari 2025</strong></p>
+                                    <ul>
+                                        <li>Pukul 14.00 WIB s.d 17.00 WIB</li>
+                                        <li>Memakai seragam SMP/MTs sekolah asal</li>
+                                        <li>Membawa kartu peserta SPMB</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card accordion-item">
+                            <div class="card-header" id="accordion-heading-3-2">
+                                <button class="collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-3-2"
+                                    aria-expanded="false" aria-controls="accordion-collapse-3-2">
+                                    Kriteria Penilaian
+                                </button>
+                            </div>
+                            <div id="accordion-collapse-3-2" class="collapse" aria-labelledby="accordion-heading-3-2"
+                                data-bs-target="#accordion-3">
+                                <div class="card-body">
+                                    <p>Seleksi Jalur Prestasi tidak lagi menggunakan tes tulis, melainkan berdasarkan:</p>
+                                    <ul>
+                                        <li>Rata-rata nilai rapor 6 pelajaran semester 3, 4, dan 5</li>
+                                        <li>Bobot atau poin dari sertifikat prestasi</li>
+                                        <li>Kemampuan Literasi Bahasa Inggris dan Membaca Al-Qur’an</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card accordion-item">
+                            <div class="card-header" id="accordion-heading-3-3">
+                                <button class="collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-3-3"
+                                    aria-expanded="false" aria-controls="accordion-collapse-3-3">
+                                    Lokasi dan Tata Tertib
+                                </button>
+                            </div>
+                            <div id="accordion-collapse-3-3" class="collapse" aria-labelledby="accordion-heading-3-3"
+                                data-bs-target="#accordion-3">
+                                <div class="card-body">
+                                    <p>Ujian wawancara dan tes literasi akan dilaksanakan di SMA Negeri 3 Banda Aceh.</p>
+                                    <p>Peserta diwajibkan:</p>
+                                    <ul>
+                                        <li>Datang tepat waktu sesuai jadwal</li>
+                                        <li>Mengenakan seragam resmi SMP/MTs asal</li>
+                                        <li>Membawa dokumen pendukung seperti kartu peserta SPMB</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- /section -->
-    <section class="wrapper bg-soft-primary">
+    <section class="wrapper bg-soft-primary angled upper-start">
         <div class="container py-14 pt-md-16 pt-lg-0 pb-md-16">
             <!--/.row -->
             <div class="row text-center">
@@ -176,16 +264,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Pendaftaran SMPB SMA NEGERI 3 BANDA ACEH akan dibuka pada tanggal 17 Februari 2025 pukul 08.00
-                    sampai tanggal 21 Februari
-                    2025 pukul 18.00. Jangan lewatkan!
+                    <p><strong>Pengumuman hasil seleksi telah keluar!</strong></p>
+                    <p>Silakan cek jadwal dan informasi tahap selanjutnya untuk seleksi SPMB.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
     </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
