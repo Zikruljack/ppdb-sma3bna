@@ -74,7 +74,7 @@ Route::prefix('/')->group(function () {
 });
 
 //admin
-Route::middleware(['auth', 'role:developer|admin|verifikator'])->group(function () {
+Route::middleware(['auth', 'role:developer|admin'])->group(function () {
 
     Route::prefix('admin')->group(function () {
 
